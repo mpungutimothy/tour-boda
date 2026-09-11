@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand palette */
+    --primary: 16 78% 55%;          /* #E85D2F laterite sunset */
+    --primary-foreground: 40 33% 96%; /* near-white cream for contrast */
+    --primary-dark: 14 72% 44%;      /* darker shade for hover */
+    --primary-light: 20 80% 68%;     /* lighter shade */
+
+    --secondary: 142 33% 27%;       /* #2F5D3E matoke green */
+    --secondary-foreground: 40 33% 96%;
+
+    --accent: 38 79% 58%;           /* #E8A33D turmeric gold */
+    --accent-foreground: 20 23% 9%;
+
+    --ink: 26 14% 9%;               /* #1A1612 ink */
+    --surface: 40 33% 96%;          /* #FAF6EF paper cream */
+
+    --muted: 30 10% 49%;            /* #8A7E70 muted brown-grey */
+    --muted-foreground: 30 10% 49%;
+
+    /* Semantic mappings */
+    --background: 40 33% 96%;       /* surface cream */
+    --foreground: 26 14% 9%;        /* ink */
+    --card: 0 0% 100%;
+    --card-foreground: 26 14% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 26 14% 9%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 40 33% 96%;
+
+    --success: 142 40% 35%;
+    --success-foreground: 40 33% 96%;
+    --warning: 38 79% 58%;
+    --warning-foreground: 26 14% 9%;
+    --error: 0 72% 51%;
+    --error-foreground: 40 33% 96%;
+
+    --border: 30 15% 87%;
+    --input: 30 15% 87%;
+    --ring: 16 78% 55%;
+
+    --chart-1: 16 78% 55%;
+    --chart-2: 142 33% 27%;
+    --chart-3: 38 79% 58%;
+    --chart-4: 26 14% 9%;
+    --chart-5: 30 10% 49%;
+
+    /* Radius scale */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-full: 999px;
+    --radius: var(--radius-sm);
+  }
+
+  .dark {
+    --primary: 16 78% 55%;
+    --primary-foreground: 26 14% 9%;
+    --secondary: 142 33% 27%;
+    --secondary-foreground: 40 33% 96%;
+    --accent: 38 79% 58%;
+    --accent-foreground: 26 14% 9%;
+    --ink: 40 33% 96%;
+    --surface: 26 14% 12%;
+    --muted: 30 8% 38%;
+    --muted-foreground: 30 8% 60%;
+    --background: 26 14% 9%;
+    --foreground: 40 33% 90%;
+    --card: 26 14% 14%;
+    --card-foreground: 40 33% 90%;
+    --popover: 26 14% 14%;
+    --popover-foreground: 40 33% 90%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 40 33% 96%;
+    --border: 26 10% 22%;
+    --input: 26 10% 22%;
+    --ring: 16 78% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  /* Warm-tinted shadows — never pure black */
+  .shadow-warm-sm {
+    box-shadow: 0 1px 2px -1px hsl(var(--ink) / 0.08),
+                0 1px 3px 0 hsl(var(--ink) / 0.06);
+  }
+  .shadow-warm-md {
+    box-shadow: 0 4px 6px -1px hsl(var(--ink) / 0.10),
+                0 2px 4px -2px hsl(var(--ink) / 0.08);
+  }
+  .shadow-warm-lg {
+    box-shadow: 0 10px 20px -4px hsl(var(--ink) / 0.12),
+                0 4px 8px -2px hsl(var(--ink) / 0.08);
+  }
+  .shadow-warm-xl {
+    box-shadow: 0 24px 48px -12px hsl(var(--ink) / 0.18),
+                0 8px 16px -4px hsl(var(--ink) / 0.10);
+  }
+
+  /* Paper grain overlay for editorial surfaces */
+  .paper-grain {
+    position: relative;
+  }
+  .paper-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
