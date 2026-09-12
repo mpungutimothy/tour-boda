@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { destinations } from "@/data/destinations";
 import { DestinationDetail } from "@/components/destinations/destination-detail";
+import { generateDestinationSchema } from "@/lib/schema/destination";
 
 export function generateStaticParams() {
   return destinations.map((d) => ({ slug: d.slug }));
@@ -32,5 +33,15 @@ export default function DestinationPage({ params }: { params: { slug: string } }
     notFound();
   }
 
-  return <DestinationDetail destination={destination} allDestinations={destinations} />;
+  const schema = generateDestinationSchema(destination);
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <DestinationDetail destination={destination} allDestinations={destinations} />
+    </>
+  );
 }
