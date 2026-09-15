@@ -43,15 +43,4 @@ export const guides: Guide[] = [
     specialties: ["Entebbe gardens", "Lake Victoria shore", "Wildlife centre"],
     bio: "Born and raised in Entebbe, two streets from the lake. Former fishing boat hand turned licensed guide. Knows where the fish auction starts at 5 AM.",
   },
-  {
-    id: "byaruhanga-moses",
-    name: "Byaruhanga Moses",
-    photo:
-      "https://images.pexels.com/photos/33993456/pexels-photo-33993456.jpeg?auto=compress&cs=tinysrgb&w=600",
-    region: "Western Region, Masindi",
-    languages: ["Luganda", "Runyoro", "English"],
-    yearsExperience: 12,
-    specialties: ["Murchison Falls", "Wildlife safaris", "Nile boat cruises"],
-    bio: "Former Uganda Wildlife Authority ranger (2013-2017). Knows where the elephants cross the road near Paraa between 4 and 6 PM. Boda guide since 2017.",
-  },
 ];

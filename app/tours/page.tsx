@@ -85,7 +85,7 @@ export default function ToursPage() {
       <div className="mb-10">
         <h1 className="font-serif text-4xl font-bold text-ink sm:text-5xl">All Tours</h1>
         <p className="mt-3 max-w-2xl font-sans text-lg text-muted-foreground">
-          Six guided rides across Uganda, each led by a local boda driver who knows the road.
+          Three guided rides across Uganda, each led by a local boda driver who knows the road.
         </p>
       </div>
 

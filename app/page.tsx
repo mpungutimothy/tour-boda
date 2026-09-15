@@ -111,9 +111,9 @@ export default function Home() {
               </Button>
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-sans text-sm text-surface/60">
-              <span>6 guided tours</span>
+              <span>3 guided tours</span>
               <span className="text-surface/30">·</span>
-              <span>6 local boda guides</span>
+              <span>3 local boda guides</span>
               <span className="text-surface/30">·</span>
               <span>Prices from UGX 60,000</span>
             </div>
@@ -166,7 +166,7 @@ export default function Home() {
               Featured Tours
             </h2>
             <p className="mt-2 font-sans text-base text-muted-foreground">
-              Six guided rides across Uganda, each led by a local boda driver
+              Three guided rides across Uganda, each led by a local boda driver
               who knows the road.
             </p>
           </div>
