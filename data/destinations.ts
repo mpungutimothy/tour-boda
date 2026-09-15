@@ -217,4 +217,220 @@ export const destinations: Destination[] = [
       },
     ],
   },
+  {
+    id: "murchison-falls-safari",
+    slug: "murchison-falls-safari-ride",
+    name: "Murchison Falls Safari Ride",
+    category: "Wildlife & Nature",
+    narrative:
+      "The road from Masindi town to Murchison Falls covers 85 kilometres of red murram and tarmac, and your guide, Byaruhanga Moses, has been driving it since 2017. He worked as a ranger in the park for four years before that, so he knows where the elephants cross the road near the Paraa ferry crossing between 4:00 and 6:00 PM. The park covers 3,893 square kilometres and holds 76 mammal species and 451 bird species. You ride to the top of the falls, where the Nile forces through a 7-metre gap in the rock and drops 43 metres. The ground shakes. Moses will tell you that the spray at the bottom supports a permanent rainbow between 10:00 AM and 2:00 PM on dry days. After the falls you ride to the Nile boat launch point, where a 3-hour cruise costs 30,000 shillings per person and takes you to the base of the falls from the river. Hippos, crocodiles, and water buffalo are visible from the boat. One honest note: the road inside the park is rough gravel for long stretches. The ride is bumpy. If you have back problems, this is not the tour for you.",
+    keyFacts: [
+      { label: "Total distance", value: "170 km round trip from Masindi" },
+      { label: "Duration", value: "Full day (10–12 hours)" },
+      { label: "Starting point", value: "Masindi town (hotel pickup)" },
+      { label: "Best time", value: "Jun–Sep and Dec–Feb (dry tracks)" },
+    ],
+    location: {
+      lat: 2.1547,
+      lng: 31.6833,
+      region: "Western Region, Nwoya District",
+    },
+    images: [
+      {
+        url: "https://images.pexels.com/photos/29897219/pexels-photo-29897219.jpeg",
+        caption: "Murchison Falls forcing through a narrow rock gap, Nile River",
+        credit: "Pexels",
+      },
+      {
+        url: "https://images.pexels.com/photos/31939652/pexels-photo-31939652.jpeg",
+        caption: "Green riverbank inside Murchison Falls National Park",
+        credit: "Pexels",
+      },
+    ],
+    author: {
+      name: "Byaruhanga Moses",
+      bio: "Former Uganda Wildlife Authority ranger (2013–2017). Boda guide since 2017. Speaks Luganda, Runyoro, and English.",
+    },
+    faqs: [
+      {
+        question: "Do I need a park entry permit?",
+        answer: "Yes. Park entry is USD 40 for non-residents and UGX 15,000 for East African residents. We arrange the permit as part of your booking.",
+      },
+      {
+        question: "Can I see the Big Five on this tour?",
+        answer: "You can see four: lions, elephants, buffalo, and leopards. Rhinos are in Ziwa Sanctuary, a separate stop. Sightings are not guaranteed.",
+      },
+      {
+        question: "Is the boat cruise included?",
+        answer: "The boat cruise is an optional add-on at 30,000 shillings per person. We book it on your behalf. The cruise runs at 9:00 AM and 2:00 PM.",
+      },
+    ],
+    tiers: [
+      {
+        name: "Falls Express",
+        price: 200000,
+        duration: "10 hours",
+        inclusions: ["Round-trip boda transport from Masindi", "Park entry permit", "Helmet", "Bottled water", "Guide at the falls"],
+        bestFor: "Travellers who want the falls and a park ride without the boat",
+      },
+      {
+        name: "Falls & Boat Cruise",
+        price: 280000,
+        duration: "12 hours",
+        inclusions: ["All Falls Express inclusions", "3-hour Nile boat cruise", "Lunch at Paraa Safari Lodge"],
+        bestFor: "Travellers who want the full river-to-falls experience",
+      },
+      {
+        name: "Sunset Game Drive",
+        price: 350000,
+        duration: "14 hours",
+        inclusions: ["All Falls & Boat Cruise inclusions", "Evening game drive in the delta", "Dinner at a lodge inside the park"],
+        bestFor: "Travellers who want to see nocturnal animals and stay late",
+      },
+    ],
+  },
+  {
+    id: "ssese-islands-beach",
+    slug: "ssese-islands-beach-escape",
+    name: "Ssese Islands Beach Escape",
+    category: "Beach & Leisure",
+    narrative:
+      "The ferry from Nakiwogo landing site in Entebbe departs at 2:00 PM and reaches Lutoboka on Kalangala Island three hours later. Your guide, Nakato Sarah, meets you at the dock. She grew up on the island and her father was one of the first fishermen to take a motorised boat to the mainland for market. The Ssese Islands are an archipelago of 84 islands in Lake Victoria, and 43 of them are inhabited. Kalangala is the largest, covering 430 square kilometres. Sarah takes you along the red dirt roads to the palm-fringed beach at Banana Beach, where the sand is clean and the water is warm. You can swim here — bilharzia is not present on this side of the island. The lake is fresh water and the temperature sits around 24 degrees year-round. Sarah knows the woman who runs the fish grill at Lutoboka landing — her name is Teopista and she grills tilapia with lemon and rock salt every evening from 5:00 PM. One honest note: the ferry is the only public way on and off the island, and it runs once a day. If you miss it, you are staying the night. Plan your return carefully.",
+    keyFacts: [
+      { label: "Ferry crossing", value: "3 hours each way" },
+      { label: "Duration", value: "Overnight (2 days)" },
+      { label: "Starting point", value: "Entebbe (Nakiwogo landing)" },
+      { label: "Best time", value: "Jan–Mar and Jun–Aug (calmer lake)" },
+    ],
+    location: {
+      lat: -0.325,
+      lng: 32.2833,
+      region: "Central Region, Kalangala District",
+    },
+    images: [
+      {
+        url: "https://images.pexels.com/photos/11948635/pexels-photo-11948635.jpeg",
+        caption: "Boats on Lake Victoria at twilight near the Ssese Islands",
+        credit: "Pexels",
+      },
+      {
+        url: "https://images.pexels.com/photos/13255158/pexels-photo-13255158.jpeg",
+        caption: "Wooden fishing boat moored on Lake Victoria near Jinja",
+        credit: "Pexels",
+      },
+    ],
+    author: {
+      name: "Nakato Sarah",
+      bio: "Born on Kalangala Island. Daughter of a Lake Victoria fisherman. Licensed guide since 2020. Speaks Luganda, Lusoga, and English.",
+    },
+    faqs: [
+      {
+        question: "Is it safe to swim in the lake at the Ssese Islands?",
+        answer: "Yes, on the Kalangala side. Bilharzia is not present in the waters around Banana Beach. We do not recommend swimming in the mainland shore areas near Entebbe.",
+      },
+      {
+        question: "What happens if I miss the return ferry?",
+        answer: "The ferry runs once a day. If you miss it, you stay the night on the island. We can arrange a guesthouse at your own cost, around UGX 40,000 per night.",
+      },
+      {
+        question: "Can I bring luggage for an overnight stay?",
+        answer: "Yes. The boda has a waterproof bag for your belongings. Keep it under 15 kg — the boda has weight limits on the island roads.",
+      },
+    ],
+    tiers: [
+      {
+        name: "Day Islander",
+        price: 120000,
+        duration: "Same-day return",
+        inclusions: ["Ferry tickets", "Boda transport on the island", "Beach visit", "Helmet", "Bottled water"],
+        bestFor: "Travellers who want a long day trip and can catch the 2 PM ferry back",
+      },
+      {
+        name: "Island Overnight",
+        price: 250000,
+        duration: "2 days, 1 night",
+        inclusions: ["All Day Islander inclusions", "One night at a beachside guesthouse", "Fish grill dinner at Teopista's", "Sunset beach walk"],
+        bestFor: "Travellers who want to slow down and not watch the clock",
+      },
+      {
+        name: "Island & Fishing Trip",
+        price: 320000,
+        duration: "2 days, 1 night",
+        inclusions: ["All Island Overnight inclusions", "Morning fishing trip with Sarah's father (3 hours)", "Fresh fish lunch on the boat"],
+        bestFor: "Travellers who want to see the lake life up close",
+      },
+    ],
+  },
+  {
+    id: "mbale-coffee-trail",
+    slug: "mbale-coffee-trail-ride",
+    name: "Mbale Coffee Trail Ride",
+    category: "Food & Culture",
+    narrative:
+      "The road from Mbale town to the coffee farms on the slopes of Mount Elgon climbs 1,200 metres over 40 kilometres of switchbacks. Your guide, Wanyama Robert, owns two acres of coffee bushes himself and has been guiding visitors through the farms since 2021. He takes you to a cooperative of 47 smallholder farmers in the Bulucheke sub-county who sell their cherries to the Mbale Coffee Union. Each farmer works between one and three acres. Robert shows you the whole process: picking the red cherries by hand between September and December, drying them on raised wooden beds in the sun for 14 to 21 days, and hulling them at the cooperative's mill in Mbale town. You meet a farmer named Joyce who has been growing coffee for 22 years and can tell you the exact price per kilo on any given day — it was 4,800 shillings for fair-trade Arabica last week. You end the day at a cupping session at the Mbale Coffee Union office, where you taste three roasts from the same cooperative and learn why altitude changes the flavour. One honest note: the road to the farms is steep and muddy in the wet months. If you visit between April and May, expect to walk the last 2 kilometres.",
+    keyFacts: [
+      { label: "Total distance", value: "80 km round trip from Mbale" },
+      { label: "Duration", value: "Full day (8–9 hours)" },
+      { label: "Starting point", value: "Mbale town (hotel pickup)" },
+      { label: "Best time", value: "Sep–Dec (harvest season)" },
+    ],
+    location: {
+      lat: 1.0792,
+      lng: 34.1750,
+      region: "Eastern Region, Mbale District",
+    },
+    images: [
+      {
+        url: "https://images.pexels.com/photos/28263584/pexels-photo-28263584.jpeg",
+        caption: "Green hills and winding roads on the slopes of Mount Elgon near Mbale",
+        credit: "Pexels",
+      },
+      {
+        url: "https://images.pexels.com/photos/6872257/pexels-photo-6872257.jpeg",
+        caption: "Lush green plantation rows under a clear sky",
+        credit: "Pexels",
+      },
+    ],
+    author: {
+      name: "Wanyama Robert",
+      bio: "Coffee farmer and licensed guide since 2021. Two acres of Arabica on Mount Elgon. Speaks Lumasaba, Luganda, and English.",
+    },
+    faqs: [
+      {
+        question: "Can I buy coffee to take home?",
+        answer: "Yes. The cooperative sells roasted beans at UGX 25,000 per kilo. Green beans are also available at UGX 18,000 per kilo if you want to roast yourself.",
+      },
+      {
+        question: "Is the cupping session suitable for beginners?",
+        answer: "Yes. Robert walks you through the basics — aroma, acidity, body. You do not need any prior coffee knowledge.",
+      },
+      {
+        question: "What should I wear on the farm visit?",
+        answer: "Closed shoes and long trousers. The coffee bushes are low but the ground is uneven. Bring a hat — there is no shade on the drying beds.",
+      },
+    ],
+    tiers: [
+      {
+        name: "Farm Visit",
+        price: 150000,
+        duration: "8 hours",
+        inclusions: ["Round-trip boda transport from Mbale", "Farm tour with Robert", "Cooperative mill visit", "Helmet", "Bottled water"],
+        bestFor: "Travellers who want to see where their coffee comes from",
+      },
+      {
+        name: "Farm & Cupping",
+        price: 200000,
+        duration: "9 hours",
+        inclusions: ["All Farm Visit inclusions", "Coffee cupping session at Mbale Coffee Union", "1 kg roasted beans to take home", "Lunch at a roadside kiosk in Bulucheke"],
+        bestFor: "Travellers who want to taste and learn the flavour side",
+      },
+      {
+        name: "Farmer for a Day",
+        price: 270000,
+        duration: "10 hours",
+        inclusions: ["All Farm & Cupping inclusions", "Hands-on cherry picking (2 hours)", "Drying bed demonstration", "Dinner with Joyce's family at the farm"],
+        bestFor: "Travellers who want to work the farm, not just see it",
+      },
+    ],
+  },
 ];

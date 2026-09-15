@@ -15,7 +15,7 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight">
           <span className="text-primary">Tour-Boda</span>
-          <span className="text-muted-foreground font-normal hidden sm:inline">Uganda</span>
+          <span className="text-ink font-normal hidden sm:inline">Uganda</span>
         </Link>
 
         {/* Center nav */}
