@@ -1,58 +1,86 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { usePrefersReducedMotion } from "@/lib/motion";
 import type { Destination } from "@/types/destination";
-import { MapPin, PenLine } from "lucide-react";
+import {
+  InstrumentCluster,
+  Readout,
+  ScrimTag,
+} from "@/components/instrument/readouts";
 
+/**
+ * Instrument-cluster hero: the route's real figures presented the way a bike
+ * presents them — distance, duration, departure, conditions.
+ *
+ * Server component: the reveal is CSS-only (see the reduced-motion block in
+ * globals.css), so this ships no JavaScript.
+ */
 export function DestinationHero({ destination }: { destination: Destination }) {
-  const reduced = usePrefersReducedMotion();
-  const heroImage = destination.images[0]?.url;
+  const hero = destination.images[0];
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0 },
-  };
+  const fact = (label: string) =>
+    destination.keyFacts.find((f) => f.label.toLowerCase() === label.toLowerCase())
+      ?.value;
+
+  const candidates = [
+    { label: "Distance", value: fact("Total distance"), tone: "data" as const },
+    { label: "Duration", value: fact("Duration"), tone: "signal" as const },
+    { label: "Departs", value: fact("Starting point"), tone: "default" as const },
+    { label: "Conditions", value: fact("Best time"), tone: "default" as const },
+  ];
+  const readouts = candidates.filter(
+    (r): r is { label: string; value: string; tone: "default" | "signal" | "data" } =>
+      typeof r.value === "string" && r.value.length > 0,
+  );
 
   return (
-    <section className="relative flex min-h-[70vh] items-end overflow-hidden">
-      <div className="absolute inset-0">
-        {heroImage && (
+    <section className="relative isolate flex min-h-[88vh] flex-col justify-end overflow-hidden">
+      {/* Windscreen: the road ahead. */}
+      <div className="absolute inset-0 -z-10">
+        {hero ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
-            src={heroImage}
-            alt={destination.images[0]?.caption ?? destination.name}
+            src={hero.url}
+            alt={hero.caption || destination.name}
             className="h-full w-full object-cover"
           />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-ink/10" />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/70 to-scrim/25" />
+        <div className="pointer-events-none absolute inset-0 bg-headlight opacity-60" />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-4xl px-4 pb-16 sm:px-6 lg:px-8 lg:pb-24">
-        <motion.div
-          variants={fadeUp}
-          initial={reduced ? false : "hidden"}
-          animate="visible"
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="space-y-4"
-        >
-          <span className="inline-block rounded-full bg-primary/90 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wide text-primary-foreground">
-            {destination.category}
-          </span>
-          <h1 className="font-serif text-4xl font-bold leading-tight text-surface sm:text-5xl lg:text-6xl">
+      <div className="mx-auto w-full max-w-7xl px-4 pb-10 pt-28 sm:px-6 lg:px-8 lg:pb-14">
+        <div className="max-w-3xl">
+          <div className="flex flex-wrap items-center gap-2">
+            <ScrimTag tone="signal">{destination.category}</ScrimTag>
+            <ScrimTag>{destination.location.region}</ScrimTag>
+          </div>
+
+          <h1 className="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-[0.01em] text-on-scrim sm:text-6xl lg:text-7xl">
             {destination.name}
           </h1>
-          <div className="flex flex-col gap-2 font-sans text-surface/80 sm:flex-row sm:items-center sm:gap-6">
-            <span className="flex items-center gap-1.5 text-sm">
-              <MapPin className="h-4 w-4" />
-              {destination.location.region}
-            </span>
-            <span className="flex items-center gap-1.5 text-sm">
-              <PenLine className="h-4 w-4" />
-              Written by {destination.author.name}
-            </span>
-          </div>
-        </motion.div>
+
+          <p className="mt-4 font-mono text-xs uppercase tracking-[0.16em] text-on-scrim/70">
+            Guide <span className="text-on-scrim">{destination.author.name}</span>
+          </p>
+        </div>
+
+        {/* The cluster. */}
+        <div className="mt-10 border-t border-on-scrim/20 pt-6">
+          <InstrumentCluster onScrim>
+            {readouts.map((readout, i) => (
+              <div
+                key={readout.label}
+                className="animate-readout-in"
+                style={{ animationDelay: `${i * 70}ms` }}
+              >
+                <Readout
+                  onScrim
+                  label={readout.label}
+                  value={readout.value}
+                  tone={readout.tone}
+                />
+              </div>
+            ))}
+          </InstrumentCluster>
+        </div>
       </div>
     </section>
   );

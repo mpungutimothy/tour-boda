@@ -1,91 +1,119 @@
 import type { Metadata } from "next";
 import { guides } from "@/data/guides";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, Languages, Briefcase, Check } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Guides",
-  description: "Meet the local boda-boda guides who lead Tour-Boda Uganda rides. Licensed, vetted, and local to the roads they ride.",
+  description:
+    "Meet the local boda-boda guides who lead Tour-Boda Uganda rides. Licensed, vetted, and local to the roads they ride.",
 };
 
 export default function GuidesPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      {/* Page header */}
-      <div className="mb-12">
-        <h1 className="font-serif text-4xl font-bold text-ink sm:text-5xl">Our Guides</h1>
-        <p className="mt-3 max-w-2xl font-sans text-lg text-muted-foreground">
-          The people who ride with you. Every guide is licensed, vetted, and local to the road they ride.
-        </p>
+    <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <div className="mb-3 flex items-center gap-3">
+        <span className="telemetry text-data">01</span>
+        <span className="h-px flex-1 bg-hairline" />
+        <span className="telemetry text-muted-foreground">Riders</span>
       </div>
 
-      {/* Guide grid */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {guides.map((guide) => (
+      <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <h1 className="font-display text-4xl font-bold uppercase leading-[0.98] tracking-[0.01em] sm:text-5xl">
+            Your guide
+          </h1>
+          <p className="mt-3 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
+            The person who actually rides with you. Every guide is licensed, and
+            local to the road they ride.
+          </p>
+        </div>
+
+        <div className="shrink-0 rounded-lg border border-hairline px-5 py-3">
+          <div className="telemetry text-muted-foreground">Guides</div>
           <div
-            key={guide.id}
-            className="group overflow-hidden rounded-lg border border-border bg-card shadow-warm-sm transition-shadow hover:shadow-warm-md"
+            data-readout
+            className="mt-1 font-mono text-2xl font-semibold leading-none text-data"
           >
-            {/* Photo */}
-            <div className="relative aspect-[3/4] overflow-hidden">
+            {String(guides.length).padStart(2, "0")}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {guides.map((guide) => (
+          <article
+            key={guide.id}
+            className="group flex flex-col overflow-hidden rounded-lg border border-hairline bg-card"
+          >
+            <div className="relative aspect-[4/5] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={guide.photo}
                 alt={`${guide.name}, Tour-Boda guide`}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-3">
-                <p className="font-serif text-lg font-semibold text-surface">{guide.name}</p>
-                <p className="flex items-center gap-1 font-sans text-xs text-surface/70">
-                  <MapPin className="h-3 w-3" />
+              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-scrim to-transparent" />
+
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <h2 className="font-display text-2xl font-bold uppercase leading-none tracking-[0.02em] text-on-scrim">
+                  {guide.name}
+                </h2>
+                <p className="mt-1.5 flex items-center gap-1.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-on-scrim/75">
+                  <MapPin className="h-3 w-3" aria-hidden />
                   {guide.region}
                 </p>
               </div>
+
+              {/* Experience badge — instrument readout on the photo. */}
+              <div className="absolute right-3 top-3 rounded-md border border-on-scrim/25 bg-scrim/70 px-2.5 py-1.5 text-right backdrop-blur-sm">
+                <div className="font-mono text-base font-bold leading-none text-[#22B7CE]">
+                  {guide.yearsExperience}
+                </div>
+                <div className="mt-0.5 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-on-scrim/70">
+                  years
+                </div>
+              </div>
             </div>
 
-            {/* Details */}
-            <div className="p-5">
-              {/* Languages */}
-              <div className="mb-3">
-                <div className="mb-1.5 flex items-center gap-1.5">
-                  <Languages className="h-3.5 w-3.5 text-primary" />
-                  <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">Languages</span>
-                </div>
-                <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-1 flex-col p-5">
+              <div>
+                <span className="telemetry text-muted-foreground">Speaks</span>
+                <ul className="mt-2 flex flex-wrap gap-1.5">
                   {guide.languages.map((lang) => (
-                    <Badge key={lang} variant="outline" className="text-xs">
+                    <li
+                      key={lang}
+                      className="rounded-full border border-hairline px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-muted-foreground"
+                    >
                       {lang}
-                    </Badge>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
 
-              {/* Experience */}
-              <div className="mb-3 flex items-center gap-1.5">
-                <Briefcase className="h-3.5 w-3.5 text-primary" />
-                <span className="font-sans text-sm text-ink">
-                  {guide.yearsExperience} years on the road
-                </span>
-              </div>
-
-              {/* Specialties */}
-              <div className="mb-4">
-                <ul className="space-y-1">
+              <div className="mt-4">
+                <span className="telemetry text-muted-foreground">Specialties</span>
+                <ul className="mt-2 space-y-1">
                   {guide.specialties.map((spec) => (
-                    <li key={spec} className="flex items-start gap-1.5 font-sans text-xs text-ink/80">
-                      <Check className="mt-0.5 h-3 w-3 shrink-0 text-success" />
+                    <li
+                      key={spec}
+                      className="flex items-start gap-2 font-sans text-xs text-muted-foreground"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-data"
+                      />
                       {spec}
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Bio */}
-              <p className="border-t border-border/60 pt-3 font-sans text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-5 border-t border-hairline pt-4 font-sans text-sm leading-relaxed text-muted-foreground">
                 {guide.bio}
               </p>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </div>

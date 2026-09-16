@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Globe } from "lucide-react";
+import { destinations } from "@/data/destinations";
 
 const navLinks = [
   { label: "Tours", href: "/tours" },
@@ -9,36 +9,49 @@ const navLinks = [
 ];
 
 export function Header() {
+  // Real figure — the number of routes actually published.
+  const routes = destinations.length;
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight">
-          <span className="text-primary">Tour-Boda</span>
-          <span className="text-ink font-normal hidden sm:inline">Uganda</span>
+    <header className="sticky top-0 z-50 w-full border-b border-hairline bg-background/85 backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link
+          href="/"
+          className="flex shrink-0 items-baseline gap-2"
+          aria-label="Tour-Boda Uganda, home"
+        >
+          <span className="font-display text-xl font-bold uppercase leading-none tracking-[0.12em] text-primary">
+            Tour-Boda
+          </span>
+          <span className="hidden font-mono text-[0.625rem] uppercase tracking-[0.2em] text-muted-foreground sm:inline">
+            Uganda
+          </span>
         </Link>
 
-        {/* Center nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Main">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-data"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        {/* Language / currency switcher */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-sm text-muted-foreground">
-            <Globe className="h-4 w-4" />
-            <span>EN</span>
-            <span className="text-border">|</span>
-            <span>UGX</span>
-          </div>
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Live route count — instrument status, not decoration. */}
+          <span className="hidden items-center gap-2 rounded-full border border-hairline px-2.5 py-1 sm:inline-flex">
+            <span className="h-1.5 w-1.5 rounded-full bg-data" />
+            <span className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
+              {routes} routes live
+            </span>
+          </span>
+
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
+            EN<span className="text-hairline">/</span>UGX
+          </span>
         </div>
       </div>
     </header>

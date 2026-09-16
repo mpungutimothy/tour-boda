@@ -3,39 +3,47 @@
 import { motion } from "framer-motion";
 import { usePrefersReducedMotion } from "@/lib/motion";
 import type { Destination } from "@/types/destination";
-import { Camera } from "lucide-react";
 
 export function ImageGallery({ destination }: { destination: Destination }) {
   const reduced = usePrefersReducedMotion();
 
   return (
     <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mb-6 flex items-center gap-2">
-        <Camera className="h-5 w-5 text-primary" />
-        <h2 className="font-serif text-xl font-semibold">Gallery</h2>
+      <div className="mb-3 flex items-center gap-3">
+        <span className="telemetry text-data">03</span>
+        <span className="h-px flex-1 bg-hairline" />
+        <span className="telemetry text-muted-foreground">Sights</span>
       </div>
-      <div className="grid gap-6 sm:grid-cols-2">
+
+      <h2 className="mb-6 font-display text-2xl font-bold uppercase leading-tight tracking-[0.01em] sm:text-3xl">
+        On the road
+      </h2>
+
+      <div className="grid gap-5 sm:grid-cols-2">
         {destination.images.map((image, i) => (
           <motion.figure
-            key={i}
-            initial={reduced ? false : { opacity: 0, y: 32 }}
+            key={image.url}
+            initial={reduced ? false : { opacity: 0, y: 24 }}
             whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5, delay: i * 0.15, ease: "easeOut" }}
-            className={i === 0 ? "sm:col-span-2 overflow-hidden rounded-lg shadow-warm-md" : "overflow-hidden rounded-lg shadow-warm-md"}
+            transition={{ duration: 0.45, delay: i * 0.1, ease: "easeOut" }}
+            className={`overflow-hidden rounded-lg border border-hairline ${
+              i === 0 ? "sm:col-span-2" : ""
+            }`}
           >
             <div className="relative aspect-[4/3] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={image.url}
                 alt={image.caption}
-                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                loading={i === 0 ? "eager" : "lazy"}
+                className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.04]"
               />
             </div>
-            <figcaption className="flex items-start justify-between gap-3 bg-card px-4 py-3">
-              <p className="font-sans text-sm text-ink">{image.caption}</p>
-              <span className="shrink-0 font-mono text-xs text-muted-foreground">
-                &copy; {image.credit}
+            <figcaption className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-t border-hairline bg-card px-4 py-3">
+              <p className="max-w-[52ch] font-sans text-sm">{image.caption}</p>
+              <span className="shrink-0 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground">
+                {image.credit}
               </span>
             </figcaption>
           </motion.figure>

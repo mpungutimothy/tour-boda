@@ -2,7 +2,6 @@
 
 import { TierSelectionProvider } from "@/components/destinations/tier-selection-context";
 import { DestinationHero } from "@/components/destinations/destination-hero";
-import { QuickFacts } from "@/components/destinations/quick-facts";
 import { NarrativeSection } from "@/components/destinations/narrative-section";
 import { ImageGallery } from "@/components/destinations/image-gallery";
 import { TierSelector } from "@/components/destinations/tier-selector";
@@ -18,13 +17,24 @@ export function DestinationDetail({ destination, allDestinations }: { destinatio
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:py-8">
-          {/* Main content column */}
-          <div className="min-w-0">
-            <QuickFacts destination={destination} />
-            <NarrativeSection destination={destination} />
-            <ImageGallery destination={destination} />
-            <TierSelector destination={destination} />
-            <FAQSection destination={destination} />
+          {/*
+            The midday band: the reading stretch of the ride. The sidebar stays
+            on the night road, so instrument and reading surfaces sit side by
+            side. Section ids are the Trip Rail's waypoints.
+          */}
+          <div className="midday min-w-0 rounded-lg bg-background text-foreground">
+            <div id="log">
+              <NarrativeSection destination={destination} />
+            </div>
+            <div id="gallery" className="defer-render">
+              <ImageGallery destination={destination} />
+            </div>
+            <div id="packages">
+              <TierSelector destination={destination} />
+            </div>
+            <div id="faq">
+              <FAQSection destination={destination} />
+            </div>
           </div>
 
           {/* Sticky booking sidebar (desktop only) */}

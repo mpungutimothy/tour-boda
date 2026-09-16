@@ -4,76 +4,89 @@ import { MapPin, Phone, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Tour-Boda Uganda. We read every message and replies usually come within a day.",
+  description:
+    "Get in touch with Tour-Boda Uganda. We read every message and replies usually come within a day.",
 };
+
+const details = [
+  {
+    icon: MapPin,
+    label: "Office",
+    lines: ["Plot 14, Acacia Avenue", "Kololo, Kampala", "Uganda"],
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    lines: ["+256 700 123 456", "Mon–Sat, 8 AM – 6 PM EAT"],
+    mono: true,
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    lines: ["hello@tour-boda.ug", "Replies within a day"],
+    mono: true,
+  },
+];
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-      {/* Page header */}
-      <div className="mb-10">
-        <h1 className="font-serif text-4xl font-bold text-ink sm:text-5xl">Contact</h1>
-        <p className="mt-4 max-w-xl font-sans text-lg leading-relaxed text-muted-foreground">
-          We read every message. Replies usually come within a day — from a real person in Kampala.
+    <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
+      <div className="mb-3 flex items-center gap-3">
+        <span className="telemetry text-data">01</span>
+        <span className="h-px flex-1 bg-hairline" />
+        <span className="telemetry text-muted-foreground">Radio check</span>
+      </div>
+
+      <div className="mb-12">
+        <h1 className="font-display text-4xl font-bold uppercase leading-[0.98] tracking-[0.01em] sm:text-5xl">
+          Contact
+        </h1>
+        <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-muted-foreground">
+          We read every message. Replies usually come within a day — from a real
+          person in Kampala.
         </p>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-[1fr_280px]">
-        {/* Form */}
-        <div>
+      <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
+        <div className="midday rounded-lg border border-hairline bg-background p-6 text-foreground sm:p-8">
           <ContactForm />
         </div>
 
-        {/* Contact details sidebar */}
-        <aside className="lg:border-l lg:border-border/60 lg:pl-8">
-          <div className="space-y-6">
-            <div>
-              <h2 className="mb-4 font-serif text-lg font-semibold text-ink">Reach us directly</h2>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <MapPin className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">Office</p>
-                    <p className="mt-0.5 font-sans text-sm text-ink">
-                      Plot 14, Acacia Avenue<br />
-                      Kololo, Kampala<br />
-                      Uganda
-                    </p>
-                  </div>
-                </li>
+        <aside className="lg:border-l lg:border-hairline lg:pl-8">
+          <span className="telemetry text-muted-foreground">Direct</span>
 
-                <li className="flex items-start gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <Phone className="h-4 w-4" />
+          <ul className="mt-5 space-y-6">
+            {details.map((detail) => (
+              <li key={detail.label} className="flex items-start gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-hairline text-primary">
+                  <detail.icon className="h-4 w-4" aria-hidden />
+                </span>
+                <div className="min-w-0">
+                  <p className="telemetry text-muted-foreground">{detail.label}</p>
+                  <div className="mt-1.5 space-y-0.5">
+                    {detail.lines.map((line, i) => (
+                      <p
+                        key={line}
+                        className={
+                          detail.mono && i === 0
+                            ? "font-mono text-sm text-foreground"
+                            : "font-sans text-xs leading-relaxed text-muted-foreground"
+                        }
+                      >
+                        {line}
+                      </p>
+                    ))}
                   </div>
-                  <div>
-                    <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">Phone</p>
-                    <p className="mt-0.5 font-mono text-sm text-ink">+256 700 123 456</p>
-                    <p className="font-sans text-xs text-muted-foreground">Mon–Sat, 8 AM – 6 PM EAT</p>
-                  </div>
-                </li>
+                </div>
+              </li>
+            ))}
+          </ul>
 
-                <li className="flex items-start gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <Mail className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">Email</p>
-                    <p className="mt-0.5 font-mono text-sm text-ink">hello@tour-boda.ug</p>
-                    <p className="font-sans text-xs text-muted-foreground">Replies within a day</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <div className="rounded-md bg-surface p-4">
-              <p className="font-sans text-sm leading-relaxed text-muted-foreground">
-                Visiting Kampala soon? Drop by the office — we always have tea ready and a map on the
-                wall. No appointment needed.
-              </p>
-            </div>
+          <div className="mt-8 border-t border-hairline pt-6">
+            <p className="font-sans text-sm leading-relaxed text-muted-foreground">
+              Visiting Kampala soon? Drop by the office — there is always tea
+              ready and a map on the wall. No appointment needed.
+            </p>
           </div>
         </aside>
       </div>

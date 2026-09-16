@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { usePrefersReducedMotion } from "@/lib/motion";
 import type { Destination } from "@/types/destination";
-import { HelpCircle } from "lucide-react";
 import { useState } from "react";
 
 export function FAQSection({ destination }: { destination: Destination }) {
@@ -12,37 +11,66 @@ export function FAQSection({ destination }: { destination: Destination }) {
 
   return (
     <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mb-6 flex items-center gap-2">
-        <HelpCircle className="h-5 w-5 text-primary" />
-        <h2 className="font-serif text-xl font-semibold">Questions & Answers</h2>
+      <div className="mb-3 flex items-center gap-3">
+        <span className="telemetry text-data">05</span>
+        <span className="h-px flex-1 bg-hairline" />
+        <span className="telemetry text-muted-foreground">Questions</span>
       </div>
-      <div className="divide-y divide-border/60 rounded-lg border border-border bg-card shadow-warm-sm">
+
+      <h2 className="font-display text-2xl font-bold uppercase leading-tight tracking-[0.01em] sm:text-3xl">
+        Questions &amp; answers
+      </h2>
+
+      <div className="mt-6 divide-y divide-hairline border-y border-hairline">
         {destination.faqs.map((faq, i) => {
           const isOpen = openIndex === i;
+          const buttonId = `faq-button-${i}`;
+          const panelId = `faq-panel-${i}`;
+
           return (
-            <div key={i}>
-              <button
-                onClick={() => setOpenIndex(isOpen ? null : i)}
-                className="flex w-full items-center justify-between px-5 py-4 text-left font-sans text-sm font-medium text-ink transition-colors hover:text-primary"
-              >
-                {faq.question}
-                <span
-                  className="ml-3 shrink-0 text-primary transition-transform duration-200"
-                  style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
+            <div key={faq.question}>
+              <h3>
+                <button
+                  id={buttonId}
+                  type="button"
+                  onClick={() => setOpenIndex(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  className="flex w-full items-center gap-4 py-4 text-left transition-colors hover:text-primary"
                 >
-                  +
-                </span>
-              </button>
+                  <span
+                    aria-hidden
+                    className="font-mono text-[0.6875rem] tabular-nums text-data"
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="flex-1 font-display text-base font-semibold leading-snug">
+                    {faq.question}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="shrink-0 font-mono text-lg leading-none text-primary transition-transform duration-200"
+                    style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
+                  >
+                    +
+                  </span>
+                </button>
+              </h3>
+
               <AnimatePresence initial={false}>
                 {isOpen && (
                   <motion.div
+                    key={panelId}
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={buttonId}
                     initial={reduced ? false : { height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={reduced ? undefined : { height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.28, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <p className="px-5 pb-4 font-sans text-sm leading-relaxed text-muted-foreground">
+                    <p className="max-w-[65ch] pb-5 pl-8 font-sans text-sm leading-relaxed text-muted-foreground">
                       {faq.answer}
                     </p>
                   </motion.div>
