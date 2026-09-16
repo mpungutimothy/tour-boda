@@ -1,0 +1,42 @@
+# Tour-Boda Uganda
+
+> Tour-Boda Uganda is a tour operator in Uganda. It pairs travellers with licensed local boda-boda (motorcycle taxi) guides for heritage, city, and nature tours in Kampala, Jinja, and Entebbe. Every tour is led by a named guide who lives on the roads they ride. Prices are quoted in Ugandan shillings (UGX).
+
+This file is a descriptive index of published content for AI assistants and search crawlers. Every link below points to a canonical page on this site. Markdown mirrors of the destination pages are listed where they exist.
+
+## Destinations
+
+Canonical tour pages. Each carries a full narrative, key facts, tier pricing, and a set of frequently asked questions.
+
+- [Kampala City Heritage Tour](https://tour-boda.ug/destinations/kampala-city-heritage): A 38 km, three-and-a-half-hour boda ride through Kampala with guide Okello Joseph, taking in the old taxi park, Kasubi Tombs, and the Bahai Temple on Kikaya Hill. Packages from UGX 85,000 to UGX 220,000.
+  - Markdown mirror: https://tour-boda.ug/md/kampala-city-heritage
+- [Jinja Heritage & Nile Experience](https://tour-boda.ug/destinations/jinja-nile): A full-day 168 km round trip from Kampala to Jinja with guide Namugga Florence, covering the Source of the Nile, the Lugazi sugar cane estates, and Jinja's colonial industrial history. Packages from UGX 180,000 to UGX 450,000.
+  - Markdown mirror: https://tour-boda.ug/md/jinja-nile
+- [Entebbe Cultural & Leisure Tour](https://tour-boda.ug/destinations/entebbe-cultural): A 22 km, five-to-six-hour ride to Entebbe with guide Ssemwogerere David, covering the Botanical Gardens, the Uganda Wildlife Education Centre, and the Nakiwogo jetty on Lake Victoria. Packages from UGX 60,000 to UGX 130,000.
+  - Markdown mirror: https://tour-boda.ug/md/entebbe-cultural
+
+## About
+
+Background on the company, how the tours are structured, and how to get in touch.
+
+- [About Tour-Boda Uganda](https://tour-boda.ug/about): Who runs the tours, how the boda-boda guide model works, and what the company is trying to do differently.
+- [Tours overview](https://tour-boda.ug/tours): The full list of published tours with starting prices, grouped by region and theme.
+- [Guides](https://tour-boda.ug/guides): Profiles of the individual guides, including the languages they speak, their years on the road, and their specialties.
+- [Contact](https://tour-boda.ug/contact): How to reach the team to ask a question or arrange a booking.
+
+## FAQ
+
+There is no single FAQ page. Questions are answered at the bottom of each destination page, where the answers are specific to that tour.
+
+- [Kampala City Heritage Tour — questions](https://tour-boda.ug/destinations/kampala-city-heritage): 5 answers on helmets, paying in dollars, rain delays, travelling with children, and bringing a camera to Kasubi Tombs.
+  - Markdown mirror: https://tour-boda.ug/md/kampala-city-heritage
+- [Jinja Heritage & Nile Experience — questions](https://tour-boda.ug/destinations/jinja-nile): 5 answers on boat safety at the Source of the Nile, white-water rafting, drive times, what lunch is included, and walking in Mabira Forest.
+  - Markdown mirror: https://tour-boda.ug/md/jinja-nile
+- [Entebbe Cultural & Leisure Tour — questions](https://tour-boda.ug/destinations/entebbe-cultural): 5 answers on visiting the Wildlife Education Centre with children, swimming and bilharzia risk, what to wear in the gardens, airport pickup, and the fried fish lunch.
+  - Markdown mirror: https://tour-boda.ug/md/entebbe-cultural
+
+## Blog
+
+No blog, news feed, or article archive is published on this site yet, so there are no post URLs to list here. Rather than invent links, this section is intentionally empty and will be filled in when articles exist. The guide profiles are the closest thing to long-form editorial content at present.
+
+- [Guide profiles](https://tour-boda.ug/guides): Short written profiles of the three guides, including background, languages, and specialties.

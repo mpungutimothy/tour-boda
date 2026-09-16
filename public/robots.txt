@@ -1,0 +1,50 @@
+# robots.txt for https://tour-boda.ug
+#
+# AI crawlers and answer engines are explicitly welcome to read this site.
+# Each fetching bot is listed as its own group, and each repeats the /admin/
+# exclusion, because a named group overrides the wildcard group rather than
+# merging with it — a bot listed without that Disallow line would be free to
+# index the internal tooling.
+#
+# The two "-Extended" tokens are not crawlers. They are usage controls: they
+# govern whether content Googlebot / Applebot have already fetched may be used
+# for AI training and generative features. They carry Allow only, because a
+# Disallow directive has no meaning for them.
+
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+Disallow: /admin/
+
+User-agent: *
+Allow: /
+Disallow: /admin/
