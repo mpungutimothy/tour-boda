@@ -26,16 +26,10 @@ export const metadata: Metadata = {
  */
 const palette = [
   {
-    name: "Signal",
+    name: "Accent",
     token: "--primary",
-    role: "Action and warmth. The rider.",
-    use: "Primary buttons, active tier, honest-note rule",
-  },
-  {
-    name: "Data",
-    token: "--data",
-    role: "Information. The machine.",
-    use: "Distances, telemetry labels, link hover",
+    role: "The single saturated colour. Electric lime.",
+    use: "CTAs, active states, data highlights — used sparingly",
   },
   {
     name: "Ink",
@@ -71,17 +65,17 @@ const semantic = [
 
 const voices = [
   {
-    voice: "Machine",
-    face: "Barlow Condensed",
-    job: "Headings, UI labels, instrument readouts",
-    className: "font-display text-3xl font-bold uppercase tracking-[0.01em]",
+    voice: "Display",
+    face: "Space Grotesk",
+    job: "Headings and UI labels — geometric, tight tracking",
+    className: "font-display text-3xl font-bold tracking-display",
     sample: "Ride the Jinja Road",
   },
   {
     voice: "Data",
     face: "JetBrains Mono",
     job: "Every number that matters",
-    className: "font-mono text-2xl font-semibold text-data",
+    className: "font-mono text-2xl font-semibold text-primary",
     sample: "168 km · 9h",
   },
   {
@@ -101,16 +95,16 @@ const voices = [
 ];
 
 const typeScale = [
-  { label: "Display 2XL", className: "font-display text-5xl font-bold uppercase", sample: "Pearl of Africa" },
-  { label: "Display XL", className: "font-display text-4xl font-bold uppercase", sample: "Find your ride" },
-  { label: "Heading LG", className: "font-display text-3xl font-bold uppercase", sample: "Featured routes" },
-  { label: "Heading MD", className: "font-display text-2xl font-bold uppercase", sample: "Compare the tiers" },
+  { label: "Display 2XL", className: "font-display text-5xl font-bold", sample: "Pearl of Africa" },
+  { label: "Display XL", className: "font-display text-4xl font-bold", sample: "Find your ride" },
+  { label: "Heading LG", className: "font-display text-3xl font-bold", sample: "Featured routes" },
+  { label: "Heading MD", className: "font-display text-2xl font-bold", sample: "Compare the tiers" },
   { label: "Heading SM", className: "font-display text-lg font-semibold uppercase", sample: "Boda Freelance" },
   { label: "Body LG", className: "font-sans text-lg", sample: "Ride through the red dusty roads of Kampala." },
   { label: "Body Base", className: "font-sans text-base", sample: "Every boda guide knows every shortcut." },
   { label: "Body SM", className: "font-sans text-sm text-muted-foreground", sample: "Duration: 3.5 hours · Distance: 38 km" },
   { label: "Telemetry", className: "telemetry text-muted-foreground", sample: "Total distance" },
-  { label: "Readout", className: "font-mono text-2xl font-semibold text-data", sample: "38 km" },
+  { label: "Readout", className: "font-mono text-2xl font-semibold text-primary", sample: "38 km" },
   { label: "Price", className: "font-mono text-xl font-semibold text-primary", sample: "UGX 85,000" },
 ];
 
@@ -118,13 +112,13 @@ export default function StyleguidePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-data">00</span>
+        <span className="telemetry text-primary">00</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Reference</span>
       </div>
 
       <div className="mb-16">
-        <h1 className="font-display text-4xl font-bold uppercase leading-[0.98] tracking-[0.01em] sm:text-5xl">
+        <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-display sm:text-5xl">
           Ride Computer
         </h1>
         <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
@@ -137,7 +131,7 @@ export default function StyleguidePage() {
       {/* Voices */}
       <section className="mb-16">
         <SectionMark index="01">Type voices</SectionMark>
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Four voices
         </h2>
 
@@ -150,7 +144,7 @@ export default function StyleguidePage() {
               }`}
             >
               <div>
-                <div className="telemetry text-data">{v.voice}</div>
+                <div className="telemetry text-primary">{v.voice}</div>
                 <div className="mt-1 font-mono text-[0.6875rem] text-muted-foreground">
                   {v.face}
                 </div>
@@ -173,7 +167,7 @@ export default function StyleguidePage() {
       {/* Palette */}
       <section className="mb-16">
         <SectionMark index="02">Palette</SectionMark>
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Colour
         </h2>
 
@@ -219,32 +213,32 @@ export default function StyleguidePage() {
           ))}
         </div>
 
-        {/* Both themes side by side — the day/night rhythm. */}
+        {/* Base and glass. */}
         <h3 className="mb-4 mt-10 font-display text-lg font-bold uppercase tracking-[0.02em]">
-          Day / night
+          Base &amp; glass
         </h3>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="rounded-lg border border-hairline bg-background p-6 text-foreground">
-            <span className="telemetry text-muted-foreground">Night road · default</span>
-            <p className="mt-3 font-display text-xl font-bold uppercase">Dawn and dusk</p>
+            <span className="telemetry text-muted-foreground">Base · bg-background</span>
+            <p className="mt-3 font-display text-xl font-bold uppercase">Near-black base</p>
             <p className="mt-2 font-sans text-sm text-muted-foreground">
-              The whole site by default. Heroes, route cards, the booking rail.
+              Cool near-black, never pure black. The whole site.
             </p>
           </div>
-          <div className="midday rounded-lg border border-hairline bg-background p-6 text-foreground">
-            <span className="telemetry text-muted-foreground">Midday · .midday</span>
-            <p className="mt-3 font-display text-xl font-bold uppercase">The reading stretch</p>
+          <div className="rounded-lg border border-hairline bg-background p-6 text-foreground">
+            <span className="telemetry text-muted-foreground">Glass · .glass</span>
+            <p className="mt-3 font-display text-xl font-bold uppercase">Frosted glass</p>
             <p className="mt-2 font-sans text-sm text-muted-foreground">
-              Long-form bands. Narrative, FAQs, pricing tables, the contact form.
+              Cards, nav and panels over imagery. Hairline at low opacity, no drop shadow.
             </p>
           </div>
         </div>
 
         <p className="mt-4 max-w-[70ch] font-sans text-sm leading-relaxed text-muted-foreground">
-          Every pair in both themes clears WCAG AA for normal text. Verify with{" "}
+          Every pair clears WCAG AA for normal text. Verify with{" "}
           <span className="font-mono text-xs">node scripts/check-contrast.mjs</span>.
           The <span className="font-mono text-xs">scrim</span> tokens are the
-          exception: they stay dark in both themes, because a photograph is
+          exception: it stays dark regardless, because a photograph is
           always dark behind an overlay.
         </p>
       </section>
@@ -252,7 +246,7 @@ export default function StyleguidePage() {
       {/* Type scale */}
       <section className="mb-16">
         <SectionMark index="03">Scale</SectionMark>
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Type scale
         </h2>
         <div className="overflow-hidden rounded-lg border border-hairline">
@@ -275,7 +269,7 @@ export default function StyleguidePage() {
       {/* Instrument */}
       <section className="mb-16">
         <SectionMark index="04">Instrument</SectionMark>
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Cluster and rail
         </h2>
 
@@ -298,7 +292,7 @@ export default function StyleguidePage() {
       {/* Radius */}
       <section className="mb-16">
         <SectionMark index="05">Form</SectionMark>
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Radius
         </h2>
         <div className="flex flex-wrap gap-6">
@@ -327,7 +321,7 @@ export default function StyleguidePage() {
 
       {/* Surfaces */}
       <section className="mb-16">
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Surfaces
         </h2>
         <div className="grid gap-6 sm:grid-cols-2">
@@ -348,7 +342,7 @@ export default function StyleguidePage() {
 
       {/* Components */}
       <section className="mb-16">
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Buttons
         </h2>
         <div className="rounded-lg border border-hairline p-8">
@@ -372,7 +366,7 @@ export default function StyleguidePage() {
       </section>
 
       <section className="mb-16">
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Badges
         </h2>
         <div className="rounded-lg border border-hairline p-8">
@@ -386,7 +380,7 @@ export default function StyleguidePage() {
       </section>
 
       <section className="mb-16">
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Cards
         </h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -422,14 +416,14 @@ export default function StyleguidePage() {
             </CardFooter>
           </Card>
 
-          <Card className="midday bg-background text-foreground">
+          <Card className="bg-background text-foreground">
             <CardHeader>
-              <CardTitle className="font-display uppercase">Midday card</CardTitle>
+              <CardTitle className="font-display uppercase">Glass card</CardTitle>
               <CardDescription>The same component on the reading surface.</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="font-sans text-sm text-muted-foreground">
-                Anything inside a <span className="font-mono text-xs">.midday</span> wrapper
+                Anything inside a <span className="font-mono text-xs">.glass</span> wrapper
                 picks up the light tokens automatically.
               </p>
             </CardContent>
@@ -442,10 +436,10 @@ export default function StyleguidePage() {
       </section>
 
       <section className="mb-16">
-        <h2 className="mb-6 font-display text-2xl font-bold uppercase tracking-[0.01em]">
+        <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Inputs
         </h2>
-        <div className="midday rounded-lg border border-hairline bg-background p-8 text-foreground">
+        <div className="rounded-lg border border-hairline bg-background p-8 text-foreground">
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="demo-name" className="telemetry text-muted-foreground">

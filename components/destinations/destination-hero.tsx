@@ -43,7 +43,7 @@ export function DestinationHero({ destination }: { destination: Destination }) {
           />
         ) : null}
         <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/70 to-scrim/25" />
-        <div className="pointer-events-none absolute inset-0 bg-headlight opacity-60" />
+        <div className="pointer-events-none absolute inset-0 glow-mesh opacity-70" />
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-4 pb-10 pt-28 sm:px-6 lg:px-8 lg:pb-14">
@@ -53,7 +53,7 @@ export function DestinationHero({ destination }: { destination: Destination }) {
             <ScrimTag>{destination.location.region}</ScrimTag>
           </div>
 
-          <h1 className="mt-5 font-display text-5xl font-bold uppercase leading-[0.95] tracking-[0.01em] text-on-scrim sm:text-6xl lg:text-7xl">
+          <h1 className="mt-5 font-display text-5xl font-bold leading-[0.95] tracking-display text-on-scrim sm:text-6xl lg:text-7xl">
             {destination.name}
           </h1>
 

@@ -90,14 +90,14 @@ export default function ToursPage() {
     <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
       {/* Page header */}
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-data">01</span>
+        <span className="telemetry text-primary">01</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Route index</span>
       </div>
 
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <h1 className="font-display text-4xl font-bold uppercase leading-[0.98] tracking-[0.01em] sm:text-5xl">
+          <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-display sm:text-5xl">
             All routes
           </h1>
           <p className="mt-3 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
@@ -111,7 +111,7 @@ export default function ToursPage() {
           <div className="telemetry text-muted-foreground">Showing</div>
           <div
             data-readout
-            className="mt-1 font-mono text-2xl font-semibold leading-none text-data"
+            className="mt-1 font-mono text-2xl font-semibold leading-none text-primary"
           >
             {String(filtered.length).padStart(2, "0")}
             <span className="ml-1 text-xs text-muted-foreground">
@@ -212,7 +212,7 @@ export default function ToursPage() {
             <Link
               key={d.id}
               href={`/destinations/${d.slug}`}
-              className="group flex flex-col overflow-hidden rounded-lg border border-hairline bg-card transition-colors hover:border-data/60"
+              className="group card-glow glass flex h-full flex-col overflow-hidden rounded-lg"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -220,7 +220,7 @@ export default function ToursPage() {
                   src={d.images[0]?.url}
                   alt={d.images[0]?.caption ?? d.name}
                   loading={i < 3 ? "eager" : "lazy"}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  className="duotone h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                 />
                 <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-scrim/90 to-transparent" />
                 <span className="absolute left-3 top-3 inline-flex items-center rounded-full border border-on-scrim/30 bg-scrim/60 px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-on-scrim backdrop-blur-sm">
@@ -242,7 +242,7 @@ export default function ToursPage() {
                 <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-hairline pt-4">
                   <div>
                     <dt className="telemetry text-muted-foreground">Distance</dt>
-                    <dd data-readout className="mt-1 font-mono text-sm text-data">
+                    <dd data-readout className="mt-1 font-mono text-sm text-primary">
                       {factOf(d, "Total distance") ?? "—"}
                     </dd>
                   </div>
@@ -258,7 +258,7 @@ export default function ToursPage() {
                   <span data-readout className="font-mono text-sm font-semibold text-primary">
                     From {formatUGX(getMinPrice(d))}
                   </span>
-                  <span className="flex items-center gap-1 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground transition-all group-hover:gap-1.5 group-hover:text-data">
+                  <span className="flex items-center gap-1 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground transition-all group-hover:gap-1.5 group-hover:text-primary">
                     Open
                     <ArrowRight className="h-3 w-3" />
                   </span>

@@ -3,145 +3,92 @@
 @tailwind utilities;
 
 /* ==========================================================================
-   Tour-Boda — "Ride Computer"
-   A motorcycle instrument cluster for a daytime road.
+   Tour-Boda — next-generation travel-tech
+   Cool near-black base, one saturated lime accent, frosted glass surfaces.
 
-   Dark is the primary surface (night road). `.midday` switches a band to the
-   light reading surface. See docs/DESIGN_DIRECTION.md.
-
-   Token NAMES are unchanged from the previous system so existing components
-   keep working; only the values are re-cast.
+   Supersedes the warm "Ride Computer" instrument system. Token NAMES are
+   unchanged so existing components keep working; only the values are re-cast.
+   All-dark: the previous light `.midday` band has been removed.
    ========================================================================== */
 
 @layer base {
   :root,
   .dark {
-    /* --- Night road (default) ------------------------------------------- */
-    --ground: 30 9% 4%;
-    --raised: 30 10% 8%;
-    --panel: 24 10% 10%;
+    /* --- Surfaces: cool near-black, never pure black -------------------- */
+    --ground: 220 14% 4%;
+    --raised: 220 13% 6%;
+    --panel: 220 12% 8%;
 
-    --background: 30 9% 4%;
-    --foreground: 38 36% 94%;
+    --background: 220 14% 4%;
+    --foreground: 220 20% 96%;
 
-    --card: 30 10% 8%;
-    --card-foreground: 38 36% 94%;
-    --popover: 24 10% 10%;
-    --popover-foreground: 38 36% 94%;
+    --card: 220 13% 6%;
+    --card-foreground: 220 20% 96%;
+    --popover: 220 12% 8%;
+    --popover-foreground: 220 20% 96%;
 
-    /* Bone ink — used for text and, at low alpha, for grain and rules. */
-    --ink: 38 36% 94%;
-    --surface: 24 10% 10%;
+    --ink: 220 20% 96%;
+    --surface: 220 12% 8%;
 
-    --muted: 24 10% 10%;
-    --muted-foreground: 34 11% 61%;
+    --muted: 220 12% 8%;
+    --muted-foreground: 220 10% 64%;
 
-    /* Signal (warm) = action and warmth. */
-    --primary: 18 100% 59%;
-    --primary-foreground: 23 48% 5%;
-    --primary-dark: 18 90% 48%;
-    --primary-light: 22 100% 70%;
+    /* --- The single accent -----------------------------------------------
+       Electric lime. Used sparingly: CTAs, active states, data highlights.
+       Both `primary` and `data` resolve to it — the old warm/cool two-hue
+       split is gone, and hierarchy now comes from opacity, not hue. */
+    --primary: 75 100% 60%;
+    --primary-foreground: 220 16% 5%;
+    --primary-dark: 75 100% 48%;
+    --primary-light: 75 100% 72%;
 
-    /* Data (cool) = route, distance, telemetry. */
-    --accent: 189 76% 23%;
-    --accent-foreground: 38 36% 94%;
-    --data: 188 72% 47%;
-    --data-foreground: 30 9% 4%;
 
-    /* Secondary reads as a muted raised surface, not a third hue. */
-    --secondary: 24 9% 14%;
-    --secondary-foreground: 38 36% 94%;
+    /* `accent` is the neutral hover wash used by the UI primitives — kept
+       neutral on purpose so a lime wash never lands behind body text. */
+    --accent: 220 12% 14%;
+    --accent-foreground: 220 20% 96%;
 
-    --destructive: 3 100% 66%;
-    --destructive-foreground: 30 9% 4%;
-    --success: 151 65% 54%;
-    --success-foreground: 30 9% 4%;
-    --warning: 43 96% 56%;
-    --warning-foreground: 30 9% 4%;
-    --error: 3 100% 66%;
-    --error-foreground: 30 9% 4%;
+    --secondary: 220 12% 12%;
+    --secondary-foreground: 220 20% 96%;
 
-    --border: 30 8% 15%;
-    --input: 30 8% 15%;
-    --ring: 18 100% 59%;
+    --destructive: 358 100% 66%;
+    --destructive-foreground: 220 16% 5%;
+    --success: 152 68% 52%;
+    --success-foreground: 220 16% 5%;
+    --warning: 42 100% 58%;
+    --warning-foreground: 220 16% 5%;
+    --error: 358 100% 66%;
+    --error-foreground: 220 16% 5%;
 
-    /* Instrument hairlines and grid — decorative only, never load-bearing. */
-    --hairline: 30 8% 15%;
-    --grid: 30 8% 12%;
+    --border: 220 12% 15%;
+    --input: 220 12% 15%;
+    --ring: 75 100% 60%;
 
-    /* Photo scrim. Constant across themes: a photograph is always dark behind
-       an overlay, so this must NOT follow --ink/--surface. */
-    --scrim: 30 12% 3%;
-    --on-scrim: 38 36% 96%;
+    /* Hairlines and the backing grid — decorative, never load-bearing. */
+    --hairline: 220 12% 15%;
+    --grid: 220 12% 9%;
 
-    /* Shadows read as depth on raised surfaces; tinted black on the night road. */
-    --shadow-tint: 0 0% 0%;
+    /* Photo scrim. A photograph is always dark behind an overlay, so this
+       deliberately does not follow --ink/--surface. */
+    --scrim: 220 16% 3%;
+    --on-scrim: 220 20% 96%;
 
-    /* Radius: tighter than before — instrument bezels, not soft cards. */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    --shadow-tint: 220 40% 2%;
+
+    /* Slightly rounded squares — not soft pastel cards. */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
     --radius-full: 999px;
     --radius: var(--radius-sm);
 
-    --chart-1: 18 100% 59%;
-    --chart-2: 188 72% 47%;
-    --chart-3: 43 96% 56%;
-    --chart-4: 38 36% 94%;
-    --chart-5: 34 11% 61%;
+    --chart-1: 75 100% 60%;
+    --chart-2: 75 60% 42%;
+    --chart-3: 42 100% 58%;
+    --chart-4: 220 20% 96%;
+    --chart-5: 220 10% 64%;
 
     color-scheme: dark;
-  }
-
-  /* --- Midday: the light reading surface -------------------------------- */
-  .midday {
-    --background: 60 14% 92%;
-    --foreground: 30 18% 7%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 30 18% 7%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 30 18% 7%;
-
-    --ink: 30 18% 7%;
-    --surface: 48 18% 96%;
-
-    --muted: 48 12% 88%;
-    --muted-foreground: 34 10% 33%;
-
-    --primary: 18 88% 37%;
-    --primary-foreground: 40 100% 98%;
-    --primary-dark: 18 88% 30%;
-    --primary-light: 20 90% 52%;
-
-    --accent: 193 82% 31%;
-    --accent-foreground: 40 100% 98%;
-    --data: 193 82% 31%;
-    --data-foreground: 40 100% 98%;
-
-    --secondary: 48 12% 88%;
-    --secondary-foreground: 30 18% 7%;
-
-    --destructive: 0 74% 42%;
-    --destructive-foreground: 40 100% 98%;
-    --success: 142 72% 26%;
-    --success-foreground: 40 100% 98%;
-    --warning: 26 90% 33%;
-    --warning-foreground: 40 100% 98%;
-    --error: 0 74% 42%;
-    --error-foreground: 40 100% 98%;
-
-    --border: 44 12% 82%;
-    --input: 44 12% 82%;
-    --ring: 18 88% 40%;
-
-    --hairline: 44 12% 82%;
-    --grid: 48 14% 88%;
-    --scrim: 30 12% 3%;
-    --on-scrim: 38 36% 96%;
-    --shadow-tint: 30 18% 7%;
-
-    color-scheme: light;
   }
 
   * {
@@ -155,7 +102,7 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Instrument readouts must never reflow as digits change. */
+  /* Numeric readouts must never reflow as digits change. */
   .tabular,
   [data-readout] {
     font-variant-numeric: tabular-nums;
@@ -163,7 +110,7 @@
   }
 
   ::selection {
-    background: hsl(var(--primary) / 0.9);
+    background: hsl(var(--primary) / 0.85);
     color: hsl(var(--primary-foreground));
   }
 
@@ -174,20 +121,58 @@
 }
 
 @layer utilities {
-  /* Road dust / film grain. Faint enough to read as texture, not noise. */
-  .paper-grain {
-    position: relative;
-  }
-  .paper-grain::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.035;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* ---------------------------------------------------------------- surfaces */
+
+  /* Frosted panel. Hairline at low opacity instead of a drop shadow. */
+  .glass {
+    background-color: hsl(var(--card) / 0.55);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid hsl(var(--hairline) / 0.75);
   }
 
-  /* Technical grid — instrument backing plate. Decorative. */
+  /* Denser glass for the sticky nav, which sits over photography. */
+  .glass-nav {
+    background-color: hsl(var(--background) / 0.72);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border-bottom: 1px solid hsl(var(--hairline) / 0.7);
+  }
+
+  /* ------------------------------------------------------------------ glows */
+
+  /* Soft radial mesh behind heroes and section headers. Never loud. */
+  .glow-mesh {
+    background-image:
+      radial-gradient(
+        50% 45% at 15% 0%,
+        hsl(var(--primary) / 0.10) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        45% 40% at 85% 15%,
+        hsl(220 60% 60% / 0.08) 0%,
+        transparent 72%
+      ),
+      radial-gradient(
+        60% 50% at 50% 100%,
+        hsl(var(--primary) / 0.05) 0%,
+        transparent 75%
+      );
+  }
+
+  /* Tighter accent bloom for section headers. */
+  .glow-accent {
+    background-image: radial-gradient(
+      40% 60% at 50% 0%,
+      hsl(var(--primary) / 0.12) 0%,
+      transparent 70%
+    );
+  }
+
+  /* ---------------------------------------------------------------- texture */
+
+  /* Grid backing plate. */
   .grid-plate {
     background-image: linear-gradient(
         to right,
@@ -198,20 +183,118 @@
     background-size: 56px 56px;
   }
 
-  /* Hairline rule that reads on both surfaces. */
-  .rule {
-    border-color: hsl(var(--hairline));
+  /* Topographic contours — concentric rings reading as mapped terrain. */
+  .topo {
+    background-image:
+      repeating-radial-gradient(
+        circle at 18% 28%,
+        hsl(var(--grid)) 0 1px,
+        transparent 1px 26px
+      ),
+      repeating-radial-gradient(
+        circle at 82% 72%,
+        hsl(var(--grid)) 0 1px,
+        transparent 1px 34px
+      );
   }
 
-  /* Eyebrow / telemetry label treatment. */
+  /* Film grain. Reads as texture, not noise. */
+  .paper-grain {
+    position: relative;
+  }
+  .paper-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ----------------------------------------------------------- interaction */
+
+  /* Route tile: lifts and reveals an accent border glow on hover. */
+  .card-glow {
+    transition:
+      transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 260ms ease,
+      box-shadow 260ms ease;
+  }
+  .card-glow:hover {
+    transform: translateY(-3px);
+    border-color: hsl(var(--primary) / 0.55);
+    box-shadow:
+      0 0 0 1px hsl(var(--primary) / 0.22),
+      0 14px 36px -14px hsl(var(--primary) / 0.32);
+  }
+
+  /* Sheen sweep for accent buttons. */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    transform: translateX(-130%) skewX(-18deg);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(0 0% 100% / 0.32) 50%,
+      transparent 100%
+    );
+    transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .sheen:hover::after {
+    transform: translateX(130%) skewX(-18deg);
+  }
+
+  /* Duotone treatment: dark base + accent tint so photography sits *in* the
+     dark UI rather than on top of it. Kept short of full grayscale so the
+     country still reads as itself; pair with an accent overlay layer. */
+  .duotone {
+    filter: grayscale(0.72) contrast(1.1) brightness(0.7);
+  }
+
+  /* ---------------------------------------------------------------- type */
+
+  /* Eyebrow / telemetry label. */
   .telemetry {
     @apply font-mono text-[0.6875rem] uppercase tracking-[0.18em];
   }
 
-  /* Content-visibility for long, below-the-fold marketing stretches. */
+  /* Large headlines tighten slightly; body stays neutral. */
+  .tracking-display {
+    letter-spacing: -0.02em;
+  }
+  .tracking-display-lg {
+    letter-spacing: -0.03em;
+  }
+
+  /* Hairline rule. */
+  .rule {
+    border-color: hsl(var(--hairline));
+  }
+
+  /* Content-visibility for long, below-the-fold stretches. */
   .defer-render {
     content-visibility: auto;
     contain-intrinsic-size: auto 600px;
+  }
+
+  /* Route-progress track (dotted). The filled run uses an inline width. */
+  .track-dots {
+    background-image: radial-gradient(
+      circle,
+      hsl(var(--hairline)) 1px,
+      transparent 1px
+    );
+    background-size: 8px 100%;
+    background-repeat: repeat-x;
   }
 }
 
@@ -224,5 +307,8 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+  .card-glow:hover {
+    transform: none;
   }
 }

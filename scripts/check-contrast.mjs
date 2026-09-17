@@ -1,8 +1,6 @@
 /**
- * WCAG 2.1 contrast audit for the Tour-Boda "Ride Computer" tokens.
- * Reproduces app/globals.css HSL triples as hex and computes real ratios.
- *
- * Run:  node scripts/check-contrast.mjs
+ * WCAG 2.1 contrast audit for the Tour-Boda token set (all-dark).
+ * Mirrors app/globals.css. Run: node scripts/check-contrast.mjs
  */
 
 function hslToRgb(h, s, l) {
@@ -32,116 +30,68 @@ function contrast(fg, bg) {
 
 const over = (fg, bg, alpha) => fg.map((c, i) => c * alpha + bg[i] * (1 - alpha));
 
-/* --- tokens, mirroring app/globals.css ---------------------------------- */
-const NIGHT = {
-  background: [30, 9, 4],
-  foreground: [38, 36, 94],
-  card: [30, 10, 8],
-  panel: [24, 10, 10],
-  mutedForeground: [34, 11, 61],
-  primary: [18, 100, 59],
-  primaryForeground: [23, 48, 5],
-  data: [188, 72, 47],
-  accent: [189, 76, 23],
-  accentForeground: [38, 36, 94],
-  secondary: [24, 9, 14],
-  secondaryForeground: [38, 36, 94],
-  success: [151, 65, 54],
-  warning: [43, 96, 56],
-  error: [3, 100, 66],
-  border: [30, 8, 15],
-  ink: [38, 36, 94],
-};
-
-const MIDDAY = {
-  background: [60, 14, 92],
-  foreground: [30, 18, 7],
-  card: [0, 0, 100],
-  panel: [48, 18, 96],
-  mutedForeground: [34, 10, 33],
-  primary: [18, 88, 37],
-  primaryForeground: [40, 100, 98],
-  data: [193, 82, 31],
-  accent: [193, 82, 31],
-  accentForeground: [40, 100, 98],
-  secondary: [48, 12, 88],
-  secondaryForeground: [30, 18, 7],
-  success: [142, 72, 26],
-  warning: [26, 90, 33],
-  error: [0, 74, 42],
-  border: [44, 12, 82],
-  ink: [30, 18, 7],
+const T = {
+  background: [220, 14, 4],
+  foreground: [220, 20, 96],
+  card: [220, 13, 6],
+  panel: [220, 12, 8],
+  mutedForeground: [220, 10, 64],
+  primary: [75, 100, 60],
+  primaryForeground: [220, 16, 5],
+  data: [75, 100, 60],
+  accent: [220, 12, 14],
+  accentForeground: [220, 20, 96],
+  secondary: [220, 12, 12],
+  secondaryForeground: [220, 20, 96],
+  success: [152, 68, 52],
+  warning: [42, 100, 58],
+  error: [358, 100, 66],
+  scrim: [220, 16, 3],
+  onScrim: [220, 20, 96],
+  hairline: [220, 12, 15],
 };
 
 const rgb = (t) => hslToRgb(t[0], t[1], t[2]);
 
-function audit(name, T, pairs) {
-  console.log(`\n=== ${name} ===`);
-  console.log(`  ${"PAIR".padEnd(46)} ${"RATIO".padEnd(7)} VERDICT`);
-  let fails = 0;
-  for (const [label, fgKey, bgKey, alpha] of pairs) {
-    let fg = rgb(T[fgKey]);
-    const bg = rgb(T[bgKey]);
-    if (alpha !== undefined) fg = over(fg, bg, alpha);
-    const ratio = contrast(fg, bg);
-    if (ratio < 4.5) fails += 1;
-    console.log(
-      `  ${label.padEnd(46)} ${ratio.toFixed(2).padEnd(7)} ${ratio < 4.5 ? "AA FAIL" : "AA"}${
-        ratio >= 7 ? " / AAA" : ""
-      }`,
-    );
-  }
-  return fails;
-}
+const pairs = [
+  ["foreground on background", "foreground", "background"],
+  ["foreground on card", "foreground", "card"],
+  ["foreground on panel", "foreground", "panel"],
+  ["muted-foreground on background", "mutedForeground", "background"],
+  ["muted-foreground on card", "mutedForeground", "card"],
+  ["accent (lime) as text on background", "primary", "background"],
+  ["accent (lime) as text on card", "primary", "card"],
+  ["accent (lime) as text on panel", "primary", "panel"],
+  ["dark text on lime fill (buttons)", "primaryForeground", "primary"],
+  ["data (lime) on background", "data", "background"],
+  ["accent-foreground on accent wash", "accentForeground", "accent"],
+  ["secondary-foreground on secondary", "secondaryForeground", "secondary"],
+  ["success on background", "success", "background"],
+  ["warning on background", "warning", "background"],
+  ["error on background", "error", "background"],
+  ["on-scrim on scrim (hero text)", "onScrim", "scrim"],
+  ["foreground/90 on background", "foreground", "background", 0.9],
+  ["foreground/70 on background", "foreground", "background", 0.7],
+  ["foreground/60 on background", "foreground", "background", 0.6],
+  ["muted-foreground on panel", "mutedForeground", "panel"],
+];
 
-console.log("Night road — resolved hex");
-for (const k of ["background", "card", "panel", "foreground", "mutedForeground", "primary", "data"]) {
-  console.log(`  ${k.padEnd(18)} ${toHex(rgb(NIGHT[k]))}`);
-}
-console.log("\nMidday — resolved hex");
-for (const k of ["background", "card", "foreground", "mutedForeground", "primary", "data"]) {
-  console.log(`  ${k.padEnd(18)} ${toHex(rgb(MIDDAY[k]))}`);
-}
+console.log("Resolved hex");
+for (const k of Object.keys(T)) console.log(`  ${k.padEnd(18)} ${toHex(rgb(T[k]))}`);
 
+console.log(`\n${"PAIR".padEnd(40)} ${"RATIO".padEnd(7)} VERDICT`);
 let fails = 0;
-fails += audit("NIGHT ROAD (default)", NIGHT, [
-  ["foreground on background", "foreground", "background"],
-  ["foreground on card", "foreground", "card"],
-  ["muted-foreground on background", "mutedForeground", "background"],
-  ["muted-foreground on card", "mutedForeground", "card"],
-  ["primary on background (signal text)", "primary", "background"],
-  ["primary on card", "primary", "card"],
-  ["primary-foreground on primary (buttons)", "primaryForeground", "primary"],
-  ["data on background (telemetry)", "data", "background"],
-  ["data on card", "data", "card"],
-  ["accent-foreground on accent", "accentForeground", "accent"],
-  ["secondary-foreground on secondary", "secondaryForeground", "secondary"],
-  ["success on background", "success", "background"],
-  ["warning on background", "warning", "background"],
-  ["error on background", "error", "background"],
-  ["ink/90 on background", "ink", "background", 0.9],
-  ["ink/70 on card", "ink", "card", 0.7],
-  ["ink/60 on background", "ink", "background", 0.6],
-  ["foreground on panel", "foreground", "panel"],
-]);
-
-fails += audit("MIDDAY (light bands)", MIDDAY, [
-  ["foreground on background", "foreground", "background"],
-  ["foreground on card", "foreground", "card"],
-  ["muted-foreground on background", "mutedForeground", "background"],
-  ["muted-foreground on card", "mutedForeground", "card"],
-  ["primary on background (signal text)", "primary", "background"],
-  ["primary on card", "primary", "card"],
-  ["primary-foreground on primary (buttons)", "primaryForeground", "primary"],
-  ["data on background (telemetry)", "data", "background"],
-  ["data on card", "data", "card"],
-  ["accent-foreground on accent", "accentForeground", "accent"],
-  ["secondary-foreground on secondary", "secondaryForeground", "secondary"],
-  ["success on background", "success", "background"],
-  ["warning on background", "warning", "background"],
-  ["error on background", "error", "background"],
-  ["ink/70 on card", "ink", "card", 0.7],
-  ["foreground on panel", "foreground", "panel"],
-]);
+for (const [label, fgKey, bgKey, alpha] of pairs) {
+  let fg = rgb(T[fgKey]);
+  const bg = rgb(T[bgKey]);
+  if (alpha !== undefined) fg = over(fg, bg, alpha);
+  const ratio = contrast(fg, bg);
+  if (ratio < 4.5) fails += 1;
+  console.log(
+    `  ${label.padEnd(38)} ${ratio.toFixed(2).padEnd(7)} ${ratio < 4.5 ? "AA FAIL" : "AA"}${
+      ratio >= 7 ? " / AAA" : ""
+    }`,
+  );
+}
 
 console.log(`\n${fails} pair(s) below 4.5:1 AA for normal text.`);

@@ -13,7 +13,7 @@ export function Header() {
   const routes = destinations.length;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-hairline bg-background/85 backdrop-blur-md">
+    <header className="glass-nav sticky top-0 z-50 w-full">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
@@ -33,7 +33,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-data"
+              className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
             >
               {link.label}
             </Link>
@@ -41,15 +41,21 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Live route count — instrument status, not decoration. */}
-          <span className="hidden items-center gap-2 rounded-full border border-hairline px-2.5 py-1 sm:inline-flex">
-            <span className="h-1.5 w-1.5 rounded-full bg-data" />
+          {/* Live status chip — dot plus pill. */}
+          <span className="hidden items-center gap-2 rounded-full border border-hairline bg-card/50 px-2.5 py-1 sm:inline-flex">
+            <span className="relative flex h-1.5 w-1.5">
+              <span
+                aria-hidden
+                className="absolute inline-flex h-full w-full animate-ping-soft rounded-full bg-primary/70"
+              />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+            </span>
             <span className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
               {routes} routes live
             </span>
           </span>
 
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-card/50 px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
             EN<span className="text-hairline">/</span>UGX
           </span>
         </div>

@@ -12,12 +12,12 @@ export function FAQSection({ destination }: { destination: Destination }) {
   return (
     <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-data">05</span>
+        <span className="telemetry text-primary">05</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Questions</span>
       </div>
 
-      <h2 className="font-display text-2xl font-bold uppercase leading-tight tracking-[0.01em] sm:text-3xl">
+      <h2 className="font-display text-2xl font-bold leading-tight tracking-display sm:text-3xl">
         Questions &amp; answers
       </h2>
 
@@ -40,7 +40,7 @@ export function FAQSection({ destination }: { destination: Destination }) {
                 >
                   <span
                     aria-hidden
-                    className="font-mono text-[0.6875rem] tabular-nums text-data"
+                    className="font-mono text-[0.6875rem] tabular-nums text-primary"
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>

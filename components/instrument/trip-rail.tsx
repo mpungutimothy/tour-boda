@@ -86,7 +86,7 @@ export function TripRail({ totalKm, waypoints = [] }: TripRailProps) {
       {/* Mobile: hairline directly under the sticky header (h-14). */}
       <div className="fixed inset-x-0 top-14 z-40 h-px bg-border lg:hidden">
         <div
-          className="h-full origin-left bg-data"
+          className="h-full origin-left bg-primary"
           style={{ transform: `scaleX(${progress})` }}
         />
       </div>
@@ -94,7 +94,7 @@ export function TripRail({ totalKm, waypoints = [] }: TripRailProps) {
       {/* Desktop: the rail proper. */}
       <div className="fixed left-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
         <div className="flex flex-col items-center gap-3">
-          <span className="telemetry text-data">
+          <span className="telemetry text-primary">
             {kmTravelled.toFixed(1)}
             <span className="text-muted-foreground">/{totalKm}</span>
           </span>
@@ -102,7 +102,7 @@ export function TripRail({ totalKm, waypoints = [] }: TripRailProps) {
           <div className="relative h-[52vh] w-px bg-border">
             {/* Distance travelled. */}
             <div
-              className="absolute inset-x-0 top-0 origin-top bg-data"
+              className="absolute inset-x-0 top-0 origin-top bg-primary"
               style={{ height: `${progress * 100}%` }}
             />
 
@@ -131,7 +131,7 @@ export function TripRail({ totalKm, waypoints = [] }: TripRailProps) {
                   <span
                     className={`h-[7px] w-[7px] rounded-full border ${
                       passed
-                        ? "border-data bg-data"
+                        ? "border-primary bg-primary"
                         : "border-hairline bg-background"
                     }`}
                   />

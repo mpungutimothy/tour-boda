@@ -59,12 +59,12 @@ export default function ContentCheckPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-data">00</span>
+        <span className="telemetry text-primary">00</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Internal</span>
       </div>
 
-      <h1 className="font-display text-4xl font-bold uppercase leading-[0.98] tracking-[0.01em]">
+      <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-display">
         Content check
       </h1>
       <p className="mt-3 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">

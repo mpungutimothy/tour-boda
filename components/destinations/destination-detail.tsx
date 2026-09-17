@@ -18,11 +18,11 @@ export function DestinationDetail({ destination, allDestinations }: { destinatio
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:py-8">
           {/*
-            The midday band: the reading stretch of the ride. The sidebar stays
+            The reading stretch. The sidebar stays
             on the night road, so instrument and reading surfaces sit side by
             side. Section ids are the Trip Rail's waypoints.
           */}
-          <div className="midday min-w-0 rounded-lg bg-background text-foreground">
+          <div className="min-w-0 rounded-lg bg-background text-foreground">
             <div id="log">
               <NarrativeSection destination={destination} />
             </div>

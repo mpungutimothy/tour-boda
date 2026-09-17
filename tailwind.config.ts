@@ -10,22 +10,19 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        // Machine voice — headings, UI labels, instrument readouts.
-        display: ["var(--font-barlow)", "system-ui", "sans-serif"],
+        // Machine voice — geometric/technical display for headings.
+        display: ["var(--font-space)", "system-ui", "sans-serif"],
         // Reading voice — body copy.
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         // Data voice — every number that matters.
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
-        // Human voice — the guide's own words, used with restraint.
+        // Human voice — the guide's own words, used in exactly one place.
         serif: ["var(--font-fraunces)", "Georgia", "serif"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        // Headlight cone — used behind the hero.
-        "headlight":
-          "radial-gradient(60% 70% at 50% 0%, hsl(var(--primary) / 0.16) 0%, transparent 70%)",
       },
       borderRadius: {
         sm: "var(--radius-sm)",
@@ -41,6 +38,9 @@ const config: Config = {
         md: "0 4px 6px -1px hsl(var(--shadow-tint) / 0.34), 0 2px 4px -2px hsl(var(--shadow-tint) / 0.26)",
         lg: "0 10px 20px -4px hsl(var(--shadow-tint) / 0.40), 0 4px 8px -2px hsl(var(--shadow-tint) / 0.28)",
         xl: "0 24px 48px -12px hsl(var(--shadow-tint) / 0.50), 0 8px 16px -4px hsl(var(--shadow-tint) / 0.32)",
+        // Accent bloom for hover states on route tiles and CTAs.
+        "glow-sm": "0 0 0 1px hsl(var(--primary) / 0.22), 0 8px 24px -10px hsl(var(--primary) / 0.30)",
+        glow: "0 0 0 1px hsl(var(--primary) / 0.28), 0 16px 40px -14px hsl(var(--primary) / 0.38)",
       },
       colors: {
         background: "hsl(var(--background))",
@@ -69,10 +69,6 @@ const config: Config = {
         },
         // Data colour: route lines, distances, telemetry. Separate job from
         // `primary` (signal/action) so the palette carries meaning.
-        data: {
-          DEFAULT: "hsl(var(--data))",
-          foreground: "hsl(var(--data-foreground))",
-        },
         ink: "hsl(var(--ink))",
         surface: "hsl(var(--surface))",
         hairline: "hsl(var(--hairline))",
@@ -132,6 +128,17 @@ const config: Config = {
           from: { transform: "scaleY(0)" },
           to: { transform: "scaleY(1)" },
         },
+        // Map-ping motif on the route line.
+        "ping-soft": {
+          "0%": { transform: "scale(0.6)", opacity: "0.9" },
+          "70%": { transform: "scale(2.4)", opacity: "0" },
+          "100%": { transform: "scale(2.4)", opacity: "0" },
+        },
+        // Route line drawing itself in.
+        "route-draw": {
+          from: { strokeDashoffset: "1" },
+          to: { strokeDashoffset: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -139,6 +146,8 @@ const config: Config = {
         sweep: "sweep 900ms cubic-bezier(0.16, 1, 0.3, 1) both",
         "readout-in": "readout-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both",
         "rail-draw": "rail-draw 600ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "ping-soft": "ping-soft 2.6s cubic-bezier(0, 0, 0.2, 1) infinite",
+        "route-draw": "route-draw 1.8s cubic-bezier(0.16, 1, 0.3, 1) both",
       },
     },
   },

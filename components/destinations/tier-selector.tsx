@@ -14,12 +14,12 @@ export function TierSelector({ destination }: { destination: Destination }) {
   return (
     <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-data">04</span>
+        <span className="telemetry text-primary">04</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Packages</span>
       </div>
 
-      <h2 className="mb-6 font-display text-2xl font-bold uppercase leading-tight tracking-[0.01em] sm:text-3xl">
+      <h2 className="mb-6 font-display text-2xl font-bold leading-tight tracking-display sm:text-3xl">
         Compare the tiers
       </h2>
 

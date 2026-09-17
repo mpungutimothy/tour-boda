@@ -32,13 +32,13 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-data">01</span>
+        <span className="telemetry text-primary">01</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Radio check</span>
       </div>
 
       <div className="mb-12">
-        <h1 className="font-display text-4xl font-bold uppercase leading-[0.98] tracking-[0.01em] sm:text-5xl">
+        <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-display sm:text-5xl">
           Contact
         </h1>
         <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-muted-foreground">
@@ -48,7 +48,7 @@ export default function ContactPage() {
       </div>
 
       <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
-        <div className="midday rounded-lg border border-hairline bg-background p-6 text-foreground sm:p-8">
+        <div className="rounded-lg border border-hairline bg-background p-6 text-foreground sm:p-8">
           <ContactForm />
         </div>
 

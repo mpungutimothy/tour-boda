@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Fraunces, JetBrains_Mono, Barlow_Condensed } from "next/font/google";
+import { Inter, Fraunces, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
@@ -11,11 +11,11 @@ const inter = Inter({
   display: "swap",
 });
 
-/** Machine voice — headings, UI labels, instrument readouts. */
-const barlow = Barlow_Condensed({
+/** Display voice — geometric/technical, for headings. */
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-barlow",
+  variable: "--font-space",
   display: "swap",
 });
 
@@ -75,21 +75,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${barlow.variable} ${fraunces.variable} ${jetbrains.variable}`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${fraunces.variable} ${jetbrains.variable}`}
     >
       <body className="font-sans antialiased">
         {/*
-          Ambient instrument backing plate. Fixed, decorative, and behind all
-          content — it gives the night road a sense of depth without adding a
-          single interactive element. Hidden from assistive tech.
+          Ambient backing: a precision grid plus a soft accent mesh. Fixed,
+          decorative, behind all content, hidden from assistive tech.
         */}
         <div
           aria-hidden
-          className="pointer-events-none fixed inset-0 -z-10 grid-plate opacity-[0.55]"
+          className="pointer-events-none fixed inset-0 -z-10 grid-plate opacity-40"
         />
         <div
           aria-hidden
-          className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-[70vh] bg-headlight"
+          className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-[80vh] glow-mesh"
         />
 
         <div className="flex min-h-screen flex-col">

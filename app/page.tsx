@@ -8,6 +8,9 @@ import {
   Readout,
   SectionMark,
 } from "@/components/instrument/readouts";
+import { CountUp, CountUpCurrency } from "@/components/motion/count-up";
+import { Reveal } from "@/components/motion/reveal";
+import { RouteLine } from "@/components/motion/route-line";
 import {
   ArrowRight,
   MapPin,
@@ -87,10 +90,11 @@ export default function Home() {
           <img
             src={heroImage}
             alt="Boda boda riders on a road in Uganda with mountains behind"
-            className="h-full w-full object-cover"
+            className="duotone h-full w-full object-cover"
           />
+          <div aria-hidden className="absolute inset-0 bg-primary/12 mix-blend-overlay" />
           <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/75 to-scrim/30" />
-          <div className="pointer-events-none absolute inset-0 bg-headlight opacity-60" />
+          <div className="pointer-events-none absolute inset-0 glow-mesh opacity-70" />
         </div>
 
         <div className="mx-auto w-full max-w-7xl px-4 pb-12 pt-28 sm:px-6 lg:px-8 lg:pb-16">
@@ -99,7 +103,7 @@ export default function Home() {
               Kampala · Jinja · Entebbe
             </span>
 
-            <h1 className="mt-4 font-display text-5xl font-bold uppercase leading-[0.94] tracking-[0.01em] text-on-scrim sm:text-6xl lg:text-7xl">
+            <h1 className="mt-4 font-display text-5xl font-bold leading-[0.94] tracking-display text-on-scrim sm:text-6xl lg:text-7xl">
               Ride Uganda with a guide who knows every road
             </h1>
 
@@ -129,16 +133,30 @@ export default function Home() {
           {/* Live figures — all derived from the published data. */}
           <div className="mt-12 border-t border-on-scrim/20 pt-6">
             <InstrumentCluster onScrim>
-              <Readout onScrim label="Routes" value={routeCount} tone="data" />
-              <Readout onScrim label="Local guides" value={guideCount} />
+              <Readout
+                onScrim
+                label="Routes"
+                value={<CountUp value={routeCount} />}
+                tone="data"
+              />
+              <Readout
+                onScrim
+                label="Local guides"
+                value={<CountUp value={guideCount} />}
+              />
               <Readout
                 onScrim
                 label="From"
-                value={fromPrice.toLocaleString("en-UG")}
+                value={<CountUpCurrency value={fromPrice} />}
                 unit="UGX"
                 tone="signal"
               />
-              <Readout onScrim label="Booking fees" value="0" hint="No markup, ever" />
+              <Readout
+                onScrim
+                label="Booking fees"
+                value={<CountUp value={0} pad={1} durationMs={600} />}
+                hint="No markup, ever"
+              />
             </InstrumentCluster>
           </div>
         </div>
@@ -156,7 +174,7 @@ export default function Home() {
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <h2
               id="featured-heading"
-              className="max-w-xl font-display text-3xl font-bold uppercase leading-tight tracking-[0.01em] sm:text-4xl"
+              className="max-w-xl font-display text-3xl font-bold leading-tight tracking-display sm:text-4xl"
             >
               Three rides, three regions
             </h2>
@@ -172,85 +190,103 @@ export default function Home() {
             {destinations.map((d, i) => {
               const price = Math.min(...d.tiers.map((t) => t.price));
               return (
-                <Link
-                  key={d.id}
-                  href={`/destinations/${d.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-lg border border-hairline bg-card transition-colors hover:border-data/60"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={d.images[0]?.url}
-                      alt={d.images[0]?.caption ?? d.name}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-scrim/90 to-transparent" />
-                    <span className="absolute left-3 top-3">
-                      <span className="inline-flex items-center rounded-full border border-on-scrim/30 bg-scrim/60 px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-on-scrim backdrop-blur-sm">
+                <Reveal key={d.id} delay={i * 90} className="h-full">
+                  <Link
+                    href={`/destinations/${d.slug}`}
+                    className="group card-glow glass flex h-full flex-col overflow-hidden rounded-lg"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={d.images[0]?.url}
+                        alt={d.images[0]?.caption ?? d.name}
+                        className="duotone h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                      />
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 bg-primary/12 mix-blend-overlay"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-scrim/90 to-transparent" />
+
+                      <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-on-scrim/25 bg-scrim/60 px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-on-scrim backdrop-blur-sm">
+                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-primary" />
                         {d.category}
                       </span>
-                    </span>
-                    <span className="absolute bottom-3 left-3 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-on-scrim/80">
-                      {String(i + 1).padStart(2, "0")} / {String(routeCount).padStart(2, "0")}
-                    </span>
-                  </div>
 
-                  <div className="flex flex-1 flex-col p-5">
-                    <h3 className="font-display text-xl font-semibold uppercase leading-tight tracking-[0.01em]">
-                      {d.name}
-                    </h3>
-
-                    <p className="mt-2 flex items-center gap-1.5 font-sans text-xs text-muted-foreground">
-                      <MapPin className="h-3.5 w-3.5" />
-                      {d.location.region}
-                    </p>
-
-                    {/* Real route figures, in place of the invented rating. */}
-                    <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-hairline pt-4">
-                      <div>
-                        <dt className="telemetry text-muted-foreground">Distance</dt>
-                        <dd data-readout className="mt-1 font-mono text-sm text-data">
-                          {factOf(d, "Total distance") ?? "—"}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt className="telemetry text-muted-foreground">Duration</dt>
-                        <dd data-readout className="mt-1 font-mono text-sm">
-                          {factOf(d, "Duration") ?? "—"}
-                        </dd>
-                      </div>
-                    </dl>
-
-                    <div className="mt-auto flex items-center justify-between border-t border-hairline pt-4">
-                      <span data-readout className="font-mono text-sm font-semibold text-primary">
-                        From {price.toLocaleString("en-UG")}
-                        <span className="ml-1 text-[0.625rem] uppercase tracking-wider text-muted-foreground">
-                          UGX
+                      {/* Route progress track — position within the network. */}
+                      <div className="absolute inset-x-3 bottom-3 flex items-center gap-2.5">
+                        <span className="track-dots relative block h-[3px] flex-1">
+                          <span
+                            className="absolute inset-y-0 left-0 rounded-full bg-primary"
+                            style={{ width: `${((i + 1) / routeCount) * 100}%` }}
+                          />
                         </span>
-                      </span>
-                      <span className="flex items-center gap-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground transition-all group-hover:gap-2 group-hover:text-data">
-                        Open
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </span>
+                        <span
+                          data-readout
+                          className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-on-scrim"
+                        >
+                          {String(i + 1).padStart(2, "0")}/{String(routeCount).padStart(2, "0")}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </Link>
+
+                    <div className="flex flex-1 flex-col p-5">
+                      <h3 className="font-display text-xl font-semibold leading-tight tracking-display">
+                        {d.name}
+                      </h3>
+
+                      <p className="mt-2 flex items-center gap-1.5 font-sans text-xs text-muted-foreground">
+                        <MapPin className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
+                        {d.location.region}
+                      </p>
+
+                      {/* Real route figures, in place of the invented rating. */}
+                      <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-hairline pt-4">
+                        <div>
+                          <dt className="telemetry text-muted-foreground">Distance</dt>
+                          <dd data-readout className="mt-1 font-mono text-sm text-primary">
+                            {factOf(d, "Total distance") ?? "—"}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="telemetry text-muted-foreground">Duration</dt>
+                          <dd data-readout className="mt-1 font-mono text-sm">
+                            {factOf(d, "Duration") ?? "—"}
+                          </dd>
+                        </div>
+                      </dl>
+
+                      <div className="mt-auto flex items-center justify-between border-t border-hairline pt-4">
+                        <span data-readout className="font-mono text-sm font-semibold text-primary">
+                          From {price.toLocaleString("en-UG")}
+                          <span className="ml-1 text-[0.625rem] uppercase tracking-wider text-muted-foreground">
+                            UGX
+                          </span>
+                        </span>
+                        <span className="flex items-center gap-1 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground transition-all group-hover:gap-2 group-hover:text-primary">
+                          Open
+                          <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ── Midday: how it works ─────────────────────────────────────── */}
+      {/* ── How it works ─────────────────────────────────────── */}
       <section
-        className="midday border-y border-hairline bg-background text-foreground"
+        className="border-y border-hairline bg-background text-foreground"
         aria-labelledby="how-heading"
       >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <SectionMark index="02">How it works</SectionMark>
           <h2
             id="how-heading"
-            className="max-w-xl font-display text-3xl font-bold uppercase leading-tight tracking-[0.01em] sm:text-4xl"
+            className="max-w-xl font-display text-3xl font-bold leading-tight tracking-display sm:text-4xl"
           >
             Three steps from idea to road
           </h2>
@@ -259,10 +295,10 @@ export default function Home() {
             {howItWorks.map((step, i) => (
               <li key={step.title} className="bg-background p-6">
                 <div className="flex items-baseline justify-between">
-                  <span className="font-mono text-2xl font-semibold text-data">
+                  <span className="font-mono text-2xl font-semibold text-primary">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <step.icon className="h-5 w-5 text-primary" aria-hidden />
+                  <step.icon className="h-5 w-5 text-primary" strokeWidth={1.5} aria-hidden />
                 </div>
                 <h3 className="mt-5 font-display text-lg font-semibold uppercase tracking-[0.02em]">
                   {step.title}
@@ -276,16 +312,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Midday: intent ───────────────────────────────────────────── */}
+      {/* ── Intent ───────────────────────────────────────────── */}
       <section
-        className="midday bg-background text-foreground"
+        className="bg-background text-foreground"
         aria-labelledby="intent-heading"
       >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <SectionMark index="03">Start from your plan</SectionMark>
           <h2
             id="intent-heading"
-            className="max-w-xl font-display text-3xl font-bold uppercase leading-tight tracking-[0.01em] sm:text-4xl"
+            className="max-w-xl font-display text-3xl font-bold leading-tight tracking-display sm:text-4xl"
           >
             What are you looking for?
           </h2>
@@ -315,16 +351,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Midday: why ──────────────────────────────────────────────── */}
+      {/* ── Why ──────────────────────────────────────────────── */}
       <section
-        className="midday border-t border-hairline bg-background text-foreground"
+        className="border-t border-hairline bg-background text-foreground"
         aria-labelledby="why-heading"
       >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <SectionMark index="04">Why Tour-Boda</SectionMark>
           <h2
             id="why-heading"
-            className="max-w-xl font-display text-3xl font-bold uppercase leading-tight tracking-[0.01em] sm:text-4xl"
+            className="max-w-xl font-display text-3xl font-bold leading-tight tracking-display sm:text-4xl"
           >
             Three things we get right
           </h2>
@@ -332,7 +368,7 @@ export default function Home() {
           <div className="mt-10 grid gap-8 sm:grid-cols-3">
             {whyTourBoda.map((item) => (
               <div key={item.title} className="border-t-2 border-primary/70 pt-5">
-                <item.icon className="h-6 w-6 text-primary" aria-hidden />
+                <item.icon className="h-6 w-6 text-primary" strokeWidth={1.5} aria-hidden />
                 <h3 className="mt-4 font-display text-lg font-semibold uppercase tracking-[0.02em]">
                   {item.title}
                 </h3>
@@ -351,7 +387,7 @@ export default function Home() {
           <SectionMark index="05">
             <span className="text-on-scrim/60">Trip ideas</span>
           </SectionMark>
-          <h2 className="font-display text-4xl font-bold uppercase leading-[0.98] tracking-[0.01em] text-on-scrim sm:text-5xl">
+          <h2 className="font-display text-4xl font-bold leading-[0.98] tracking-display text-on-scrim sm:text-5xl">
             Find your Uganda
           </h2>
           <p className="mx-auto mt-4 max-w-lg font-sans text-base leading-relaxed text-on-scrim/75">

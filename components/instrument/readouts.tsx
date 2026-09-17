@@ -2,11 +2,11 @@ import type { ReactNode } from "react";
 
 /**
  * Signal/data colours fixed for use over photography. The theme tokens flip
- * between night and midday, but a photo scrim is always dark, so these must not
+ * between themes, but a photo scrim is always dark, so these must not
  * follow the theme.
  */
-const ON_SCRIM_SIGNAL = "text-[#FF6D2E]";
-const ON_SCRIM_DATA = "text-[#22B7CE]";
+const ON_SCRIM_SIGNAL = "text-[#CCFF33]";
+const ON_SCRIM_DATA = "text-[#CCFF33]";
 
 /**
  * A single instrument readout: telemetry label above, large mono value below.
@@ -37,7 +37,7 @@ export function Readout({
     : tone === "signal"
       ? "text-primary"
       : tone === "data"
-        ? "text-data"
+        ? "text-primary"
         : "text-foreground";
 
   return (
@@ -108,7 +108,7 @@ export function Tag({
   const tones = {
     neutral: "border-hairline text-muted-foreground",
     signal: "border-primary/50 text-primary",
-    data: "border-data/50 text-data",
+    data: "border-primary/50 text-primary",
   } as const;
 
   return (
@@ -132,7 +132,7 @@ export function ScrimTag({
 }) {
   const tones = {
     neutral: "border-on-scrim/30 text-on-scrim/80",
-    signal: `border-[#FF6D2E]/60 ${ON_SCRIM_SIGNAL}`,
+    signal: `border-[#CCFF33]/60 ${ON_SCRIM_SIGNAL}`,
   } as const;
 
   return (
@@ -154,7 +154,7 @@ export function SectionMark({
 }) {
   return (
     <div className="mb-4 flex items-center gap-3">
-      <span className="telemetry text-data">{index}</span>
+      <span className="telemetry text-primary">{index}</span>
       <span className="h-px flex-1 bg-hairline" />
       <span className="telemetry text-muted-foreground">{children}</span>
     </div>

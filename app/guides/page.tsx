@@ -12,14 +12,14 @@ export default function GuidesPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-data">01</span>
+        <span className="telemetry text-primary">01</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Riders</span>
       </div>
 
       <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
         <div>
-          <h1 className="font-display text-4xl font-bold uppercase leading-[0.98] tracking-[0.01em] sm:text-5xl">
+          <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-display sm:text-5xl">
             Your guide
           </h1>
           <p className="mt-3 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
@@ -32,7 +32,7 @@ export default function GuidesPage() {
           <div className="telemetry text-muted-foreground">Guides</div>
           <div
             data-readout
-            className="mt-1 font-mono text-2xl font-semibold leading-none text-data"
+            className="mt-1 font-mono text-2xl font-semibold leading-none text-primary"
           >
             {String(guides.length).padStart(2, "0")}
           </div>
@@ -43,7 +43,7 @@ export default function GuidesPage() {
         {guides.map((guide) => (
           <article
             key={guide.id}
-            className="group flex flex-col overflow-hidden rounded-lg border border-hairline bg-card"
+            className="group card-glow glass flex flex-col overflow-hidden rounded-lg"
           >
             <div className="relative aspect-[4/5] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -51,12 +51,12 @@ export default function GuidesPage() {
                 src={guide.photo}
                 alt={`${guide.name}, Tour-Boda guide`}
                 loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                className="duotone h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
               <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-scrim to-transparent" />
 
               <div className="absolute inset-x-0 bottom-0 p-4">
-                <h2 className="font-display text-2xl font-bold uppercase leading-none tracking-[0.02em] text-on-scrim">
+                <h2 className="font-display text-2xl font-bold leading-none tracking-display text-on-scrim">
                   {guide.name}
                 </h2>
                 <p className="mt-1.5 flex items-center gap-1.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-on-scrim/75">
@@ -67,7 +67,7 @@ export default function GuidesPage() {
 
               {/* Experience badge — instrument readout on the photo. */}
               <div className="absolute right-3 top-3 rounded-md border border-on-scrim/25 bg-scrim/70 px-2.5 py-1.5 text-right backdrop-blur-sm">
-                <div className="font-mono text-base font-bold leading-none text-[#22B7CE]">
+                <div className="font-mono text-base font-bold leading-none text-[#CCFF33]">
                   {guide.yearsExperience}
                 </div>
                 <div className="mt-0.5 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-on-scrim/70">
@@ -101,7 +101,7 @@ export default function GuidesPage() {
                     >
                       <span
                         aria-hidden
-                        className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-data"
+                        className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-primary"
                       />
                       {spec}
                     </li>

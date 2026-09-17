@@ -45,11 +45,11 @@ export default function AboutPage() {
       <section className="border-b border-hairline">
         <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mb-3 flex items-center gap-3">
-            <span className="telemetry text-data">00</span>
+            <span className="telemetry text-primary">00</span>
             <span className="h-px flex-1 bg-hairline" />
             <span className="telemetry text-muted-foreground">Who we are</span>
           </div>
-          <h1 className="font-display text-4xl font-bold uppercase leading-[0.98] tracking-[0.01em] sm:text-5xl">
+          <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-display sm:text-5xl">
             About Tour-Boda
           </h1>
           <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
@@ -60,17 +60,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Body — midday reading band */}
-      <section className="midday bg-background text-foreground">
+      {/* Body — reading band */}
+      <section className="bg-background text-foreground">
         <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
           <div style={{ maxWidth: "65ch" }}>
             {sections.map((section, i) => (
               <div key={section.title} className={i > 0 ? "mt-12" : undefined}>
                 <div className="mb-3 flex items-center gap-3">
-                  <span className="telemetry text-data">{section.index}</span>
+                  <span className="telemetry text-primary">{section.index}</span>
                   <span className="h-px flex-1 bg-hairline" />
                 </div>
-                <h2 className="mb-3 font-display text-2xl font-bold uppercase tracking-[0.02em]">
+                <h2 className="mb-3 font-display text-2xl font-bold tracking-display">
                   {section.title}
                 </h2>
                 <p className="font-sans text-[1.0625rem] leading-[1.75] text-muted-foreground">

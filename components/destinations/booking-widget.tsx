@@ -20,7 +20,7 @@ export function BookingWidget({ destination }: { destination: Destination }) {
   return (
     <>
       {/* Desktop sticky sidebar — stays on the night road while the reading
-          column runs in the midday band. */}
+          column stays on the dark surface. */}
       <aside className="hidden lg:block">
         <div className="sticky top-24 rounded-lg border border-hairline bg-card p-5">
           <span className="telemetry text-muted-foreground">Your selection</span>
