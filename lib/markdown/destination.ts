@@ -9,6 +9,10 @@ export function destinationToMarkdown(destination: Destination): string {
   lines.push("");
   lines.push(`> ${destination.category} · ${destination.location.region}`);
   lines.push("");
+  if (destination.pricingMode === "quotation" && destination.quoteNote) {
+    lines.push(`**Pricing:** ${destination.quoteNote}`);
+    lines.push("");
+  }
 
   lines.push("## Quick Facts");
   lines.push("");
@@ -27,16 +31,49 @@ export function destinationToMarkdown(destination: Destination): string {
 
   lines.push("## Packages");
   lines.push("");
+  lines.push(
+    "Three service levels are published for this route. Prices are per person in Ugandan shillings (UGX), VAT inclusive, for a party of two.",
+  );
+  lines.push("");
   for (const tier of destination.tiers) {
     lines.push(`### ${tier.name}`);
     lines.push("");
-    lines.push(`- **Price:** UGX ${tier.price.toLocaleString("en-UG")}`);
+    lines.push(`- **Price:** UGX ${tier.price.toLocaleString("en-UG")} per person`);
     lines.push(`- **Duration:** ${tier.duration}`);
+    lines.push(`- **Capacity:** up to ${tier.maxParty} riders`);
+    lines.push(
+      `- **Boda transport:** ${
+        tier.components.transport.included
+          ? "included"
+          : `not included — add for UGX ${tier.components.transport.value.toLocaleString("en-UG")} per person`
+      }`,
+    );
+    lines.push(
+      `- **Licensed guide:** ${
+        tier.components.guide.included
+          ? "included"
+          : `not included — add for UGX ${tier.components.guide.value.toLocaleString("en-UG")} per person`
+      }`,
+    );
+    lines.push(
+      `- **Meals:** ${
+        tier.components.meals.included
+          ? "included"
+          : `not included — add for UGX ${tier.components.meals.value.toLocaleString("en-UG")} per person`
+      }`,
+    );
     lines.push(`- **Best for:** ${tier.bestFor}`);
     lines.push("- **Inclusions:**");
     for (const inc of tier.inclusions) {
       lines.push(`  - ${inc}`);
     }
+    lines.push("- **Not included:**");
+    for (const exc of tier.excludes) {
+      lines.push(`  - ${exc}`);
+    }
+    lines.push(
+      `- **Book this level:** ${SITE_URL}/book/${destination.slug}?tier=${tier.key}`,
+    );
     lines.push("");
   }
 

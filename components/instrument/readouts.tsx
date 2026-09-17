@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
 /**
- * Signal/data colours fixed for use over photography. The theme tokens flip
- * between themes, but a photo scrim is always dark, so these must not
- * follow the theme.
+ * Signal colour fixed for use over photography. Theme tokens are unreliable on
+ * top of a photo, and a photo scrim is always dark, so this is the savanna-gold
+ * accent written out literally rather than read from the theme.
  */
-const ON_SCRIM_SIGNAL = "text-[#CCFF33]";
-const ON_SCRIM_DATA = "text-[#CCFF33]";
+const ON_SCRIM_SIGNAL = "text-[#F2B32B]";
+const ON_SCRIM_DATA = "text-[#F2B32B]";
 
 /**
  * A single instrument readout: telemetry label above, large mono value below.
@@ -132,7 +132,7 @@ export function ScrimTag({
 }) {
   const tones = {
     neutral: "border-on-scrim/30 text-on-scrim/80",
-    signal: `border-[#CCFF33]/60 ${ON_SCRIM_SIGNAL}`,
+    signal: `border-[#F2B32B]/60 ${ON_SCRIM_SIGNAL}`,
   } as const;
 
   return (

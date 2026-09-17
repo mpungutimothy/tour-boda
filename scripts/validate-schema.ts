@@ -45,7 +45,7 @@ function collectNotes(graph: Record<string, unknown>): Notes {
       case "BreadcrumbList":
         add(
           FEATURE_BREADCRUMB,
-          "Markup is valid, but the page does not render a visible breadcrumb trail. Google asks that markup reflect visible content.",
+          "Markup reflects the visible breadcrumb trail rendered in the destination hero.",
         );
         break;
       case "FAQPage":
@@ -61,7 +61,7 @@ function collectNotes(graph: Record<string, unknown>): Notes {
 
   add(
     FEATURE_RATING,
-    "Values are hardcoded placeholders, not collected reviews. Google prohibits marking up fake reviews; ratings not from actual users may trigger a manual action.",
+    "No AggregateRating is emitted anywhere. The catalogue stores no customer reviews, so there is nothing honest to mark up; the previous hardcoded placeholder has been removed.",
   );
 
   return notes;
@@ -125,7 +125,7 @@ if (dumpIndex !== -1) {
       feature === FEATURE_ATTRACTION || feature === FEATURE_FAQ
         ? "(no rich result)"
         : feature === FEATURE_RATING
-          ? "(policy risk)"
+          ? "(intentionally absent)"
           : "";
     console.log(
       `  ${feature.padEnd(34)} ${(errors > 0 ? "FAIL" : "PASS").padEnd(10)} ${errors} / ${warnings}  ${suffix}`,

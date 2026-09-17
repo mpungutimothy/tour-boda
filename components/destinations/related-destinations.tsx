@@ -1,7 +1,10 @@
 import Link from "next/link";
 import type { Destination } from "@/types/destination";
+import { fromPrice } from "@/data/destinations";
+import { tierMeta } from "@/data/tiers";
+import { formatUGX } from "@/lib/format";
+import { TierDot } from "@/components/marketplace/tier-ui";
 import { ArrowRight } from "lucide-react";
-import { formatUGX } from "@/lib/motion";
 
 /** Departure board: the other routes on the network. */
 export function RelatedDestinations({
@@ -11,7 +14,7 @@ export function RelatedDestinations({
   destinations: Destination[];
   currentId: string;
 }) {
-  const related = destinations.filter((d) => d.id !== currentId);
+  const related = destinations.filter((d) => d.id !== currentId).slice(0, 3);
   if (related.length === 0) return null;
 
   const factOf = (d: Destination, label: string) =>
@@ -21,23 +24,25 @@ export function RelatedDestinations({
     <section className="border-t border-hairline">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="mb-3 flex items-center gap-3">
-          <span className="telemetry text-primary">06</span>
+          <span className="telemetry text-primary">07</span>
           <span className="h-px flex-1 bg-hairline" />
-          <span className="telemetry text-muted-foreground">Also on the network</span>
+          <span className="telemetry text-muted-foreground">
+            Also on the network
+          </span>
         </div>
 
         <h2 className="mb-8 font-display text-2xl font-bold leading-tight tracking-display sm:text-3xl">
           Other routes
         </h2>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {related.map((d) => (
             <Link
               key={d.id}
               href={`/destinations/${d.slug}`}
-              className="group card-glow glass flex flex-col overflow-hidden rounded-lg sm:flex-row"
+              className="group card-glow glass flex flex-col overflow-hidden rounded-lg"
             >
-              <div className="relative aspect-[16/9] shrink-0 overflow-hidden sm:aspect-auto sm:w-48">
+              <div className="relative aspect-[16/9] shrink-0 overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={d.images[0]?.url}
@@ -45,11 +50,17 @@ export function RelatedDestinations({
                   loading="lazy"
                   className="duotone h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
                 />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-primary/12 mix-blend-overlay"
+                />
               </div>
 
               <div className="flex min-w-0 flex-1 flex-col p-5">
-                <span className="telemetry text-muted-foreground">{d.category}</span>
-                <h3 className="mt-1.5 font-display text-lg font-semibold uppercase leading-tight tracking-[0.02em]">
+                <span className="telemetry text-muted-foreground">
+                  {d.category}
+                </span>
+                <h3 className="mt-1.5 font-display text-lg font-semibold leading-tight tracking-display">
                   {d.name}
                 </h3>
 
@@ -68,9 +79,33 @@ export function RelatedDestinations({
                   </div>
                 </dl>
 
+                {/* Three-tier prices, all visible. */}
+                <ul className="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-md border border-hairline bg-hairline">
+                  {d.tiers.map((tier) => (
+                    <li
+                      key={tier.key}
+                      data-tier={tier.key}
+                      className="bg-card px-2 py-2"
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <TierDot tierKey={tier.key} />
+                        <span className="font-mono text-[0.5rem] uppercase tracking-[0.1em] text-muted-foreground">
+                          {tierMeta(tier.key).shortLabel}
+                        </span>
+                      </span>
+                      <span
+                        data-readout
+                        className="mt-1 block font-mono text-[0.6875rem] font-semibold tier-text"
+                      >
+                        {formatUGX(tier.price)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
                 <div className="mt-auto flex items-center justify-between gap-3 border-t border-hairline pt-3">
                   <span data-readout className="font-mono text-sm font-semibold text-primary">
-                    From {formatUGX(Math.min(...d.tiers.map((t) => t.price)))}
+                    From {formatUGX(fromPrice(d))}
                   </span>
                   <span className="flex items-center gap-1 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground transition-all group-hover:gap-1.5 group-hover:text-primary">
                     Open

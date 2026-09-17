@@ -1,19 +1,38 @@
 # Tour-Boda Uganda
 
-> Tour-Boda Uganda is a tour operator in Uganda. It pairs travellers with licensed local boda-boda (motorcycle taxi) guides for heritage, city, and nature tours in Kampala, Jinja, and Entebbe. Every tour is led by a named guide who lives on the roads they ride. Prices are quoted in Ugandan shillings (UGX).
+> Tour-Boda Uganda is a travel marketplace for boda-boda (motorcycle taxi) tours. It pairs travellers with licensed local riders and guides for heritage, city, nature and community experiences in Kampala, Jinja, Entebbe, Mbale and Fort Portal, plus bespoke routes quoted on request. Every published route sells at three service levels: a self-guided Boda Freelance ride, a Guided Tour with a licensed guide, and a full Experience Tour package. Prices are quoted in Ugandan shillings (UGX), VAT inclusive, and the platform adds no booking fee to the traveller.
 
 This file is a descriptive index of published content for AI assistants and search crawlers. Every link below points to a canonical page on this site. Markdown mirrors of the destination pages are listed where they exist.
 
 ## Destinations
 
-Canonical tour pages. Each carries a full narrative, key facts, tier pricing, and a set of frequently asked questions.
+Canonical route pages. Each carries a full narrative, key facts, three service levels with prices, and a set of frequently asked questions.
 
-- [Kampala City Heritage Tour](https://tour-boda.ug/destinations/kampala-city-heritage): A 38 km, three-and-a-half-hour boda ride through Kampala with guide Okello Joseph, taking in the old taxi park, Kasubi Tombs, and the Bahai Temple on Kikaya Hill. Packages from UGX 85,000 to UGX 220,000.
+- [Kampala City Heritage Tour](https://tour-boda.ug/destinations/kampala-city-heritage): A 38 km, three-and-a-half-hour boda ride through Kampala with guide Okello Joseph, taking in the old taxi park, Kasubi Tombs, and the Bahai Temple on Kikaya Hill. Packages from UGX 85,000 to UGX 220,000 per person.
+  - Service levels: the self-guided ride, the guided ride with historical commentary, or a full day adding the Uganda Museum and Namirembe Cathedral.
   - Markdown mirror: https://tour-boda.ug/md/kampala-city-heritage
-- [Jinja Heritage & Nile Experience](https://tour-boda.ug/destinations/jinja-nile): A full-day 168 km round trip from Kampala to Jinja with guide Namugga Florence, covering the Source of the Nile, the Lugazi sugar cane estates, and Jinja's colonial industrial history. Packages from UGX 180,000 to UGX 450,000.
+  - Book: https://tour-boda.ug/book/kampala-city-heritage?tier=guided
+- [Jinja Heritage & Nile Experience](https://tour-boda.ug/destinations/jinja-nile): A full-day 168 km round trip from Kampala to Jinja with guide Namugga Florence, covering the Source of the Nile, the Lugazi sugar cane estates, and Jinja's colonial industrial history. Packages from UGX 180,000 to UGX 450,000 per person.
+  - Service levels: transport only, transport with a licensed guide and lunch at the Sailing Club, or an overnight package with a Nile sunset cruise and a Mabira Forest walk.
   - Markdown mirror: https://tour-boda.ug/md/jinja-nile
-- [Entebbe Cultural & Leisure Tour](https://tour-boda.ug/destinations/entebbe-cultural): A 22 km, five-to-six-hour ride to Entebbe with guide Ssemwogerere David, covering the Botanical Gardens, the Uganda Wildlife Education Centre, and the Nakiwogo jetty on Lake Victoria. Packages from UGX 60,000 to UGX 130,000.
+  - Book: https://tour-boda.ug/book/jinja-nile?tier=guided
+- [Entebbe Cultural & Leisure Tour](https://tour-boda.ug/destinations/entebbe-cultural): A 22 km, five-to-six-hour ride to Entebbe with guide Ssemwogerere David, covering the Botanical Gardens, the Uganda Wildlife Education Centre, and the Nakiwogo jetty on Lake Victoria. Packages from UGX 60,000 to UGX 130,000 per person.
+  - Service levels: transport and entries, a guided version with lunch and a Nile Special at the jetty, or the full afternoon with the fried fish lunch and a sunset boat ride.
   - Markdown mirror: https://tour-boda.ug/md/entebbe-cultural
+  - Book: https://tour-boda.ug/book/entebbe-cultural?tier=guided
+- [Sipi Falls & Mount Elgon Foothills](https://tour-boda.ug/destinations/sipi-falls-mbale): A five-hour walk of the three Sipi falls on the Mount Elgon foothills with guide Wamala Robert, taking in smallholder coffee terraces, a wet mill, and the 95-metre main drop. Packages from UGX 140,000 to UGX 320,000 per person.
+  - Service levels: the ride with digital trail notes, a licensed trail guide with a coffee-farm tasting and lunch, or two days with abseiling and a sunrise walk.
+  - Markdown mirror: https://tour-boda.ug/md/sipi-falls-mbale
+  - Book: https://tour-boda.ug/book/sipi-falls-mbale?tier=guided
+- [Kibale Community & Crater Lakes](https://tour-boda.ug/destinations/kibale-community): A community-hosted walk around the crater lakes outside Fort Portal with guide Kyomuhendo Justus, including a craft cooperative, a bee-hive and tea-boundary walk, and lunch with a host family. Packages from UGX 110,000 to UGX 260,000 per person.
+  - Service levels: the crater-lake road, a community-hosted village walk with lunch, or an overnight homestay with a market-to-kitchen cooking session.
+  - Markdown mirror: https://tour-boda.ug/md/kibale-community
+  - Book: https://tour-boda.ug/book/kibale-community?tier=guided
+- [Custom Destination Tour](https://tour-boda.ug/destinations/custom-destination-tour): A bespoke route built to the traveller's own itinerary by planner Mbabazi Sarah, quoted line by line within 48 hours. Indicative prices only; every booking is priced by hand. Packages from UGX 150,000 to UGX 620,000 per person.
+  - Service levels: rider and route notes, a licensed guide holding a multi-stop plan together, or a multi-day itinerary with permits and airport transfers arranged.
+  - Pricing is by quotation. The published figures are indicative starting points, not firm offers.
+  - Markdown mirror: https://tour-boda.ug/md/custom-destination-tour
+  - Book: https://tour-boda.ug/book/custom-destination-tour?tier=guided
 
 ## About
 
@@ -21,7 +40,8 @@ Background on the company, how the tours are structured, and how to get in touch
 
 - [About Tour-Boda Uganda](https://tour-boda.ug/about): Who runs the tours, how the boda-boda guide model works, and what the company is trying to do differently.
 - [Tours overview](https://tour-boda.ug/tours): The full list of published tours with starting prices, grouped by region and theme.
-- [Guides](https://tour-boda.ug/guides): Profiles of the individual guides, including the languages they speak, their years on the road, and their specialties.
+- [Guides](https://tour-boda.ug/guides): Profiles of all 6 guides, including the languages they speak, their years on the road, the authority that issued their licence, and the service levels they are cleared to lead.
+- [How the platform works](https://tour-boda.ug/how-it-works): How a booking is priced, how the revenue is split between the boda operator, the destination and the platform, and the institutional partnerships behind it.
 - [Contact](https://tour-boda.ug/contact): How to reach the team to ask a question or arrange a booking.
 
 ## FAQ
@@ -34,9 +54,15 @@ There is no single FAQ page. Questions are answered at the bottom of each destin
   - Markdown mirror: https://tour-boda.ug/md/jinja-nile
 - [Entebbe Cultural & Leisure Tour — questions](https://tour-boda.ug/destinations/entebbe-cultural): 5 answers on visiting the Wildlife Education Centre with children, swimming and bilharzia risk, what to wear in the gardens, airport pickup, and the fried fish lunch.
   - Markdown mirror: https://tour-boda.ug/md/entebbe-cultural
+- [Sipi Falls & Mount Elgon Foothills — questions](https://tour-boda.ug/destinations/sipi-falls-mbale): 5 answers on how hard the walk is, whether hiking boots are needed, abseiling, buying coffee at the mill, and getting to Mbale.
+  - Markdown mirror: https://tour-boda.ug/md/sipi-falls-mbale
+- [Kibale Community & Crater Lakes — questions](https://tour-boda.ug/destinations/kibale-community): 5 answers on where the money goes, whether the experience is staged, photography and drone rules, travelling with children, and staying overnight in the village.
+  - Markdown mirror: https://tour-boda.ug/md/kibale-community
+- [Custom Destination Tour — questions](https://tour-boda.ug/destinations/custom-destination-tour): 5 answers on how quoting works, why prices are not final, minimum lead times, running a route nobody has run before, and what happens when a plan changes on the day.
+  - Markdown mirror: https://tour-boda.ug/md/custom-destination-tour
 
 ## Blog
 
 No blog, news feed, or article archive is published on this site yet, so there are no post URLs to list here. Rather than invent links, this section is intentionally empty and will be filled in when articles exist. The guide profiles are the closest thing to long-form editorial content at present.
 
-- [Guide profiles](https://tour-boda.ug/guides): Short written profiles of the three guides, including background, languages, and specialties.
+- [Guide profiles](https://tour-boda.ug/guides): Short written profiles of all 6 guides, including background, languages, licence authority and specialties.

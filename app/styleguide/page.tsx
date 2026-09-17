@@ -16,7 +16,7 @@ import { InstrumentCluster, Readout, Tag, SectionMark } from "@/components/instr
 export const metadata: Metadata = {
   title: "Styleguide",
   description:
-    "The Ride Computer design system: tokens, type voices, and components for Tour-Boda Uganda.",
+    "The Tour-Boda design system: tokens, tier tones, type voices, and components for the Uganda boda-boda marketplace.",
 };
 
 /**
@@ -28,14 +28,14 @@ const palette = [
   {
     name: "Accent",
     token: "--primary",
-    role: "The single saturated colour. Electric lime.",
-    use: "CTAs, active states, data highlights — used sparingly",
+    role: "The single saturated colour. Savanna gold, drawn from the Uganda flag.",
+    use: "CTAs, active states, price highlights — used sparingly",
   },
   {
     name: "Ink",
     token: "--ink",
     role: "Primary text.",
-    use: "Headings and body on the night road",
+    use: "Headings and body copy",
   },
   {
     name: "Surface",
@@ -54,6 +54,28 @@ const palette = [
     token: "--scrim",
     role: "Text over photography. Theme-constant.",
     use: "Hero overlays, captions on images",
+  },
+];
+
+/** One landscape-derived hue per service level, used across the marketplace. */
+const tierTones = [
+  {
+    name: "Boda Freelance",
+    token: "--tier-1",
+    role: "Red-earth terracotta.",
+    use: "Tier 1 badges, tabs and price highlights",
+  },
+  {
+    name: "Guided Tour",
+    token: "--tier-2",
+    role: "Savanna gold — the same value as the accent.",
+    use: "Tier 2, and the default active state",
+  },
+  {
+    name: "Experience Tour",
+    token: "--tier-3",
+    role: "Nile green.",
+    use: "Tier 3 badges, tabs and price highlights",
   },
 ];
 
@@ -119,12 +141,14 @@ export default function StyleguidePage() {
 
       <div className="mb-16">
         <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-display sm:text-5xl">
-          Ride Computer
+          Marketplace system
         </h1>
         <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
-          The Tour-Boda design system. A motorcycle instrument cluster for a
-          daytime road: dark at the ends of the ride, light through the middle.
-          Full rationale in <span className="font-mono text-sm">docs/DESIGN_DIRECTION.md</span>.
+          The Tour-Boda design system. A travel marketplace read through a bike
+          instrument cluster: one warm near-black ground, one savanna-gold
+          accent, and three landscape-derived tones for the three service
+          levels. Full rationale in{" "}
+          <span className="font-mono text-sm">docs/DESIGN_DIRECTION.md</span>.
         </p>
       </div>
 
@@ -194,7 +218,44 @@ export default function StyleguidePage() {
           ))}
         </div>
 
-        <h3 className="mb-4 mt-10 font-display text-lg font-bold uppercase tracking-[0.02em]">
+        {/* Tier tones */}
+        <h3 className="mb-4 mt-10 font-display text-lg font-bold tracking-display">
+          Service-level tones
+        </h3>
+        <p className="mb-4 max-w-[70ch] font-sans text-sm leading-relaxed text-muted-foreground">
+          One hue per service level, so the three-tier comparison is readable at
+          a glance and colour-coded identically on cards, tabs, the comparison
+          table and the booking flow. Components declare{" "}
+          <span className="font-mono text-xs">data-tier</span> and never a hue,
+          so the palette can be re-tuned in one place.
+        </p>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {tierTones.map((c) => (
+            <div key={c.name} className="overflow-hidden rounded-md border border-hairline">
+              <div
+                className="h-20 border-b border-hairline"
+                style={{ backgroundColor: `hsl(var(${c.token}))` }}
+                aria-hidden
+              />
+              <div className="p-3">
+                <p className="font-display text-sm font-semibold tracking-display">
+                  {c.name}
+                </p>
+                <p className="mt-1 font-sans text-xs leading-snug text-muted-foreground">
+                  {c.role}
+                </p>
+                <p className="mt-1 font-sans text-xs leading-snug text-muted-foreground">
+                  {c.use}
+                </p>
+                <p className="mt-2 font-mono text-[0.5625rem] text-muted-foreground">
+                  {c.token}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 className="mb-4 mt-10 font-display text-lg font-bold tracking-display">
           Semantic
         </h3>
         <div className="grid grid-cols-3 gap-4">

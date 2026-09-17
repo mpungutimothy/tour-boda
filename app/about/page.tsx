@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { destinations } from "@/data/destinations";
 import { Button } from "@/components/ui/button";
+import { PartnerRail } from "@/components/marketplace/partners-section";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -33,6 +34,16 @@ const sections = [
     index: "04",
     title: "How we keep prices fair",
     body: "We price every tour in Ugandan shillings at local rates. The figure you see on a tour page is the figure you pay — no tourist markup, no dollar conversion that quietly inflates at checkout, no surprise fuel surcharge. The guide sets the price with us based on distance, fuel, and time, and we take a small percentage to keep the website running. If a tour costs UGX 85,000, the rider gets the lion's share of 85,000 shillings. That is how it should work, and in our experience, it is how most riders and most travellers want it to work.",
+  },
+  {
+    index: "05",
+    title: "How the money is split",
+    body: "Every booking is split three ways. The boda operator and the guide share 60%, the destination or community that actually delivers the day receives 25%, and the platform keeps 15% to run the booking system, vet the guides and administer insurance. On the cheapest route we publish — a UGX 60,000 Entebbe afternoon — the rider still takes more than a third of the ticket. The traveller pays one price and no booking fee; the platform's share comes out of the package, not on top of it.",
+  },
+  {
+    index: "06",
+    title: "Who we work with",
+    body: "None of this runs on our own authority. Riders are licensed by the city or district authority and vetted against the Uganda Tour Guides Association's standards. Route access depends on the sites themselves — the Buganda Kingdom's clan elders at Kasubi Tombs, the Uganda Wildlife Education Centre, the Sipi Falls Guides Association, the Kibale community tourism group. Each of those relationships is listed on our model page with an honest note of where it currently stands, including the ones still only under discussion.",
   },
 ];
 
@@ -104,13 +115,36 @@ export default function AboutPage() {
             ))}
           </div>
 
+          {/* Ecosystem */}
+          <div className="mt-14 border-t border-hairline pt-8" style={{ maxWidth: "65ch" }}>
+            <div className="mb-3 flex items-center gap-3">
+              <span className="telemetry text-primary">07</span>
+              <span className="h-px flex-1 bg-hairline" />
+              <span className="telemetry text-muted-foreground">Ecosystem</span>
+            </div>
+            <h2 className="mb-3 font-display text-2xl font-bold tracking-display">
+              In partnership with
+            </h2>
+            <p className="mb-6 font-sans text-sm leading-relaxed text-muted-foreground">
+              Institutional permission is what makes a mobility marketplace
+              legal and repeatable. These are the relationships it depends on.
+            </p>
+            <PartnerRail />
+            <Button asChild variant="link" className="mt-4 px-0">
+              <Link href="/how-it-works#partners">
+                Every relationship, with its status
+                <ArrowRight className="ml-1 h-4 w-4" aria-hidden />
+              </Link>
+            </Button>
+          </div>
+
           {/* CTA */}
           <div
             className="mt-14 flex flex-col items-start gap-4 border-t border-hairline pt-8 sm:flex-row sm:items-center sm:justify-between"
             style={{ maxWidth: "65ch" }}
           >
             <div>
-              <h2 className="font-display text-xl font-bold uppercase tracking-[0.02em]">
+              <h2 className="font-display text-xl font-bold tracking-display">
                 Ready to ride?
               </h2>
               <p className="mt-1 font-sans text-sm text-muted-foreground">

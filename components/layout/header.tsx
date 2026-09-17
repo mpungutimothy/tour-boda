@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { destinations } from "@/data/destinations";
+import { guides } from "@/data/guides";
 
 const navLinks = [
-  { label: "Tours", href: "/tours" },
+  { label: "All routes", href: "/tours" },
   { label: "Guides", href: "/guides" },
+  { label: "How it works", href: "/how-it-works" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
 export function Header() {
-  // Real figure — the number of routes actually published.
+  // Real figures — the number of routes and guides actually published.
   const routes = destinations.length;
+  const guideCount = guides.length;
 
   return (
     <header className="glass-nav sticky top-0 z-50 w-full">
@@ -20,7 +23,7 @@ export function Header() {
           className="flex shrink-0 items-baseline gap-2"
           aria-label="Tour-Boda Uganda, home"
         >
-          <span className="font-display text-xl font-bold uppercase leading-none tracking-[0.12em] text-primary">
+          <span className="font-display text-xl font-bold leading-none tracking-[0.1em] text-primary">
             Tour-Boda
           </span>
           <span className="hidden font-mono text-[0.625rem] uppercase tracking-[0.2em] text-muted-foreground sm:inline">
@@ -28,12 +31,12 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Main">
+        <nav className="hidden items-center gap-6 lg:flex" aria-label="Main">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-primary"
+              className="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-primary"
             >
               {link.label}
             </Link>
@@ -41,8 +44,8 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Live status chip — dot plus pill. */}
-          <span className="hidden items-center gap-2 rounded-full border border-hairline bg-card/50 px-2.5 py-1 sm:inline-flex">
+          {/* Live catalogue chip — dot plus pill. */}
+          <span className="hidden items-center gap-2 rounded-full border border-hairline bg-card/50 px-2.5 py-1 md:inline-flex">
             <span className="relative flex h-1.5 w-1.5">
               <span
                 aria-hidden
@@ -51,7 +54,7 @@ export function Header() {
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
             </span>
             <span className="font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground">
-              {routes} routes live
+              {routes} routes · {guideCount} guides
             </span>
           </span>
 
@@ -60,6 +63,23 @@ export function Header() {
           </span>
         </div>
       </div>
+
+      {/* Second row on narrow screens: the nav has to stay reachable on the
+          phone this will be demoed from. */}
+      <nav
+        className="scroll-x scroll-fade gap-5 border-t border-hairline px-4 py-2 lg:hidden"
+        aria-label="Main, small screens"
+      >
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="shrink-0 snap-start font-mono text-[0.625rem] uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-primary"
+          >
+            {link.label}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }

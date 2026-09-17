@@ -3,77 +3,87 @@
 @tailwind utilities;
 
 /* ==========================================================================
-   Tour-Boda — next-generation travel-tech
-   Cool near-black base, one saturated lime accent, frosted glass surfaces.
+   Tour-Boda — travel marketplace
+   Deep warm-dark base, savanna-gold accent, three landscape tier tones.
 
-   Supersedes the warm "Ride Computer" instrument system. Token NAMES are
-   unchanged so existing components keep working; only the values are re-cast.
-   All-dark: the previous light `.midday` band has been removed.
+   Accent is drawn from the Uganda landscape rather than generic travel blue:
+   savanna gold for the brand and the guided tier, red-earth terracotta for the
+   entry tier, Nile green for the full package. Token NAMES are unchanged from
+   the previous system so existing components keep working; only values moved.
+   All-dark: there is no light band.
    ========================================================================== */
 
 @layer base {
   :root,
   .dark {
-    /* --- Surfaces: cool near-black, never pure black -------------------- */
-    --ground: 220 14% 4%;
-    --raised: 220 13% 6%;
-    --panel: 220 12% 8%;
+    /* --- Surfaces: warm near-black, never pure black -------------------- */
+    --ground: 30 8% 4%;
+    --raised: 28 7% 6%;
+    --panel: 28 6% 8%;
 
-    --background: 220 14% 4%;
-    --foreground: 220 20% 96%;
+    --background: 30 8% 4%;
+    --foreground: 36 20% 96%;
 
-    --card: 220 13% 6%;
-    --card-foreground: 220 20% 96%;
-    --popover: 220 12% 8%;
-    --popover-foreground: 220 20% 96%;
+    --card: 28 7% 6%;
+    --card-foreground: 36 20% 96%;
+    --popover: 28 6% 8%;
+    --popover-foreground: 36 20% 96%;
 
-    --ink: 220 20% 96%;
-    --surface: 220 12% 8%;
+    --ink: 36 20% 96%;
+    --surface: 28 6% 8%;
 
-    --muted: 220 12% 8%;
-    --muted-foreground: 220 10% 64%;
+    --muted: 28 6% 8%;
+    --muted-foreground: 33 9% 64%;
 
-    /* --- The single accent -----------------------------------------------
-       Electric lime. Used sparingly: CTAs, active states, data highlights.
-       Both `primary` and `data` resolve to it — the old warm/cool two-hue
-       split is gone, and hierarchy now comes from opacity, not hue. */
-    --primary: 75 100% 60%;
-    --primary-foreground: 220 16% 5%;
-    --primary-dark: 75 100% 48%;
-    --primary-light: 75 100% 72%;
+    /* --- The signature accent: savanna gold -------------------------------
+       Sampled from the Uganda flag's yellow and the dry-season savanna. Used
+       sparingly: CTAs, active states, price highlights. Hierarchy comes from
+       opacity and weight, never from a second competing hue. */
+    --primary: 42 90% 56%;
+    --primary-foreground: 30 25% 6%;
+    --primary-dark: 38 92% 46%;
+    --primary-light: 46 95% 66%;
 
+    /* --- Tier tones --------------------------------------------------------
+       One landscape-derived hue per service level, so the three-tier
+       comparison is readable at a glance and colour-coded consistently
+       everywhere it appears: cards, tabs, comparison table, booking flow.
+       All three clear 4.5:1 as text on the base surface. */
+    --tier-1: 13 65% 57%; /* Boda Freelance   — red-earth terracotta */
+    --tier-2: 42 90% 56%; /* Guided Tour      — savanna gold        */
+    --tier-3: 160 60% 46%; /* Experience Tour  — Nile green          */
 
-    /* `accent` is the neutral hover wash used by the UI primitives — kept
-       neutral on purpose so a lime wash never lands behind body text. */
-    --accent: 220 12% 14%;
-    --accent-foreground: 220 20% 96%;
+    /* `accent` stays a neutral hover wash so a gold wash never lands behind
+       body text and breaks contrast. */
+    --accent: 28 6% 14%;
+    --accent-foreground: 36 20% 96%;
 
-    --secondary: 220 12% 12%;
-    --secondary-foreground: 220 20% 96%;
+    --secondary: 28 6% 12%;
+    --secondary-foreground: 36 20% 96%;
 
-    --destructive: 358 100% 66%;
-    --destructive-foreground: 220 16% 5%;
-    --success: 152 68% 52%;
-    --success-foreground: 220 16% 5%;
+    --destructive: 358 100% 68%;
+    --destructive-foreground: 30 25% 6%;
+    --success: 152 62% 48%;
+    --success-foreground: 30 25% 6%;
     --warning: 42 100% 58%;
-    --warning-foreground: 220 16% 5%;
-    --error: 358 100% 66%;
-    --error-foreground: 220 16% 5%;
+    --warning-foreground: 30 25% 6%;
+    --error: 358 100% 68%;
+    --error-foreground: 30 25% 6%;
 
-    --border: 220 12% 15%;
-    --input: 220 12% 15%;
-    --ring: 75 100% 60%;
+    --border: 28 6% 15%;
+    --input: 28 6% 15%;
+    --ring: 42 90% 56%;
 
     /* Hairlines and the backing grid — decorative, never load-bearing. */
-    --hairline: 220 12% 15%;
-    --grid: 220 12% 9%;
+    --hairline: 28 6% 15%;
+    --grid: 28 6% 9%;
 
     /* Photo scrim. A photograph is always dark behind an overlay, so this
        deliberately does not follow --ink/--surface. */
-    --scrim: 220 16% 3%;
-    --on-scrim: 220 20% 96%;
+    --scrim: 30 12% 3%;
+    --on-scrim: 36 20% 96%;
 
-    --shadow-tint: 220 40% 2%;
+    --shadow-tint: 30 40% 2%;
 
     /* Slightly rounded squares — not soft pastel cards. */
     --radius-sm: 6px;
@@ -82,11 +92,13 @@
     --radius-full: 999px;
     --radius: var(--radius-sm);
 
-    --chart-1: 75 100% 60%;
-    --chart-2: 75 60% 42%;
-    --chart-3: 42 100% 58%;
-    --chart-4: 220 20% 96%;
-    --chart-5: 220 10% 64%;
+    /* Chart series follow the tier tones so the revenue model and the tier
+       badges use one shared colour language. */
+    --chart-1: 42 90% 56%;
+    --chart-2: 13 65% 57%;
+    --chart-3: 160 60% 46%;
+    --chart-4: 36 20% 96%;
+    --chart-5: 33 9% 64%;
 
     color-scheme: dark;
   }
@@ -121,6 +133,45 @@
 }
 
 @layer utilities {
+  /* ------------------------------------------------------------------- tiers */
+
+  /* One attribute sets --tier-color, and every tier-styled class below reads
+     from it. Components only declare `data-tier="guided"`; they never hardcode
+     a hue, so the palette can be re-tuned in one place. */
+  [data-tier="freelance"] {
+    --tier-color: var(--tier-1);
+  }
+  [data-tier="guided"] {
+    --tier-color: var(--tier-2);
+  }
+  [data-tier="experience"] {
+    --tier-color: var(--tier-3);
+  }
+
+  .tier-text {
+    color: hsl(var(--tier-color));
+  }
+  .tier-chip {
+    color: hsl(var(--tier-color));
+    background-color: hsl(var(--tier-color) / 0.13);
+    border: 1px solid hsl(var(--tier-color) / 0.45);
+  }
+  .tier-fill {
+    background-color: hsl(var(--tier-color));
+    color: hsl(var(--primary-foreground));
+  }
+  .tier-border {
+    border-color: hsl(var(--tier-color));
+  }
+  .tier-ring {
+    box-shadow:
+      0 0 0 1px hsl(var(--tier-color) / 0.85),
+      0 16px 40px -18px hsl(var(--tier-color) / 0.45);
+  }
+  .tier-soft {
+    background-color: hsl(var(--tier-color) / 0.08);
+  }
+
   /* ---------------------------------------------------------------- surfaces */
 
   /* Frosted panel. Hairline at low opacity instead of a drop shadow. */
@@ -133,10 +184,17 @@
 
   /* Denser glass for the sticky nav, which sits over photography. */
   .glass-nav {
-    background-color: hsl(var(--background) / 0.72);
+    background-color: hsl(var(--background) / 0.78);
     backdrop-filter: blur(18px) saturate(150%);
     -webkit-backdrop-filter: blur(18px) saturate(150%);
     border-bottom: 1px solid hsl(var(--hairline) / 0.7);
+  }
+
+  /* Solid panel for filter plates that sit on the flat base — nothing behind
+     them to blur, so glass would be decoration without a job. */
+  .plate {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--hairline));
   }
 
   /* ------------------------------------------------------------------ glows */
@@ -146,17 +204,17 @@
     background-image:
       radial-gradient(
         50% 45% at 15% 0%,
-        hsl(var(--primary) / 0.10) 0%,
+        hsl(var(--primary) / 0.12) 0%,
         transparent 70%
       ),
       radial-gradient(
         45% 40% at 85% 15%,
-        hsl(220 60% 60% / 0.08) 0%,
+        hsl(var(--tier-3) / 0.08) 0%,
         transparent 72%
       ),
       radial-gradient(
         60% 50% at 50% 100%,
-        hsl(var(--primary) / 0.05) 0%,
+        hsl(var(--tier-1) / 0.06) 0%,
         transparent 75%
       );
   }
@@ -253,11 +311,16 @@
     transform: translateX(130%) skewX(-18deg);
   }
 
-  /* Duotone treatment: dark base + accent tint so photography sits *in* the
-     dark UI rather than on top of it. Kept short of full grayscale so the
-     country still reads as itself; pair with an accent overlay layer. */
+  /* Colour grade for photography: pulled toward the warm end so a photo sits
+     *in* the surface rather than on top of it. Kept short of full grayscale so
+     the country still reads as itself; pair with the accent overlay layer. */
   .duotone {
-    filter: grayscale(0.72) contrast(1.1) brightness(0.7);
+    filter: grayscale(0.42) contrast(1.1) brightness(0.74) saturate(1.15);
+  }
+
+  /* Lighter grade for portrait crops, where faces need to stay readable. */
+  .grade-portrait {
+    filter: grayscale(0.25) contrast(1.05) brightness(0.9) saturate(1.05);
   }
 
   /* ---------------------------------------------------------------- type */
@@ -295,6 +358,26 @@
     );
     background-size: 8px 100%;
     background-repeat: repeat-x;
+  }
+
+  /* -------------------------------------------------------------- scrollers */
+
+  /* Horizontal chip rail: scrolls on a phone, wraps nowhere. */
+  .scroll-x {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x proximity;
+  }
+  .scroll-x::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Fade the right edge of a scroller so it reads as scrollable. */
+  .scroll-fade {
+    mask-image: linear-gradient(to right, black 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 88%, transparent 100%);
   }
 }
 

@@ -2,20 +2,23 @@
 
 import { useEffect, useState } from "react";
 
+/**
+ * Tracks `prefers-reduced-motion`. Resolved in an effect rather than during
+ * render so the server and the first client paint agree, which keeps this out
+ * of hydration-mismatch territory.
+ */
 export function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(query.matches);
+    const handler = (event: MediaQueryListEvent) => setReduced(event.matches);
+    query.addEventListener("change", handler);
+    return () => query.removeEventListener("change", handler);
   }, []);
 
   return reduced;
 }
 
-export function formatUGX(amount: number): string {
-  return `UGX ${amount.toLocaleString("en-UG")}`;
-}
+export { formatUGX, formatUGXShort, formatNumber } from "@/lib/format";

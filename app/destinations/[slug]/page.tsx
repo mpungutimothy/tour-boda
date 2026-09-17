@@ -36,6 +36,7 @@ const WAYPOINTS = [
   { id: "log", label: "Road log" },
   { id: "gallery", label: "Sights" },
   { id: "packages", label: "Packages" },
+  { id: "guides", label: "Guide" },
   { id: "faq", label: "Q&A" },
 ];
 

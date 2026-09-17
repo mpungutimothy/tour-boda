@@ -7,7 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "verify:data": "node --import ./scripts/ts-alias-loader.mjs scripts/verify-marketplace.ts",
+    "verify:pricing": "node --import ./scripts/ts-alias-loader.mjs scripts/verify-pricing.ts",
+    "verify:contrast": "node scripts/check-contrast.mjs",
+    "verify:copy": "node scripts/compare-narratives.mjs HEAD",
+    "verify:schema": "node --import ./scripts/ts-alias-loader.mjs scripts/validate-schema.ts",
+    "verify": "npm run typecheck && npm run verify:data && npm run verify:pricing && npm run verify:contrast && npm run verify:copy && npm run verify:schema",
+    "lint:content": "node --import ./scripts/ts-alias-loader.mjs scripts/lint-destinations.ts",
+    "build:llms": "node --import ./scripts/ts-alias-loader.mjs scripts/build-llms.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

@@ -72,6 +72,13 @@ const config: Config = {
         ink: "hsl(var(--ink))",
         surface: "hsl(var(--surface))",
         hairline: "hsl(var(--hairline))",
+        // Tier tones. Prefer the `data-tier` attribute and the `.tier-*`
+        // utilities over these, so a tier's colour is never hardcoded.
+        tier: {
+          1: "hsl(var(--tier-1))",
+          2: "hsl(var(--tier-2))",
+          3: "hsl(var(--tier-3))",
+        },
         // Scrim for text over photography. Theme-constant by design.
         scrim: "hsl(var(--scrim))",
         "on-scrim": "hsl(var(--on-scrim))",
@@ -139,6 +146,21 @@ const config: Config = {
           from: { strokeDashoffset: "1" },
           to: { strokeDashoffset: "0" },
         },
+        // Revenue bars growing out from the left.
+        "bar-grow": {
+          from: { transform: "scaleX(0)" },
+          to: { transform: "scaleX(1)" },
+        },
+        // Donut segments sweeping round.
+        "seg-draw": {
+          from: { strokeDashoffset: "100" },
+          to: { strokeDashoffset: "0" },
+        },
+        // Filter results settling in as the query changes.
+        "fade-up": {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -148,6 +170,9 @@ const config: Config = {
         "rail-draw": "rail-draw 600ms cubic-bezier(0.16, 1, 0.3, 1) both",
         "ping-soft": "ping-soft 2.6s cubic-bezier(0, 0, 0.2, 1) infinite",
         "route-draw": "route-draw 1.8s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "bar-grow": "bar-grow 900ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "seg-draw": "seg-draw 1100ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "fade-up": "fade-up 320ms cubic-bezier(0.16, 1, 0.3, 1) both",
       },
     },
   },

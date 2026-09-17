@@ -1,6 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  createElement,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type HTMLAttributes,
+  type ReactNode,
+  type Ref,
+} from "react";
 
 /**
  * Scroll reveal with optional stagger. Wraps content and fades/slides it up
@@ -52,21 +61,24 @@ export function Reveal({
     return () => observer.disconnect();
   }, []);
 
-  return (
-    <Tag
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ref={ref as any}
-      className={className}
-      style={{
-        opacity: shown ? 1 : 0,
-        transform: shown || reduced ? "none" : "translateY(18px)",
-        transition: reduced
-          ? undefined
-          : `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 620ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
-        willChange: shown ? undefined : "opacity, transform",
-      }}
-    >
-      {children}
-    </Tag>
-  );
+  // Built as a props object and handed to `createElement` rather than spread
+  // onto <Tag>. `Tag` is a union of intrinsic element names, so TypeScript
+  // cannot resolve a single ref type for JSX — this keeps the ref properly
+  // typed (HTMLElement) without reaching for `any`.
+  const style: CSSProperties = {
+    opacity: shown ? 1 : 0,
+    transform: shown || reduced ? "none" : "translateY(18px)",
+    transition: reduced
+      ? undefined
+      : `opacity 620ms cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 620ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+    willChange: shown ? undefined : "opacity, transform",
+  };
+
+  const props: HTMLAttributes<HTMLElement> & { ref: Ref<HTMLElement> } = {
+    ref,
+    className,
+    style,
+  };
+
+  return createElement(Tag, props, children);
 }

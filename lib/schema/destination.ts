@@ -13,24 +13,19 @@ const ORGANIZATION = {
 } as const;
 
 /**
- * ⚠️  POLICY RISK — READ BEFORE SHIPPING
+ * NOTE: there is no `aggregateRating` anywhere in this graph, and there must
+ * not be until real reviews exist.
  *
- * These values are hardcoded placeholders. Nothing in `data/destinations.ts`
- * stores real customer reviews, so this markup asserts a 4.8/5 rating from 12
- * reviewers that no user ever gave.
+ * A previous version emitted a hardcoded 4.8/5 from 12 reviewers. Nothing in
+ * `data/routes/` stores customer reviews, so that markup asserted ratings no
+ * user ever gave. Google's structured data guidelines: "Don't mark up
+ * irrelevant or misleading content, such as fake reviews", and reviews not by
+ * actual users "may result in manual action" — which would remove rich-result
+ * eligibility for the affected pages.
  *
- * Google's General structured data guidelines state: "Don't mark up irrelevant
- * or misleading content, such as fake reviews", and "reviews or ratings not by
- * actual users may result in manual action". A structured data manual action
- * removes rich-result eligibility for the affected pages.
- *
- * Replace this with real, collected review data — or set it to `null` to omit
- * aggregateRating from the output entirely.
+ * `generateAggregateRating` now returns `null` unconditionally. Wire it to a
+ * real review store before changing that.
  */
-const DESTINATION_RATING: { ratingValue: number; reviewCount: number } | null = {
-  ratingValue: 4.8,
-  reviewCount: 12,
-};
 
 interface SchemaObject {
   [key: string]: unknown;
@@ -130,6 +125,11 @@ function generateOffer(destination: Destination, tier: TourTier): SchemaObject {
     name: tier.name,
     price: tier.price,
     priceCurrency: "UGX",
+    // `description` carries the quotation caveat for bespoke routes, so no
+    // consumer treats an indicative figure as a firm offer.
+    ...(destination.pricingMode === "quotation" && destination.quoteNote
+      ? { description: destination.quoteNote }
+      : {}),
     // UnitPriceSpecification restates the same price in structured form. Google
     // accepts either `price` or `priceSpecification`; supplying both is valid
     // and keeps the unit semantics explicit for other consumers.
@@ -138,6 +138,20 @@ function generateOffer(destination: Destination, tier: TourTier): SchemaObject {
       price: tier.price,
       priceCurrency: "UGX",
       valueAddedTaxIncluded: true,
+      // The published price is per person, at the standard party of two.
+      referenceQuantity: {
+        "@type": "QuantitativeValue",
+        value: 2,
+        unitText: "person",
+      },
+    },
+    // A boda carries two passengers, so maximum party size is a real
+    // constraint rather than merchandising.
+    eligibleQuantity: {
+      "@type": "QuantitativeValue",
+      minValue: 1,
+      maxValue: tier.maxParty,
+      unitText: "person",
     },
     availability: "https://schema.org/InStock",
     itemCondition: "https://schema.org/NewCondition",
@@ -153,18 +167,11 @@ function generateOffer(destination: Destination, tier: TourTier): SchemaObject {
 
 /**
  * Returns the aggregate rating to nest inside each Product, or `null` when no
- * real review data exists. See the DESTINATION_RATING warning above.
+ * real review data exists. See the note at the top of this file: this always
+ * returns `null` today, deliberately.
  */
 export function generateAggregateRating(): SchemaObject | null {
-  if (!DESTINATION_RATING) return null;
-
-  return {
-    "@type": "AggregateRating",
-    ratingValue: DESTINATION_RATING.ratingValue,
-    reviewCount: DESTINATION_RATING.reviewCount,
-    bestRating: 5,
-    worstRating: 1,
-  };
+  return null;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -202,11 +209,9 @@ export function generateFAQPage(destination: Destination): SchemaObject | null {
 /* -------------------------------------------------------------------------- */
 
 /**
- * ⚠️  The destination page does not currently render a visible breadcrumb
- * trail. Google's guidelines say not to mark up content that is not visible to
- * readers, so this node is at risk of being treated as invisible markup until a
- * breadcrumb UI is added to the page. `components/ui/breadcrumb.tsx` already
- * exists and is unused.
+ * The destination page renders a visible breadcrumb trail in its hero, so this
+ * markup reflects content a reader can actually see — which is what Google's
+ * guidelines ask for.
  */
 export function generateBreadcrumbList(destination: Destination): SchemaObject {
   const url = destinationUrl(destination.slug);
