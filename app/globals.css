@@ -2,103 +2,229 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ==========================================================================
-   Tour-Boda — travel marketplace
-   Deep warm-dark base, savanna-gold accent, three landscape tier tones.
+/* Skeleton shimmer. Declared outside any layer so the raw `animation:`
+   declaration inside `.skeleton` can resolve it regardless of which Tailwind
+   utilities happen to be generated for a given build. */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
 
-   Accent is drawn from the Uganda landscape rather than generic travel blue:
-   savanna gold for the brand and the guided tier, red-earth terracotta for the
-   entry tier, Nile green for the full package. Token NAMES are unchanged from
-   the previous system so existing components keep working; only values moved.
-   All-dark: there is no light band.
+/* One deliberate entrance sequence, used by the hero and nothing else. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tier price crossfade when the selected tier changes. */
+@keyframes price-swap {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   Tour-Boda — design tokens
+
+   Two themes, one token vocabulary.
+
+   The content body is LIGHT (white and cream, editorial), and the header and
+   footer are DARK, so the site is bookended rather than uniformly themed. That
+   is implemented by scoping, not by a `.dark` class on `<html>`:
+
+     :root          → the light palette. Every content section inherits it.
+     .theme-shell   → the dark palette. Applied to <header>, <footer>, and the
+                      full-bleed photographic bands that sit inside the light
+                      body.
+
+   Because custom properties cascade, a component that writes `bg-card` or
+   `text-primary-ink` is automatically correct in both places. Nothing has to
+   know which theme it is in, which is what keeps the alternation honest
+   instead of hand-painted per section.
+
+   ACCENTS ARE SHARED AND MODE-CONSTANT. Gold, green and clay are declared once
+   on `:root` and inherited by `.theme-shell`; only surfaces, ink and dividers
+   are re-declared. Gold means the same thing in the header as it does on a
+   destination card.
+
+   Gold foreground text uses `text-primary-ink`, never `text-primary`. Filled
+   gold is #C98A2C in both themes; gold *text* drops to #A8701F on white, where
+   the brighter tone only reaches 2.9:1 and fails WCAG AA outright.
    ========================================================================== */
 
 @layer base {
-  :root,
-  .dark {
-    /* --- Surfaces: warm near-black, never pure black -------------------- */
-    --ground: 30 8% 4%;
-    --raised: 28 7% 6%;
-    --panel: 28 6% 8%;
+  :root {
+    /* --- Mode-constant accents ------------------------------------------
+       Declared once, inherited by every scope. Do not re-declare these in
+       .theme-shell — an accent that shifts between the header and the body is
+       two accents pretending to be one. */
+    --primary: 36 64% 48%; /* #C98A2C savanna gold — fills, CTAs, active tabs */
+    --primary-dark: 33 68% 40%; /* #A8701F deeper gold — hover on fills */
+    --primary-light: 38 72% 62%;
 
-    --background: 30 8% 4%;
-    --foreground: 36 20% 96%;
+    /* Gold used as *text*.
+       The spec suggests #A8701F here. Measured, that is 4.25:1 on white — fine
+       for a 28px price, but a fail for the 11px gold eyebrows and 12px labels
+       that also use this token, and there are around ninety of those. So the
+       DEFAULT is the deeper #8A5A16 at 6.4:1, which is safe at any size, and a
+       single token is used for all gold text rather than two that a future
+       contributor has to choose between correctly.
+       On the dark shell the bright #C98A2C is used, where it reaches 6.3:1. */
+    --primary-ink: 32 71% 31%; /* #8A5A16 — 6.4:1 on white, 6.0:1 on cream */
 
-    --card: 28 7% 6%;
-    --card-foreground: 36 20% 96%;
-    --popover: 28 6% 8%;
-    --popover-foreground: 36 20% 96%;
+    --clay: 15 60% 44%; /* #B5502D — the Experience tier flag, nothing else */
+    --success: 130 19% 26%; /* #3F5C44 deep green */
+    --success-deep: 133 27% 20%; /* #2F4A35 — small badge text on light */
+    --success-bright: 130 24% 34%; /* lifted green, for use on the dark shell */
 
-    --ink: 36 20% 96%;
-    --surface: 28 6% 8%;
+    --warning: 36 84% 34%; /* #9F650E — deep amber, 4.8:1 as 12px text on white */
+    --destructive: 2 66% 45%;
+    --error: 2 66% 45%;
 
-    --muted: 28 6% 8%;
-    --muted-foreground: 33 9% 64%;
+    /* --- Light palette: the content body -------------------------------- */
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 45 17% 9%; /* #1C1A14 ink */
 
-    /* --- The signature accent: savanna gold -------------------------------
-       Sampled from the Uganda flag's yellow and the dry-season savanna. Used
-       sparingly: CTAs, active states, price highlights. Hierarchy comes from
-       opacity and weight, never from a second competing hue. */
-    --primary: 42 90% 56%;
-    --primary-foreground: 30 25% 6%;
-    --primary-dark: 38 92% 46%;
-    --primary-light: 46 95% 66%;
+    --card: 0 0% 100%; /* white cards on white and on cream */
+    --card-foreground: 45 17% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 45 17% 9%;
 
-    /* --- Tier tones --------------------------------------------------------
-       One landscape-derived hue per service level, so the three-tier
-       comparison is readable at a glance and colour-coded consistently
-       everywhere it appears: cards, tabs, comparison table, booking flow.
-       All three clear 4.5:1 as text on the base surface. */
-    --tier-1: 13 65% 57%; /* Boda Freelance   — red-earth terracotta */
-    --tier-2: 42 90% 56%; /* Guided Tour      — savanna gold        */
-    --tier-3: 160 60% 46%; /* Experience Tour  — Nile green          */
+    --ink: 45 17% 9%;
+    --surface: 44 44% 92%; /* #F3EEE0 form fields, insets */
 
-    /* `accent` stays a neutral hover wash so a gold wash never lands behind
-       body text and breaks contrast. */
-    --accent: 28 6% 14%;
-    --accent-foreground: 36 20% 96%;
+    /* Section-level alternation. Cream is a *band*, never a card. */
+    --cream: 44 65% 96%; /* #FBF7EC */
+    --field: 44 44% 92%; /* #F3EEE0 */
 
-    --secondary: 28 6% 12%;
-    --secondary-foreground: 36 20% 96%;
+    --muted: 44 65% 96%;
+    --muted-foreground: 38 11% 38%; /* #6B6355 secondary text */
 
-    --destructive: 358 100% 68%;
-    --destructive-foreground: 30 25% 6%;
-    --success: 152 62% 48%;
-    --success-foreground: 30 25% 6%;
-    --warning: 42 100% 58%;
-    --warning-foreground: 30 25% 6%;
-    --error: 358 100% 68%;
-    --error-foreground: 30 25% 6%;
+    --accent: 44 44% 92%; /* neutral hover wash */
+    --accent-foreground: 45 17% 9%;
 
-    --border: 28 6% 15%;
-    --input: 28 6% 15%;
-    --ring: 42 90% 56%;
+    --secondary: 44 65% 96%;
+    --secondary-foreground: 45 17% 9%;
 
-    /* Hairlines and the backing grid — decorative, never load-bearing. */
-    --hairline: 28 6% 15%;
-    --grid: 28 6% 9%;
+    --primary-foreground: 40 30% 8%; /* dark text on a gold fill */
 
-    /* Photo scrim. A photograph is always dark behind an overlay, so this
-       deliberately does not follow --ink/--surface. */
+    --destructive-foreground: 0 0% 100%;
+    --success-foreground: 0 0% 100%;
+    --warning-foreground: 45 17% 9%;
+    --error-foreground: 0 0% 100%;
+
+    /* --- Dividers --------------------------------------------------------
+       The spec calls for rgba(28,26,20,0.12). These are that colour
+       premultiplied over the surface it sits on — #1C1A14 at 12% over white
+       is rgb(228,228,227) — because the token is consumed as `hsl(var(--x))`,
+       a single triple with no room for an alpha channel. Rendering the
+       composite keeps 154 existing `border-hairline` call sites working and
+       produces exactly the specified line. */
+    --border: 60 2% 89%;
+    --input: 60 2% 89%;
+    --hairline: 60 2% 89%;
+    --grid: 44 30% 93%;
+
+    --ring: 33 68% 40%;
+
+    /* --- Photo scrim -----------------------------------------------------
+       Deliberately constant across both themes: a photograph is always dark
+       behind an overlay, so these must not follow --ink/--surface. */
     --scrim: 30 12% 3%;
     --on-scrim: 36 20% 96%;
 
-    --shadow-tint: 30 40% 2%;
+    --shadow-tint: 36 30% 22%;
 
-    /* Slightly rounded squares — not soft pastel cards. */
+    /* --- Chart series ---------------------------------------------------- */
+    --chart-1: 36 64% 48%; /* gold   — operator + guide */
+    --chart-2: 130 19% 26%; /* green  — destination     */
+    --chart-3: 15 60% 44%; /* clay   — platform        */
+    --chart-4: 45 17% 9%;
+    --chart-5: 38 11% 38%;
+
+    /* --- Radii -----------------------------------------------------------
+       Cards read as sheets, not pills: the top edge is square where the
+       photograph bleeds off it, and only the bottom corners are rounded. */
     --radius-sm: 6px;
     --radius-md: 10px;
-    --radius-lg: 14px;
+    --radius-lg: 16px;
     --radius-full: 999px;
     --radius: var(--radius-sm);
 
-    /* Chart series follow the tier tones so the revenue model and the tier
-       badges use one shared colour language. */
-    --chart-1: 42 90% 56%;
-    --chart-2: 13 65% 57%;
-    --chart-3: 160 60% 46%;
-    --chart-4: 36 20% 96%;
-    --chart-5: 33 9% 64%;
+    color-scheme: light;
+  }
+
+  /* ------------------------------------------------------------------------
+     Dark shell — header, footer, and dark photographic bands.
+
+     Scoped to a class rather than the document so the light body below it is
+     never affected. Shared accents are intentionally absent here.
+     ------------------------------------------------------------------------ */
+  .theme-shell {
+    --background: 40 17% 7%; /* #15130F warm near-black "soil" */
+    --foreground: 43 45% 92%; /* #F4EFE2 paper */
+
+    --card: 38 16% 10%;
+    --card-foreground: 43 45% 92%;
+    --popover: 38 16% 10%;
+    --popover-foreground: 43 45% 92%;
+
+    --ink: 43 45% 92%;
+    --surface: 38 16% 13%;
+    --cream: 38 16% 10%;
+    --field: 38 16% 13%;
+
+    --muted: 38 16% 12%;
+    --muted-foreground: 44 20% 74%; /* #C9C2AE dimmed paper */
+
+    --accent: 38 16% 16%;
+    --accent-foreground: 43 45% 92%;
+
+    --secondary: 38 16% 13%;
+    --secondary-foreground: 43 45% 92%;
+
+    /* Bright gold is legible on soil, so gold text stays #C98A2C here. */
+    --primary-ink: 36 64% 48%;
+
+    /* Green lifts for the dark ground; the light-theme deep green would read
+       as mud against #15130F. */
+    --success: 130 26% 52%;
+    --success-deep: 130 30% 62%;
+
+    /* rgba(244,239,226,0.12) over #15130F = rgb(48,45,40). */
+    --border: 38 10% 17%;
+    --input: 38 10% 17%;
+    --hairline: 38 10% 17%;
+    --grid: 38 10% 12%;
+
+    --ring: 36 64% 48%;
+
+    --destructive: 2 72% 62%;
+    --warning: 36 90% 58%;
+
+    --destructive-foreground: 40 17% 7%;
+    --warning-foreground: 40 17% 7%;
+    --success-foreground: 40 17% 7%;
+    --error: 2 72% 62%;
+    --error-foreground: 40 17% 7%;
+
+    --shadow-tint: 30 40% 2%;
+    --primary-foreground: 40 17% 7%;
+
+    --chart-4: 43 45% 92%;
+    --chart-5: 44 20% 74%;
 
     color-scheme: dark;
   }
@@ -111,6 +237,7 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
@@ -122,7 +249,7 @@
   }
 
   ::selection {
-    background: hsl(var(--primary) / 0.85);
+    background: hsl(var(--primary) / 0.9);
     color: hsl(var(--primary-foreground));
   }
 
@@ -135,155 +262,124 @@
 @layer utilities {
   /* ------------------------------------------------------------------- tiers */
 
-  /* One attribute sets --tier-color, and every tier-styled class below reads
-     from it. Components only declare `data-tier="guided"`; they never hardcode
-     a hue, so the palette can be re-tuned in one place. */
+  /* One attribute sets --tier-color and every tier-styled class reads from it.
+     Components declare `data-tier="guided"` and never hardcode a hue.
+
+     The tier system is deliberately restrained: gold carries *selection* (an
+     active tab, a chosen price) regardless of which tier is chosen, and clay
+     appears only on the Experience flag. Three competing tier hues would fight
+     the gold that marks the active choice. */
   [data-tier="freelance"] {
-    --tier-color: var(--tier-1);
+    --tier-color: var(--ink);
   }
   [data-tier="guided"] {
-    --tier-color: var(--tier-2);
+    --tier-color: var(--primary);
   }
   [data-tier="experience"] {
-    --tier-color: var(--tier-3);
+    --tier-color: var(--clay);
   }
 
   .tier-text {
     color: hsl(var(--tier-color));
   }
+  /* The tier's own hue as a background. Used for the small legend dots, so the
+     three levels stay distinguishable there — `tier-fill` is deliberately gold
+     for every tier, because gold marks *selection*, not level. */
+  .tier-bg {
+    background-color: hsl(var(--tier-color));
+  }
   .tier-chip {
     color: hsl(var(--tier-color));
-    background-color: hsl(var(--tier-color) / 0.13);
-    border: 1px solid hsl(var(--tier-color) / 0.45);
+    background-color: hsl(var(--tier-color) / 0.1);
+    border: 1px solid hsl(var(--tier-color) / 0.4);
   }
   .tier-fill {
-    background-color: hsl(var(--tier-color));
+    background-color: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
   }
   .tier-border {
     border-color: hsl(var(--tier-color));
   }
   .tier-ring {
-    box-shadow:
-      0 0 0 1px hsl(var(--tier-color) / 0.85),
-      0 16px 40px -18px hsl(var(--tier-color) / 0.45);
+    box-shadow: 0 0 0 1px hsl(var(--tier-color) / 0.75);
   }
   .tier-soft {
-    background-color: hsl(var(--tier-color) / 0.08);
+    background-color: hsl(var(--primary) / 0.08);
+  }
+
+  /* The Experience flag. The only place clay is allowed. */
+  .flag-experience {
+    color: hsl(var(--clay));
+    background-color: hsl(var(--clay) / 0.1);
+    border: 1px solid hsl(var(--clay) / 0.3);
   }
 
   /* ---------------------------------------------------------------- surfaces */
 
-  /* Frosted panel. Hairline at low opacity instead of a drop shadow. */
+  /* The card. Flat white, hairline border, soft shadow on hover. */
   .glass {
-    background-color: hsl(var(--card) / 0.55);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    border: 1px solid hsl(var(--hairline) / 0.75);
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--hairline));
   }
 
-  /* Denser glass for the sticky nav, which sits over photography. */
+  /* Sticky navigation. Solid, because it sits above photography and text must
+     not show through it. */
   .glass-nav {
-    background-color: hsl(var(--background) / 0.78);
-    backdrop-filter: blur(18px) saturate(150%);
-    -webkit-backdrop-filter: blur(18px) saturate(150%);
-    border-bottom: 1px solid hsl(var(--hairline) / 0.7);
+    background-color: hsl(var(--background) / 0.92);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-bottom: 1px solid hsl(var(--hairline));
   }
 
-  /* Solid panel for filter plates that sit on the flat base — nothing behind
-     them to blur, so glass would be decoration without a job. */
+  /* Solid panel for filter plates and sidebars. */
   .plate {
     background-color: hsl(var(--card));
     border: 1px solid hsl(var(--hairline));
   }
 
-  /* ------------------------------------------------------------------ glows */
-
-  /* Soft radial mesh behind heroes and section headers. Never loud. */
-  .glow-mesh {
-    background-image:
-      radial-gradient(
-        50% 45% at 15% 0%,
-        hsl(var(--primary) / 0.12) 0%,
-        transparent 70%
-      ),
-      radial-gradient(
-        45% 40% at 85% 15%,
-        hsl(var(--tier-3) / 0.08) 0%,
-        transparent 72%
-      ),
-      radial-gradient(
-        60% 50% at 50% 100%,
-        hsl(var(--tier-1) / 0.06) 0%,
-        transparent 75%
-      );
+  /* Section band. Cream alternation lives here and nowhere else. */
+  .band-cream {
+    background-color: hsl(var(--cream));
   }
 
-  /* Tighter accent bloom for section headers. */
-  .glow-accent {
-    background-image: radial-gradient(
-      40% 60% at 50% 0%,
-      hsl(var(--primary) / 0.12) 0%,
-      transparent 70%
-    );
+  /* --------------------------------------------------------- card behaviour */
+
+  /* Destination card: lifts 4px, border turns gold, soft shadow blooms. */
+  .card-lift {
+    transition:
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 220ms ease,
+      box-shadow 220ms ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-4px);
+    border-color: hsl(var(--primary));
+    box-shadow:
+      0 1px 2px hsl(var(--shadow-tint) / 0.06),
+      0 12px 28px -10px hsl(var(--shadow-tint) / 0.22);
   }
 
-  /* ---------------------------------------------------------------- texture */
-
-  /* Grid backing plate. */
-  .grid-plate {
-    background-image: linear-gradient(
-        to right,
-        hsl(var(--grid)) 1px,
-        transparent 1px
-      ),
-      linear-gradient(to bottom, hsl(var(--grid)) 1px, transparent 1px);
-    background-size: 56px 56px;
+  /* Guide card: same lift, green border — trust, not commerce. */
+  .card-lift-guide:hover {
+    border-color: hsl(var(--success));
+    box-shadow:
+      0 1px 2px hsl(var(--shadow-tint) / 0.06),
+      0 12px 28px -10px hsl(var(--shadow-tint) / 0.22);
   }
 
-  /* Topographic contours — concentric rings reading as mapped terrain. */
-  .topo {
-    background-image:
-      repeating-radial-gradient(
-        circle at 18% 28%,
-        hsl(var(--grid)) 0 1px,
-        transparent 1px 26px
-      ),
-      repeating-radial-gradient(
-        circle at 82% 72%,
-        hsl(var(--grid)) 0 1px,
-        transparent 1px 34px
-      );
-  }
-
-  /* Film grain. Reads as texture, not noise. */
-  .paper-grain {
-    position: relative;
-  }
-  .paper-grain::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  /* ----------------------------------------------------------- interaction */
-
-  /* Route tile: lifts and reveals an accent border glow on hover. */
+  /* Legacy alias so older markup keeps working. */
   .card-glow {
     transition:
-      transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 260ms ease,
-      box-shadow 260ms ease;
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 220ms ease,
+      box-shadow 220ms ease;
   }
   .card-glow:hover {
-    transform: translateY(-3px);
-    border-color: hsl(var(--primary) / 0.55);
+    transform: translateY(-4px);
+    border-color: hsl(var(--primary));
     box-shadow:
-      0 0 0 1px hsl(var(--primary) / 0.22),
-      0 14px 36px -14px hsl(var(--primary) / 0.32);
+      0 1px 2px hsl(var(--shadow-tint) / 0.06),
+      0 12px 28px -10px hsl(var(--shadow-tint) / 0.22);
   }
 
   /* Sheen sweep for accent buttons. */
@@ -301,7 +397,7 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      hsl(0 0% 100% / 0.32) 50%,
+      hsl(0 0% 100% / 0.3) 50%,
       transparent 100%
     );
     transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -311,45 +407,158 @@
     transform: translateX(130%) skewX(-18deg);
   }
 
-  /* Colour grade for photography: pulled toward the warm end so a photo sits
-     *in* the surface rather than on top of it. Kept short of full grayscale so
-     the country still reads as itself; pair with the accent overlay layer. */
+  /* ------------------------------------------------------------- photography */
+
+  /* A light editorial grade. The dark theme used to crush photographs toward
+     the surface so they sat *in* it; on white the opposite is wanted — the
+     photography should read as clean and documentary, so this only takes the
+     edge off saturation and lifts contrast slightly. */
   .duotone {
-    filter: grayscale(0.42) contrast(1.1) brightness(0.74) saturate(1.15);
+    filter: saturate(1.03) contrast(1.04);
   }
 
-  /* Lighter grade for portrait crops, where faces need to stay readable. */
+  /* Portraits, held a touch warmer. */
   .grade-portrait {
-    filter: grayscale(0.25) contrast(1.05) brightness(0.9) saturate(1.05);
+    filter: saturate(1.02) contrast(1.03);
   }
 
-  /* ---------------------------------------------------------------- type */
+  /* ---------------------------------------------------------------- loading */
 
-  /* Eyebrow / telemetry label. */
+  /* Skeleton placeholder. A cream-to-tan sweep travelling left to right, so a
+     loading card reads as filling rather than as broken. Never a spinner. */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: hsl(var(--field));
+  }
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(0 0% 100% / 0.55) 50%,
+      transparent 100%
+    );
+    animation: shimmer 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  /* On the dark shell the sweep has to be a light wash, not a white flare. */
+  .theme-shell .skeleton {
+    background-color: hsl(var(--surface));
+  }
+  .theme-shell .skeleton::after {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--foreground) / 0.09) 50%,
+      transparent 100%
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton::after {
+      animation: none;
+    }
+  }
+
+  /* ------------------------------------------------------------------ glows */
+
+  /* Very restrained. On a light page a coloured bloom reads as a smudge. */
+  .glow-mesh {
+    background-image: radial-gradient(
+      50% 40% at 12% 0%,
+      hsl(var(--primary) / 0.06) 0%,
+      transparent 70%
+    );
+  }
+
+  .glow-accent {
+    background-image: radial-gradient(
+      50% 70% at 50% 0%,
+      hsl(var(--primary) / 0.06) 0%,
+      transparent 70%
+    );
+  }
+
+  /* ---------------------------------------------------------------- texture */
+
+  .grid-plate {
+    background-image: linear-gradient(
+        to right,
+        hsl(var(--grid)) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, hsl(var(--grid)) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .topo {
+    background-image:
+      repeating-radial-gradient(
+        circle at 18% 28%,
+        hsl(var(--grid)) 0 1px,
+        transparent 1px 26px
+      ),
+      repeating-radial-gradient(
+        circle at 82% 72%,
+        hsl(var(--grid)) 0 1px,
+        transparent 1px 34px
+      );
+  }
+
+  .paper-grain {
+    position: relative;
+  }
+  .paper-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ------------------------------------------------------------------- type */
+
+  /* Eyebrow / section label.
+     Deliberately NOT monospace. Set in Inter with wide tracking it reads as an
+     editorial kicker; set in mono it read as a control-panel readout, which is
+     the register this rebuild is moving away from. Mono is now reserved for
+     genuinely tabular data — prices, counts, distances. */
   .telemetry {
-    @apply font-mono text-[0.6875rem] uppercase tracking-[0.18em];
+    @apply font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em];
   }
 
-  /* Large headlines tighten slightly; body stays neutral. */
+  /* Headline tracking. Fraunces is an optical-size serif and needs far less
+     negative tracking than the geometric sans it replaces. */
   .tracking-display {
-    letter-spacing: -0.02em;
+    letter-spacing: -0.011em;
   }
   .tracking-display-lg {
-    letter-spacing: -0.03em;
+    letter-spacing: -0.018em;
   }
 
-  /* Hairline rule. */
+  /* Prices and ratings. Slightly heavier and gold, so a number separates from
+     the sentence around it without needing a bigger type size. */
+  .numeric-emphasis {
+    font-weight: 650;
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.01em;
+    color: hsl(var(--primary-ink));
+  }
+
   .rule {
     border-color: hsl(var(--hairline));
   }
 
-  /* Content-visibility for long, below-the-fold stretches. */
   .defer-render {
     content-visibility: auto;
     contain-intrinsic-size: auto 600px;
   }
 
-  /* Route-progress track (dotted). The filled run uses an inline width. */
   .track-dots {
     background-image: radial-gradient(
       circle,
@@ -362,7 +571,6 @@
 
   /* -------------------------------------------------------------- scrollers */
 
-  /* Horizontal chip rail: scrolls on a phone, wraps nowhere. */
   .scroll-x {
     display: flex;
     overflow-x: auto;
@@ -374,10 +582,16 @@
     display: none;
   }
 
-  /* Fade the right edge of a scroller so it reads as scrollable. */
   .scroll-fade {
     mask-image: linear-gradient(to right, black 88%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, black 88%, transparent 100%);
+  }
+
+  /* ------------------------------------------------------------ trust marks */
+
+  /* Small green dot used in the trust bar. */
+  .dot-trust {
+    background-color: hsl(var(--success));
   }
 }
 
@@ -391,7 +605,8 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .card-glow:hover {
+  .card-glow:hover,
+  .card-lift:hover {
     transform: none;
   }
 }

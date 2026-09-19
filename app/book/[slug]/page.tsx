@@ -1,10 +1,10 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { destinations, getDestination } from "@/data/destinations";
-import { TIER_ORDER } from "@/data/tiers";
+import { TierFromQuery } from "@/components/booking/tier-from-query";
 import { BookingFlow } from "@/components/booking/booking-flow";
-import type { TierKey } from "@/types/destination";
 import { ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
@@ -24,30 +24,15 @@ export function generateMetadata({
   };
 }
 
-export default function BookPage({
-  params,
-  searchParams,
-}: {
-  params: { slug: string };
-  searchParams?: { tier?: string };
-}) {
+export default function BookPage({ params }: { params: { slug: string } }) {
   const destination = getDestination(params.slug);
   if (!destination) notFound();
-
-  // The tier arrives from the card or the detail page. Validate it rather than
-  // trusting the query string, so a hand-edited URL cannot select a tier that
-  // does not exist and crash the quote.
-  const requested = searchParams?.tier;
-  const initialTier: TierKey =
-    requested && (TIER_ORDER as string[]).includes(requested)
-      ? (requested as TierKey)
-      : "guided";
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <Link
         href={`/destinations/${destination.slug}`}
-        className="inline-flex items-center gap-1.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-primary"
+        className="inline-flex items-center gap-1.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-primary-ink"
       >
         <ArrowLeft className="h-3 w-3" aria-hidden />
         Back to {destination.name}
@@ -55,7 +40,7 @@ export default function BookPage({
 
       <div className="mt-6 mb-9">
         <div className="mb-3 flex items-center gap-3">
-          <span className="telemetry text-primary">Booking</span>
+          <span className="telemetry text-primary-ink">Booking</span>
           <span className="h-px flex-1 bg-hairline" />
           <span className="telemetry text-muted-foreground">
             {destination.location.district}
@@ -66,7 +51,19 @@ export default function BookPage({
         </h1>
       </div>
 
-      <BookingFlow destination={destination} initialTier={initialTier} />
+      {/* The tier arrives as ?tier=. Resolving it on the client keeps this route
+          static, which is what lets the whole site be exported to plain files.
+
+          The fallback is the *whole* booking flow at the default tier rather
+          than a spinner: this route is prerendered, so whatever is here is what
+          lands in the HTML. A skeleton would mean the booking page had no
+          content without JavaScript. Once hydrated, the client swaps in the
+          flow at the tier the link asked for. */}
+      <Suspense
+        fallback={<BookingFlow destination={destination} initialTier="guided" />}
+      >
+        <TierFromQuery destination={destination} />
+      </Suspense>
     </div>
   );
 }

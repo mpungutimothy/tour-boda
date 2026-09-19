@@ -1,12 +1,15 @@
 import type { ReactNode } from "react";
 
 /**
- * Signal colour fixed for use over photography. Theme tokens are unreliable on
- * top of a photo, and a photo scrim is always dark, so this is the savanna-gold
- * accent written out literally rather than read from the theme.
+ * Signal colour for use over photography.
+ *
+ * Every consumer of `onScrim` also sits inside a `.theme-shell` scope (the
+ * destination hero), so `text-primary-ink` resolves to the bright #C98A2C there
+ * rather than the #A8701F used for gold on white. Reading the token instead of
+ * a literal hex means the two can no longer drift apart.
  */
-const ON_SCRIM_SIGNAL = "text-[#F2B32B]";
-const ON_SCRIM_DATA = "text-[#F2B32B]";
+const ON_SCRIM_SIGNAL = "text-primary-ink";
+const ON_SCRIM_DATA = "text-primary-ink";
 
 /**
  * A single instrument readout: telemetry label above, large mono value below.
@@ -35,9 +38,9 @@ export function Readout({
         ? ON_SCRIM_DATA
         : "text-on-scrim"
     : tone === "signal"
-      ? "text-primary"
+      ? "text-primary-ink"
       : tone === "data"
-        ? "text-primary"
+        ? "text-primary-ink"
         : "text-foreground";
 
   return (
@@ -107,8 +110,8 @@ export function Tag({
 }) {
   const tones = {
     neutral: "border-hairline text-muted-foreground",
-    signal: "border-primary/50 text-primary",
-    data: "border-primary/50 text-primary",
+    signal: "border-primary/50 text-primary-ink",
+    data: "border-primary/50 text-primary-ink",
   } as const;
 
   return (
@@ -132,7 +135,7 @@ export function ScrimTag({
 }) {
   const tones = {
     neutral: "border-on-scrim/30 text-on-scrim/80",
-    signal: `border-[#F2B32B]/60 ${ON_SCRIM_SIGNAL}`,
+    signal: `border-primary/60 ${ON_SCRIM_SIGNAL}`,
   } as const;
 
   return (
@@ -154,7 +157,7 @@ export function SectionMark({
 }) {
   return (
     <div className="mb-4 flex items-center gap-3">
-      <span className="telemetry text-primary">{index}</span>
+      <span className="telemetry text-primary-ink">{index}</span>
       <span className="h-px flex-1 bg-hairline" />
       <span className="telemetry text-muted-foreground">{children}</span>
     </div>

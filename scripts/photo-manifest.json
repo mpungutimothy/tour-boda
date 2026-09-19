@@ -1,0 +1,392 @@
+{
+  "_comment": "Every photograph the site displays. `subject` is what the photo actually shows — it is reviewed against the contact sheet, and it drives both alt text and the credits page. `context` is where it appears. `width` is the largest size the slot ever renders at, so we never ship a 6,000px original into a thumbnail.",
+  "photos": [
+    {
+      "name": "hero-home",
+      "url": "https://images.pexels.com/photos/38520450/pexels-photo-38520450.jpeg?auto=compress&cs=tinysrgb&w=1920",
+      "width": 1920,
+      "context": "Home hero",
+      "subject": "A boda-boda rider carrying a passenger along a Ugandan street, mountains behind"
+    },
+    {
+      "name": "guide-photo-okello",
+      "url": "https://images.pexels.com/photos/15929275/pexels-photo-15929275.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "width": 900,
+      "context": "Guide profile — Okello Joseph",
+      "subject": "Smiling young man in a red shirt, close portrait"
+    },
+    {
+      "name": "guide-photo-florence",
+      "url": "https://images.pexels.com/photos/27038743/pexels-photo-27038743.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "width": 900,
+      "context": "Guide profile — Namugga Florence",
+      "subject": "Woman in a patterned headwrap smiling in an outdoor street setting"
+    },
+    {
+      "name": "guide-photo-david",
+      "url": "https://images.pexels.com/photos/3316263/pexels-photo-3316263.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "width": 900,
+      "context": "Guide profile — Ssemwogerere David",
+      "subject": "Man in African print shirt laughing, close portrait"
+    },
+
+    {
+      "name": "dest-kampala-1",
+      "commons": "Royal Kasubi tombs in Kampala.jpg",
+      "width": 1600,
+      "context": "Kampala City Heritage — gallery lead",
+      "subject": "The thatched dome of Kasubi Tombs, burial ground of the Buganda kings"
+    },
+    {
+      "name": "dest-kampala-2",
+      "commons": "Bahai Temple Kampala Uganda.jpg",
+      "width": 900,
+      "context": "Kampala City Heritage — gallery",
+      "subject": "The Bahai Temple on Kikaya Hill, the only one of its kind in Africa"
+    },
+    {
+      "name": "dest-kampala-3",
+      "commons": "Kampala old taxi park.jpg",
+      "width": 900,
+      "context": "Kampala City Heritage — gallery",
+      "subject": "Minibuses packed into the Old Taxi Park, where the Kampala ride begins"
+    },
+    {
+      "name": "dest-kampala-4",
+      "commons": "Nakasero Market Kampala.jpg",
+      "width": 900,
+      "context": "Kampala City Heritage — gallery",
+      "subject": "Produce stalls inside Nakasero Market, Kampala"
+    },
+    {
+      "name": "dest-kampala-5",
+      "commons": "Boda Boda's of Uganda.jpg",
+      "width": 900,
+      "context": "Kampala City Heritage — gallery",
+      "subject": "A rank of boda-boda motorcycles waiting for fares"
+    },
+
+    {
+      "name": "dest-jinja-1",
+      "commons": "Source of the Nile - Jinja, Uganda (181090963).jpg",
+      "width": 1600,
+      "context": "Jinja & the Nile — gallery lead",
+      "subject": "The Source of the Nile at Jinja, where the river leaves Lake Victoria"
+    },
+    {
+      "name": "dest-jinja-2",
+      "commons": "Source of the Nile, Jinja Uganda - international tourist site.jpg",
+      "width": 900,
+      "context": "Jinja & the Nile — gallery",
+      "subject": "The Source of the Nile monument and gardens at Jinja"
+    },
+    {
+      "name": "dest-jinja-3",
+      "commons": "Jinja source of Nile.jpg",
+      "width": 900,
+      "context": "Jinja & the Nile — gallery",
+      "subject": "The Nile flowing away from the Source at Jinja"
+    },
+    {
+      "name": "dest-jinja-4",
+      "commons": "River Nile, Jinja, Uganda 1.jpg",
+      "width": 900,
+      "context": "Jinja & the Nile — gallery",
+      "subject": "Rapids on the Nile at Jinja, where the river narrows over rock"
+    },
+    {
+      "name": "dest-jinja-5",
+      "commons": "Uganda Jinja Streetview.JPG",
+      "width": 900,
+      "context": "Jinja & the Nile — gallery",
+      "subject": "A street in Jinja town, where the colonial-era grid still shapes the blocks"
+    },
+
+    {
+      "name": "dest-entebbe-1",
+      "commons": "Beach within Botanical Garden, Entebbe, Uganda.jpg",
+      "width": 1600,
+      "context": "Entebbe Cultural — gallery lead",
+      "subject": "The lake beach inside Entebbe Botanical Gardens"
+    },
+    {
+      "name": "dest-entebbe-2",
+      "commons": "Entebbe Botanical Gardens 3.jpg",
+      "width": 900,
+      "context": "Entebbe Cultural — gallery",
+      "subject": "A raptor perched on a garden tree — the Entebbe gardens are a known birding site"
+    },
+    {
+      "name": "dest-entebbe-3",
+      "commons": "Entebbe Botanical Gardens 4.jpg",
+      "width": 900,
+      "context": "Entebbe Cultural — gallery",
+      "subject": "Gardens and shoreline at Entebbe Botanical Gardens"
+    },
+    {
+      "name": "dest-entebbe-4",
+      "commons": "Scene in Fishing Village along Shore of Lake Victoria - Entebbe - Uganda.jpg",
+      "width": 900,
+      "context": "Entebbe Cultural — gallery",
+      "subject": "A fishing village on the Lake Victoria shore near Entebbe"
+    },
+    {
+      "name": "dest-entebbe-5",
+      "commons": "Uganda's Iconic Shoebill Stork in Mabamba Wetland.jpg",
+      "width": 900,
+      "context": "Entebbe Cultural — gallery",
+      "subject": "A shoebill stork standing in the Mabamba wetland near Entebbe"
+    },
+
+    {
+      "name": "dest-sipi-1",
+      "commons": "Sipi Falls in Uganda.jpg",
+      "width": 1600,
+      "context": "Sipi Falls & Mbale — gallery lead",
+      "subject": "The main drop of Sipi Falls on the Mount Elgon escarpment"
+    },
+    {
+      "name": "dest-sipi-2",
+      "commons": "Sipi falls Uganda.jpg",
+      "width": 900,
+      "context": "Sipi Falls & Mbale — gallery",
+      "subject": "Sipi Falls viewed from the base of the gorge"
+    },
+    {
+      "name": "dest-sipi-3",
+      "commons": "Ripe Ugandan coffee 8.jpg",
+      "width": 900,
+      "context": "Sipi Falls & Mbale — gallery",
+      "subject": "Ripe red coffee cherries on the branch in Uganda"
+    },
+    {
+      "name": "dest-sipi-4",
+      "commons": "Drying beans in mbale.JPG",
+      "width": 900,
+      "context": "Sipi Falls & Mbale — gallery",
+      "subject": "Coffee beans laid out to dry in the sun at Mbale"
+    },
+    {
+      "name": "dest-sipi-5",
+      "commons": "Drive through Mbale town IMG 0602 Drive through Mbale town.jpg",
+      "width": 900,
+      "context": "Sipi Falls & Mbale — gallery",
+      "subject": "A street in Mbale town, eastern Uganda"
+    },
+
+    {
+      "name": "dest-kibale-1",
+      "commons": "Crater Lake nestled in Fort Portal 01.jpg",
+      "width": 1600,
+      "context": "Kibale Community — gallery lead",
+      "subject": "A crater lake set in green hills outside Fort Portal"
+    },
+    {
+      "name": "dest-kibale-2",
+      "commons": "Crater Lakes of Fort Portal 01.jpg",
+      "width": 900,
+      "context": "Kibale Community — gallery",
+      "subject": "One of the crater lakes on the Fort Portal plateau"
+    },
+    {
+      "name": "dest-kibale-3",
+      "commons": "013 Alpha male chimpanzee at Kibale forest National Park Photo by Giles Laurent.jpg",
+      "width": 900,
+      "context": "Kibale Community — gallery",
+      "subject": "An alpha male chimpanzee in Kibale forest National Park"
+    },
+    {
+      "name": "dest-kibale-4",
+      "commons": "Tea plantations of Kyamuhunga in Bushenyi district in Uganda 13.jpg",
+      "width": 900,
+      "context": "Kibale Community — gallery",
+      "subject": "Terraced tea plantation rows in western Uganda"
+    },
+    {
+      "name": "dest-kibale-5",
+      "commons": "Shoes in a market in Fort Portal city - Dave Proffer.jpg",
+      "width": 900,
+      "context": "Kibale Community — gallery",
+      "subject": "A market stall in Fort Portal, where the Nkingo cooperative sells its honey and raffia work"
+    },
+
+    {
+      "name": "dest-custom-1",
+      "commons": "Hilly green scenery on the Bushenyi to Kasese tarmac road in Western Uganda 02.jpg",
+      "width": 1600,
+      "context": "Custom Destination Tour — gallery lead",
+      "subject": "Green hills along the tarmac road in western Uganda"
+    },
+    {
+      "name": "dest-custom-2",
+      "commons": "Boda boda on the tarmac road.jpg",
+      "width": 900,
+      "context": "Custom Destination Tour — gallery",
+      "subject": "A boda-boda riding along a tarmac road"
+    },
+    {
+      "name": "dest-custom-3",
+      "commons": "Boda boda in uganda.jpg",
+      "width": 900,
+      "context": "Custom Destination Tour — gallery",
+      "subject": "A boda-boda rider on a Ugandan road"
+    },
+    {
+      "name": "dest-custom-4",
+      "commons": "Lake Bunyonyi, Uganda.jpg",
+      "width": 900,
+      "context": "Custom Destination Tour — gallery",
+      "subject": "Terraced islands and steep shores of Lake Bunyonyi"
+    },
+    {
+      "name": "dest-custom-5",
+      "commons": "Top of Murchison falls.jpg",
+      "width": 900,
+      "context": "Custom Destination Tour — gallery",
+      "subject": "The Nile forcing through the gorge at the top of Murchison Falls"
+    },
+
+    {
+      "name": "exp-city-heritage",
+      "commons": "Nakasero market built in 1927 in Kampala, Uganda.jpg",
+      "width": 800,
+      "context": "Experience type tile — City & heritage",
+      "subject": "The 1927 market hall at Nakasero, Kampala"
+    },
+    {
+      "name": "exp-nature-waterfalls",
+      "commons": "Sipi falls holiday.jpg",
+      "width": 800,
+      "context": "Experience type tile — Nature & waterfalls",
+      "subject": "Water falling over the Sipi gorge"
+    },
+    {
+      "name": "exp-lake-river",
+      "commons": "Tourists on a boat cruise on river Nile.jpg",
+      "width": 800,
+      "context": "Experience type tile — Lake & river",
+      "subject": "Passengers on a boat cruise along the Nile"
+    },
+    {
+      "name": "exp-wildlife",
+      "commons": "Wildlife Education Centre Entebbe.jpg",
+      "width": 800,
+      "context": "Experience type tile — Wildlife",
+      "subject": "Grounds of the Uganda Wildlife Education Centre at Entebbe"
+    },
+    {
+      "name": "exp-community",
+      "commons": "Mosopisek women Weaving.jpg",
+      "width": 800,
+      "context": "Experience type tile — Community & village",
+      "subject": "Women weaving together at a community workshop"
+    },
+    {
+      "name": "exp-food-market",
+      "commons": "ROLEX2.jpg",
+      "width": 800,
+      "context": "Experience type tile — Food & markets",
+      "subject": "A Ugandan rolex — an egg omelette rolled in a fresh chapati"
+    },
+    {
+      "name": "exp-mountains-hiking",
+      "commons": "Mount Elgon-2.jpg",
+      "width": 800,
+      "context": "Experience type tile — Mountains & hiking",
+      "subject": "The slopes of Mount Elgon above the cloud line"
+    },
+    {
+      "name": "exp-custom",
+      "commons": "Hilly green scenery on the Bushenyi to Kasese tarmac road in Western Uganda 13.jpg",
+      "width": 800,
+      "context": "Experience type tile — Custom & bespoke",
+      "subject": "Open road through the hills of western Uganda"
+    },
+
+    {
+      "name": "guide-okello",
+      "commons": "Nakasero Market.jpg",
+      "width": 900,
+      "context": "Guide profile band — Okello Joseph (Kampala)",
+      "subject": "Traders and produce at Nakasero Market, Kampala"
+    },
+    {
+      "name": "guide-florence",
+      "commons": "Source of the Nile Bridge Jinja Oct 2019.jpg",
+      "width": 900,
+      "context": "Guide profile band — Namugga Florence (Jinja)",
+      "subject": "The Source of the Nile bridge at Jinja"
+    },
+    {
+      "name": "guide-david",
+      "commons": "Aero Beach in Entebbe..JPG",
+      "width": 900,
+      "context": "Guide profile band — Ssemwogerere David (Entebbe)",
+      "subject": "The Lake Victoria shoreline at Entebbe"
+    },
+    {
+      "name": "guide-robert",
+      "commons": "Sipi Falls Main Drop.jpg",
+      "width": 900,
+      "context": "Guide profile band — Wamala Robert (Kapchorwa)",
+      "subject": "The main drop of Sipi Falls"
+    },
+    {
+      "name": "guide-justus",
+      "commons": "Fort Portal Uganda.jpg",
+      "width": 900,
+      "context": "Guide profile band — Kyomuhendo Justus (Fort Portal)",
+      "subject": "A street in Fort Portal, western Uganda"
+    },
+    {
+      "name": "guide-sarah",
+      "commons": "Market near Old Taxi Park, Kampala.JPG",
+      "width": 900,
+      "context": "Guide profile band — Mbabazi Sarah (Kampala)",
+      "subject": "The market beside the Old Taxi Park in central Kampala"
+    },
+
+    {
+      "name": "brand-rider-passenger",
+      "commons": "Boda boda with passenger.jpg",
+      "width": 1600,
+      "context": "Site-wide — full-bleed band",
+      "subject": "A boda-boda rider carrying a passenger"
+    },
+    {
+      "name": "brand-boda-rank",
+      "commons": "Boda boda (Motorcycle centre).jpg",
+      "width": 1600,
+      "context": "Site-wide — full-bleed band",
+      "subject": "Rows of boda-boda motorcycles at a staging point"
+    },
+    {
+      "name": "brand-mbale-junction",
+      "commons": "Boda bodas among vehicles at a junction in Mbale town,Uganda.jpg",
+      "width": 900,
+      "context": "Site-wide — eastern region band",
+      "subject": "Boda-bodas among traffic at a junction in Mbale town"
+    },
+    {
+      "name": "brand-ugandan-food",
+      "commons": "Ugandan matooke food.jpg",
+      "width": 800,
+      "context": "Site-wide — food band",
+      "subject": "A plate of Ugandan matooke and groundnut sauce"
+    },
+    {
+      "name": "brand-lake-sunset",
+      "commons": "Sunset Over Lake Victoria.jpg",
+      "width": 800,
+      "context": "Site-wide — evening band",
+      "subject": "Sunset over Lake Victoria"
+    },
+    {
+      "name": "brand-night-city",
+      "commons": "City life in the night.jpg",
+      "width": 800,
+      "context": "Site-wide — Kampala at night",
+      "subject": "Kampala street life after dark"
+    }
+  ]
+}

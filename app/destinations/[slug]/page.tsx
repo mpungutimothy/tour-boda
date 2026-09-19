@@ -4,6 +4,7 @@ import { destinations } from "@/data/destinations";
 import { DestinationDetail } from "@/components/destinations/destination-detail";
 import { TripRail } from "@/components/instrument/trip-rail";
 import { generateDestinationSchema } from "@/lib/schema/destination";
+import { absoluteUrl } from "@/lib/site";
 
 export function generateStaticParams() {
   return destinations.map((d) => ({ slug: d.slug }));
@@ -22,7 +23,12 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       title: destination.name,
       description,
       type: "article",
-      images: destination.images.map((img) => ({ url: img.url, alt: img.caption })),
+      // Photography is local, so it must be made absolute for crawlers — a
+      // relative /images/ path means nothing to a social card scraper.
+      images: destination.images.map((img) => ({
+        url: absoluteUrl(img.url),
+        alt: img.caption,
+      })),
     },
   };
 }

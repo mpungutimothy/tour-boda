@@ -1,4 +1,5 @@
 import type { DestinationContent } from "@/types/destination-content";
+import { gallery } from "@/lib/photos";
 
 /**
  * The three founding routes, written as editorial content only. Marketplace
@@ -25,20 +26,28 @@ export const coreDestinations: DestinationContent[] = [
       lng: 32.5811,
       region: "Central Region, Kampala District",
     },
-    images: [
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Kampala_Kasubi_Tombs.jpg/1280px-Kampala_Kasubi_Tombs.jpg",
-        caption:
-          "The thatched dome of Kasubi Tombs, the burial ground of the Buganda kings",
-        credit: "Wikimedia Commons — not not phil, CC BY-SA 2.0",
-      },
-      {
-        url: "https://upload.wikimedia.org/wikipedia/commons/9/96/Bahai_Temple_Kampala_Uganda.jpg",
-        caption:
-          "The Bahai Temple on Kikaya Hill, the only one of its kind in Africa",
-        credit: "Wikimedia Commons — Owobusingye, CC BY 4.0",
-      },
-    ],
+    images: gallery([
+      [
+        "dest-kampala-1.jpg",
+        "The thatched dome of Kasubi Tombs, the burial ground of the Buganda kings, rebuilt after the 2010 fire",
+      ],
+      [
+        "dest-kampala-2.jpg",
+        "The Bahai Temple on Kikaya Hill, the only one of its kind in Africa",
+      ],
+      [
+        "dest-kampala-3.jpg",
+        "The Old Taxi Park, where the ride starts — ten minutes before the noise stops being overwhelming",
+      ],
+      [
+        "dest-kampala-4.jpg",
+        "Nakasero market, where the rolex stalls fire up at 6:15 every morning",
+      ],
+      [
+        "dest-kampala-5.jpg",
+        "A boda rank waiting on fares. The whole route runs on this trade",
+      ],
+    ]),
     author: {
       name: "Okello Joseph",
       bio: "Boda rider since 2011. Born in Gulu, moved to Kampala at sixteen. Speaks Luganda, Acholi, and English.",
@@ -107,19 +116,28 @@ export const coreDestinations: DestinationContent[] = [
       lng: 33.2024,
       region: "Eastern Region, Jinja District",
     },
-    images: [
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Source_of_the_Nile%2C_Jinja_Uganda_-_international_tourist_site.jpg/1280px-Source_of_the_Nile%2C_Jinja_Uganda_-_international_tourist_site.jpg",
-        caption: "The Source of the Nile at Jinja, where Lake Victoria feeds the White Nile",
-        credit: "Wikimedia Commons — Christopher Liberty, CC BY-SA 4.0",
-      },
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Jinja_source_of_Nile.jpg/1280px-Jinja_source_of_Nile.jpg",
-        caption:
-          "The marker at the spot where the Nile begins, which Speke reached in 1862",
-        credit: "Wikimedia Commons — Dror Feitelson, CC BY-SA 3.0",
-      },
-    ],
+    images: gallery([
+      [
+        "dest-jinja-1.jpg",
+        "The Source of the Nile at Jinja, where Lake Victoria feeds the White Nile",
+      ],
+      [
+        "dest-jinja-2.jpg",
+        "The Source of the Nile gardens and monument, the marker Speke reached in 1862",
+      ],
+      [
+        "dest-jinja-3.jpg",
+        "The Nile leaving the lake at Jinja — the start of a river that runs 6,650 kilometres",
+      ],
+      [
+        "dest-jinja-4.jpg",
+        "Rapids below Jinja, where the Nile narrows hard over rock",
+      ],
+      [
+        "dest-jinja-5.jpg",
+        "Jinja town, laid out on a colonial grid that the market still organises itself around",
+      ],
+    ]),
     author: {
       name: "Namugga Florence",
       bio: "Tourism graduate of Makerere University (2018). Thesis: 'Industrial Heritage and River Economy of Jinja Town.' Speaks Luganda, Lusoga, and English.",
@@ -188,19 +206,28 @@ export const coreDestinations: DestinationContent[] = [
       lng: 32.4473,
       region: "Central Region, Entebbe Municipality",
     },
-    images: [
-      {
-        url: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Entebbe_Botanical_Gardens_4.jpg",
-        caption:
-          "The fern walk in the Entebbe Botanical Gardens, overgrown from June to August",
-        credit: "Wikimedia Commons — gotouganda, CC BY 2.0",
-      },
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Entebbe_Botanical_Gardens_3.jpg/1280px-Entebbe_Botanical_Gardens_3.jpg",
-        caption: "A bird of prey in the canopy at the Entebbe Botanical Gardens",
-        credit: "Wikimedia Commons, CC BY 2.0",
-      },
-    ],
+    images: gallery([
+      [
+        "dest-entebbe-1.jpg",
+        "The lake beach inside the Botanical Gardens, where the garden and Lake Victoria meet",
+      ],
+      [
+        "dest-entebbe-2.jpg",
+        "A bird of prey in the canopy at the Entebbe Botanical Gardens",
+      ],
+      [
+        "dest-entebbe-3.jpg",
+        "The fern walk in the Entebbe Botanical Gardens, overgrown from June to August",
+      ],
+      [
+        "dest-entebbe-4.jpg",
+        "A fishing village on the Lake Victoria shore, where the auction starts before five",
+      ],
+      [
+        "dest-entebbe-5.jpg",
+        "A shoebill in the Mabamba wetland. This is the bird people come to Entebbe for",
+      ],
+    ]),
     author: {
       name: "Ssemwogerere David",
       bio: "Born and raised in Entebbe. Former Lake Victoria fishing boat hand. Licensed tour guide since 2016. Speaks Luganda, English, and basic Kiswahili.",

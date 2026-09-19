@@ -84,7 +84,7 @@ export function ResultsGrid({
       {showSort ? (
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground">
-            <span data-readout className="text-base font-semibold text-primary">
+            <span data-readout className="text-base font-semibold text-primary-ink">
               {String(matches.length).padStart(2, "0")}
             </span>{" "}
             of {String(destinations.length).padStart(2, "0")} routes

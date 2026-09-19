@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:static": "node scripts/build-static.mjs",
+    "serve:static": "node scripts/serve-static.mjs",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
@@ -13,9 +15,12 @@
     "verify:contrast": "node scripts/check-contrast.mjs",
     "verify:copy": "node scripts/compare-narratives.mjs HEAD",
     "verify:schema": "node --import ./scripts/ts-alias-loader.mjs scripts/validate-schema.ts",
-    "verify": "npm run typecheck && npm run verify:data && npm run verify:pricing && npm run verify:contrast && npm run verify:copy && npm run verify:schema",
+    "verify:images": "node scripts/verify-images.mjs",
+    "verify": "npm run typecheck && npm run verify:data && npm run verify:pricing && npm run verify:contrast && npm run verify:copy && npm run verify:schema && npm run verify:images",
     "lint:content": "node --import ./scripts/ts-alias-loader.mjs scripts/lint-destinations.ts",
-    "build:llms": "node --import ./scripts/ts-alias-loader.mjs scripts/build-llms.ts"
+    "build:llms": "node --import ./scripts/ts-alias-loader.mjs scripts/build-llms.ts",
+    "photos": "node scripts/sync-photos.mjs",
+    "photos:force": "node scripts/sync-photos.mjs --force"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

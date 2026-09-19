@@ -48,8 +48,8 @@ import {
   Check,
   CheckCircle2,
   CreditCard,
-  Loader2,
   Lock,
+  MapPin,
   Minus,
   Phone,
   Plus,
@@ -312,7 +312,7 @@ export function BookingFlow({
                     className={cn(
                       "flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[0.625rem] uppercase tracking-[0.12em] transition-colors",
                       current
-                        ? "border-primary bg-primary/12 text-primary"
+                        ? "border-primary bg-primary/12 text-primary-ink"
                         : done
                           ? "border-success/45 bg-success/10 text-success"
                           : "border-hairline text-muted-foreground",
@@ -450,7 +450,7 @@ export function BookingFlow({
                 <ul className="mt-3 space-y-3">
                   {guides.map((guide) => (
                     <li key={guide.id} className="flex items-start gap-3">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-hairline bg-card font-display text-xs font-bold text-primary">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-hairline bg-card font-display text-xs font-bold text-primary-ink">
                         {guide.name
                           .split(/\s+/)
                           .slice(0, 2)
@@ -621,7 +621,7 @@ export function BookingFlow({
                   >
                     <span className="min-w-0">
                       <span className="flex items-center gap-2 font-sans text-sm text-foreground">
-                        <Icon className="h-4 w-4 text-primary" aria-hidden />
+                        <Icon className="h-4 w-4 text-primary-ink" aria-hidden />
                         {COMPONENT_LABELS[key]}
                         {locked ? (
                           <span className="font-mono text-[0.5625rem] uppercase tracking-[0.12em] text-muted-foreground">
@@ -697,7 +697,7 @@ export function BookingFlow({
                           <span className="shrink-0 text-right">
                             <span
                               data-readout
-                              className="block font-mono text-sm font-semibold text-primary"
+                              className="block font-mono text-sm font-semibold text-primary-ink"
                             >
                               {formatUGX(addOn.price)}
                             </span>
@@ -800,7 +800,7 @@ export function BookingFlow({
             </p>
 
             {isQuotation && destination.quoteNote ? (
-              <p className="mt-5 flex items-start gap-2.5 rounded-lg border border-primary/35 bg-primary/[0.07] p-3.5 font-sans text-xs leading-relaxed text-primary">
+              <p className="mt-5 flex items-start gap-2.5 rounded-lg border border-primary/35 bg-primary/[0.07] p-3.5 font-sans text-xs leading-relaxed text-primary-ink">
                 <Sparkles className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
                 {destination.quoteNote}
               </p>
@@ -885,7 +885,7 @@ export function BookingFlow({
                           className={cn(
                             "flex h-9 w-9 shrink-0 items-center justify-center rounded-md border",
                             active
-                              ? "border-primary/50 bg-primary/15 text-primary"
+                              ? "border-primary/50 bg-primary/15 text-primary-ink"
                               : "border-hairline text-muted-foreground",
                           )}
                         >
@@ -957,7 +957,7 @@ export function BookingFlow({
                 </div>
 
                 <p className="mt-5 flex items-start gap-2.5 rounded-lg border border-hairline bg-background/60 p-3.5 font-sans text-xs leading-relaxed text-muted-foreground">
-                  <Lock className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                  <Lock className="mt-0.5 h-4 w-4 shrink-0 text-primary-ink" aria-hidden />
                   Prototype payment. No gateway is contacted, no card or mobile
                   money details are transmitted or stored, and no money moves.
                 </p>
@@ -986,7 +986,7 @@ export function BookingFlow({
 
             <div className="mt-6 rounded-lg border border-hairline bg-card p-5">
               <p className="telemetry text-muted-foreground">Reference</p>
-              <p className="mt-2 font-mono text-3xl font-bold tracking-[0.08em] text-primary">
+              <p className="mt-2 font-mono text-3xl font-bold tracking-[0.08em] text-primary-ink">
                 {reference.code}
               </p>
               <dl className="mt-5 grid gap-3 border-t border-hairline pt-5 sm:grid-cols-2">
@@ -1039,7 +1039,7 @@ export function BookingFlow({
                 <li key={line} className="flex items-start gap-3">
                   <span
                     data-readout
-                    className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-hairline font-mono text-[0.625rem] text-primary"
+                    className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-hairline font-mono text-[0.625rem] text-primary-ink"
                   >
                     {index + 1}
                   </span>
@@ -1067,19 +1067,19 @@ export function BookingFlow({
             </Button>
 
             {step === "payment" ? (
+              // `loading` keeps the label mounted and prepends the spinner, so
+              // the button does not change width or wording mid-click. The
+              // previous version swapped "Pay UGX 279,000" for "Processing",
+              // which made the whole footer row shift at the moment of click.
               <Button
                 type="button"
                 size="lg"
                 onClick={submit}
-                disabled={processing}
+                loading={processing}
+                loadingLabel="Processing your payment"
                 className="min-w-[13rem]"
               >
-                {processing ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden />
-                    Processing
-                  </>
-                ) : isQuotation ? (
+                {isQuotation ? (
                   <>
                     Request quotation
                     <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
@@ -1120,6 +1120,33 @@ export function BookingFlow({
       {/* ---- Sticky price panel ---- */}
       <aside className="lg:sticky lg:top-20 lg:self-start">
         <div className="plate rounded-lg p-5">
+          {/* Thumbnail bleeds to the plate edge, so the price panel always shows
+              the thing being priced. Booking blind is the fastest way to lose
+              trust at the payment step. */}
+          {destination.images[0] ? (
+            <div className="relative -mx-5 -mt-5 mb-4 aspect-[16/9] overflow-hidden rounded-t-lg">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={destination.images[0].url}
+                alt=""
+                loading="lazy"
+                className="duotone h-full w-full object-cover"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-primary/12 mix-blend-overlay"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-scrim/90 to-transparent"
+              />
+              <span className="absolute inset-x-3 bottom-2.5 flex items-center gap-1.5 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-on-scrim">
+                <MapPin className="h-3 w-3" aria-hidden />
+                {destination.location.district}
+              </span>
+            </div>
+          ) : null}
+
           <div className="flex items-center justify-between gap-3">
             <span className="telemetry text-muted-foreground">Your selection</span>
             <TierBadge tierKey={tier.key} />
@@ -1172,7 +1199,7 @@ export function BookingFlow({
             <span className="text-right">
               <span
                 data-readout
-                className="block font-mono text-2xl font-bold leading-none text-primary"
+                className="block font-mono text-2xl font-bold leading-none text-primary-ink"
               >
                 {formatUGX(quote.total)}
               </span>
@@ -1291,7 +1318,7 @@ function QuoteTable({
             <td className="px-4 py-4 text-right">
               <span
                 data-readout
-                className="font-mono text-xl font-bold text-primary"
+                className="font-mono text-xl font-bold text-primary-ink"
               >
                 {formatUGX(total)}
               </span>
@@ -1340,7 +1367,7 @@ function PartyStepper({
           onClick={() => onChange(value - 1)}
           disabled={!canDecrease}
           aria-label={`One fewer ${label.toLowerCase()}`}
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-hairline text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary disabled:opacity-40 disabled:hover:border-hairline disabled:hover:text-muted-foreground"
+          className="flex h-8 w-8 items-center justify-center rounded-md border border-hairline text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary-ink disabled:opacity-40 disabled:hover:border-hairline disabled:hover:text-muted-foreground"
         >
           <Minus className="h-3.5 w-3.5" aria-hidden />
         </button>
@@ -1356,7 +1383,7 @@ function PartyStepper({
           onClick={() => onChange(value + 1)}
           disabled={!canIncrease}
           aria-label={`One more ${label.toLowerCase()}`}
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-hairline text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary disabled:opacity-40 disabled:hover:border-hairline disabled:hover:text-muted-foreground"
+          className="flex h-8 w-8 items-center justify-center rounded-md border border-hairline text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary-ink disabled:opacity-40 disabled:hover:border-hairline disabled:hover:text-muted-foreground"
         >
           <Plus className="h-3.5 w-3.5" aria-hidden />
         </button>

@@ -97,7 +97,7 @@ const voices = [
     voice: "Data",
     face: "JetBrains Mono",
     job: "Every number that matters",
-    className: "font-mono text-2xl font-semibold text-primary",
+    className: "font-mono text-2xl font-semibold text-primary-ink",
     sample: "168 km · 9h",
   },
   {
@@ -126,15 +126,15 @@ const typeScale = [
   { label: "Body Base", className: "font-sans text-base", sample: "Every boda guide knows every shortcut." },
   { label: "Body SM", className: "font-sans text-sm text-muted-foreground", sample: "Duration: 3.5 hours · Distance: 38 km" },
   { label: "Telemetry", className: "telemetry text-muted-foreground", sample: "Total distance" },
-  { label: "Readout", className: "font-mono text-2xl font-semibold text-primary", sample: "38 km" },
-  { label: "Price", className: "font-mono text-xl font-semibold text-primary", sample: "UGX 85,000" },
+  { label: "Readout", className: "font-mono text-2xl font-semibold text-primary-ink", sample: "38 km" },
+  { label: "Price", className: "font-mono text-xl font-semibold text-primary-ink", sample: "UGX 85,000" },
 ];
 
 export default function StyleguidePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-primary">00</span>
+        <span className="telemetry text-primary-ink">00</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Reference</span>
       </div>
@@ -168,7 +168,7 @@ export default function StyleguidePage() {
               }`}
             >
               <div>
-                <div className="telemetry text-primary">{v.voice}</div>
+                <div className="telemetry text-primary-ink">{v.voice}</div>
                 <div className="mt-1 font-mono text-[0.6875rem] text-muted-foreground">
                   {v.face}
                 </div>
@@ -456,7 +456,7 @@ export default function StyleguidePage() {
               </p>
             </CardContent>
             <CardFooter className="justify-between">
-              <span className="font-mono text-lg font-semibold text-primary">UGX 85,000</span>
+              <span className="font-mono text-lg font-semibold text-primary-ink">UGX 85,000</span>
               <Button size="sm">Open</Button>
             </CardFooter>
           </Card>
@@ -472,7 +472,7 @@ export default function StyleguidePage() {
               </p>
             </CardContent>
             <CardFooter className="justify-between">
-              <span className="font-mono text-lg font-semibold text-primary">UGX 180,000</span>
+              <span className="font-mono text-lg font-semibold text-primary-ink">UGX 180,000</span>
               <Button size="sm">Open</Button>
             </CardFooter>
           </Card>
@@ -489,7 +489,7 @@ export default function StyleguidePage() {
               </p>
             </CardContent>
             <CardFooter className="justify-between">
-              <span className="font-mono text-lg font-semibold text-primary">UGX 60,000</span>
+              <span className="font-mono text-lg font-semibold text-primary-ink">UGX 60,000</span>
               <Button size="sm">Open</Button>
             </CardFooter>
           </Card>

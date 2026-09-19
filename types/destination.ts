@@ -40,9 +40,16 @@ export interface DestinationLocation {
 }
 
 export interface DestinationImage {
+  /** Local path under `/images/`. */
   url: string;
   caption: string;
-  credit: string;
+  /**
+   * Optional: when absent, the credit is looked up from the generated
+   * `data/photo-credits.ts`, which is populated from the source file's own
+   * licence metadata. Prefer the lookup — a hand-typed credit is a credit that
+   * eventually goes stale or wrong.
+   */
+  credit?: string;
 }
 
 export interface DestinationAuthor {

@@ -1,19 +1,58 @@
 import Link from "next/link";
 import { destinations } from "@/data/destinations";
 import { guides } from "@/data/guides";
-import { TIER_META, TIER_ORDER } from "@/data/tiers";
 import { PARTNERS } from "@/data/partners";
 import { REVENUE_SPLIT } from "@/data/revenue";
 import { PROTOTYPE_NOTICE } from "@/lib/demo";
-import { RouteLine } from "@/components/motion/route-line";
-import { TierDot } from "@/components/marketplace/tier-ui";
+import {
+  ArrowUpRight,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+} from "lucide-react";
+
+/** Grouped so the footer reads as a site map rather than a link dump. */
+const SITEMAP: { heading: string; links: { label: string; href: string }[] }[] = [
+  {
+    heading: "Plan a trip",
+    links: [
+      { label: "All destinations", href: "/tours" },
+      { label: "Guides", href: "/guides" },
+      { label: "How it works", href: "/how-it-works" },
+      { label: "Build a custom route", href: "/book/custom-destination-tour" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "About us", href: "/about" },
+      { label: "Contact", href: "/contact" },
+      { label: "Partnerships", href: "/how-it-works#partners" },
+      { label: "Photography credits", href: "/credits" },
+    ],
+  },
+  {
+    heading: "Legal",
+    links: [
+      { label: "Booking terms", href: "/terms" },
+      { label: "Privacy", href: "/privacy" },
+      { label: "Design system", href: "/styleguide" },
+    ],
+  },
+];
 
 /**
  * Site footer.
  *
- * Carries three things the pitch needs visible on every page: the three-tier
- * model, the revenue split, and the partner ecosystem — plus the prototype
- * disclosure, so nobody mistakes sample data for a live claim.
+ * The dark half of the bookend, and the only place on the site where the whole
+ * ecosystem is listed at once — which is exactly what a pitch panel looks for
+ * and what a traveller never needs to see. Grouped as a sitemap so both
+ * audiences can find their shelf.
+ *
+ * Partner marks are chips rather than logos: the relationships are real but the
+ * permission to display institutional marks is not yet in place, and inventing
+ * a logo for a government body is not a thing to do on a pitch page.
  */
 export function Footer() {
   const routes = destinations.length;
@@ -22,138 +61,176 @@ export function Footer() {
     destinations.map((destination) => destination.location.district),
   ).size;
 
+  const socials = [
+    { label: "Instagram", Icon: Instagram, url: "https://instagram.com/tourbodauganda" },
+    { label: "Facebook", Icon: Facebook, url: "https://facebook.com/tourbodauganda" },
+    { label: "LinkedIn", Icon: Linkedin, url: "https://linkedin.com/company/tourbodauganda" },
+    { label: "YouTube", Icon: Youtube, url: "https://youtube.com/@tourbodauganda" },
+  ];
+
   return (
-    <footer className="glow-accent relative mt-20 overflow-hidden border-t border-hairline">
-      {/* Mapped-terrain texture, so the route line reads as drawn onto it. */}
-      <div
-        aria-hidden
-        className="topo pointer-events-none absolute inset-0 -z-10 opacity-60"
-      />
+    <footer className="theme-shell border-t border-hairline bg-background">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        {/* ---- Brand + sitemap ---- */}
+        <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-12">
+          <div className="max-w-sm">
+            <Link
+              href="/"
+              className="inline-flex items-baseline gap-2"
+              aria-label="Tour-Boda Uganda, home"
+            >
+              <span className="font-display text-2xl font-semibold leading-none tracking-display text-foreground">
+                Tour-Boda
+              </span>
+              <span className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                Uganda
+              </span>
+            </Link>
 
-      <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* The network, drawn. Reinforces 'we know every road' on every page. */}
-        <div className="mb-10">
-          <RouteLine className="h-auto w-full max-w-2xl" />
-          <p className="mt-3 max-w-2xl font-sans text-xs leading-relaxed text-muted-foreground">
-            {districtCount} districts, one network. Every route is ridden by a
-            local guide who knows the road by name.
-          </p>
-        </div>
+            <p className="mt-4 font-sans text-sm leading-relaxed text-muted-foreground">
+              A marketplace for the last mile of Ugandan tourism. Local
+              boda-boda riders, licensed and vetted, bookable at a published
+              price in shillings.
+            </p>
 
-        {/* Spec plate. */}
-        <div className="mb-8 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 border-b border-hairline pb-6">
-          <span className="font-display text-2xl font-bold tracking-[0.1em] text-primary">
-            Tour-Boda
-          </span>
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
-            <span className="telemetry text-muted-foreground">
-              <span className="text-primary">{routes}</span> routes
-            </span>
-            <span className="telemetry text-muted-foreground">
-              <span className="text-primary">{guideCount}</span> guides
-            </span>
-            <span className="telemetry text-muted-foreground">
-              Currency <span className="text-primary">UGX</span>
-            </span>
-            <span className="telemetry text-muted-foreground">
-              Booking fee <span className="text-primary">None</span>
-            </span>
-          </div>
-        </div>
-
-        {/* Model, split, ecosystem — the three things an investor looks for. */}
-        <div className="mb-8 grid gap-8 sm:grid-cols-3">
-          <div>
-            <h2 className="telemetry text-muted-foreground">Service levels</h2>
-            <ul className="mt-3 space-y-2">
-              {TIER_ORDER.map((key) => (
-                <li key={key} data-tier={key} className="flex items-center gap-2">
-                  <TierDot tierKey={key} />
-                  <Link
-                    href="/how-it-works"
-                    className="font-sans text-xs text-muted-foreground transition-colors hover:tier-text"
+            {/* Revenue split, stated once more at the bottom of every page. */}
+            <div className="mt-6 rounded-lg border border-hairline p-3.5">
+              <p className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Where your money goes
+              </p>
+              <ul className="mt-2.5 space-y-1.5">
+                {REVENUE_SPLIT.map((party) => (
+                  <li
+                    key={party.id}
+                    className="flex items-baseline justify-between gap-3 font-sans text-xs"
                   >
-                    {TIER_META[key].name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                    <span className="text-muted-foreground">
+                      {party.shortLabel}
+                    </span>
+                    <span className="numeric-emphasis font-mono text-xs">
+                      {Math.round(party.share * 100)}%
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          <div>
-            <h2 className="telemetry text-muted-foreground">Revenue split</h2>
-            <ul className="mt-3 space-y-2">
-              {REVENUE_SPLIT.map((party) => (
-                <li
-                  key={party.id}
-                  className="flex items-center gap-2 font-sans text-xs text-muted-foreground"
-                >
-                  <span data-readout className="font-mono text-foreground">
-                    {Math.round(party.share * 100)}%
-                  </span>
-                  {party.shortLabel}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/how-it-works#revenue-heading"
-              className="mt-3 inline-block font-mono text-[0.625rem] uppercase tracking-[0.14em] text-primary transition-opacity hover:opacity-80"
-            >
-              How the split works
-            </Link>
-          </div>
-
-          <div>
-            <h2 className="telemetry text-muted-foreground">Ecosystem</h2>
-            <ul className="mt-3 space-y-2">
-              {PARTNERS.slice(0, 4).map((partner) => (
-                <li
-                  key={partner.id}
-                  className="font-sans text-xs text-muted-foreground"
-                >
-                  {partner.name}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/how-it-works#partners"
-              className="mt-3 inline-block font-mono text-[0.625rem] uppercase tracking-[0.14em] text-primary transition-opacity hover:opacity-80"
-            >
-              All {PARTNERS.length} relationships
-            </Link>
-          </div>
+          {SITEMAP.map((group) => (
+            <nav key={group.heading} aria-label={group.heading}>
+              <h2 className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-foreground">
+                {group.heading}
+              </h2>
+              <ul className="mt-4 space-y-2.5">
+                {group.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="font-sans text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        {/* Prototype disclosure. */}
-        <p className="mb-8 rounded-lg border border-hairline bg-background/60 p-3.5 font-sans text-[0.6875rem] leading-relaxed text-muted-foreground">
-          <span className="font-mono uppercase tracking-[0.14em] text-primary">
-            {PROTOTYPE_NOTICE.label}.
-          </span>{" "}
-          {PROTOTYPE_NOTICE.detail}
-        </p>
+        {/* ---- Partner credibility chips ---- */}
+        <div className="mt-12 border-t border-hairline pt-8">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+            <h2 className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-foreground">
+              Ecosystem
+            </h2>
+            <p className="font-sans text-xs text-muted-foreground">
+              {routes} routes · {guideCount} guides · {districtCount} districts
+            </p>
+          </div>
 
-        <div className="flex flex-col justify-between gap-6 border-t border-hairline pt-6 sm:flex-row sm:items-center">
-          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground">
-            &copy; {new Date().getFullYear()} Tour-Boda Uganda
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {PARTNERS.map((partner) => (
+              <li key={partner.id}>
+                <span className="inline-flex items-center gap-2 rounded-full border border-hairline px-3.5 py-1.5 font-sans text-xs text-muted-foreground">
+                  <span
+                    aria-hidden
+                    className={
+                      partner.status === "signed"
+                        ? "h-1.5 w-1.5 rounded-full bg-success"
+                        : "h-1.5 w-1.5 rounded-full border border-hairline"
+                    }
+                  />
+                  {partner.name}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            href="/how-it-works#partners"
+            className="mt-4 inline-flex items-center gap-1.5 font-sans text-xs font-semibold text-primary-ink transition-opacity hover:opacity-80"
+          >
+            Every relationship, with its status
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+          </Link>
+        </div>
+
+        {/* ---- Social ---- */}
+        <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-hairline pt-8">
+          <ul className="flex items-center gap-2">
+            {socials.map(({ label, Icon, url }) => (
+              <li key={label}>
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  title={`${label} (placeholder handle)`}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-muted-foreground transition-colors hover:border-primary hover:text-primary-ink"
+                >
+                  <Icon className="h-4 w-4" aria-hidden />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p className="font-sans text-[0.6875rem] text-muted-foreground">
+            Placeholder handles — no accounts are live yet.
           </p>
-          <nav className="flex flex-wrap items-center gap-x-6 gap-y-2" aria-label="Footer">
+        </div>
+
+        {/* ---- Bottom bar ---- */}
+        <div className="mt-8 flex flex-col justify-between gap-4 border-t border-hairline pt-6 sm:flex-row sm:items-center">
+          <p className="font-sans text-xs text-muted-foreground">
+            &copy; {new Date().getFullYear()} Tour-Boda Uganda. Prices in
+            Ugandan shillings.
+          </p>
+          <nav
+            className="flex flex-wrap items-center gap-x-6 gap-y-2"
+            aria-label="Legal"
+          >
             {[
-              { label: "How it works", href: "/how-it-works" },
-              { label: "All routes", href: "/tours" },
-              { label: "Guides", href: "/guides" },
-              { label: "Privacy", href: "/privacy" },
               { label: "Terms", href: "/terms" },
+              { label: "Privacy", href: "/privacy" },
+              { label: "Photo credits", href: "/credits" },
             ].map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-primary"
+                className="font-sans text-xs text-muted-foreground transition-colors hover:text-foreground"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
         </div>
+
+        {/* ---- Prototype disclosure ---- */}
+        <p className="mt-8 rounded-lg border border-hairline p-3.5 font-sans text-[0.6875rem] leading-relaxed text-muted-foreground">
+          <span className="font-semibold uppercase tracking-[0.12em] text-primary-ink">
+            {PROTOTYPE_NOTICE.label}.
+          </span>{" "}
+          {PROTOTYPE_NOTICE.detail}
+        </p>
       </div>
     </footer>
   );

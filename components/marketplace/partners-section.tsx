@@ -17,9 +17,18 @@ import { ShieldCheck } from "lucide-react";
  */
 
 const STATUS_STYLE: Record<PartnerStatus, string> = {
-  signed: "border-success/45 bg-success/10 text-success",
-  "in-discussion": "border-primary/45 bg-primary/10 text-primary",
+  // Small badge text on white, so gold drops to the stronger tone (#8A5A16,
+  // 5.9:1) rather than the price tone (#A8701F, 4.2:1 — fine at 28px, not at
+  // 11px). Green is already deep enough at #3F5C44.
+  signed: "border-success/40 bg-success/10 text-success",
+  "in-discussion": "border-primary/40 bg-primary/10 text-primary-ink",
   placeholder: "border-hairline text-muted-foreground",
+};
+
+const STATUS_DOT: Record<PartnerStatus, string> = {
+  signed: "bg-success",
+  "in-discussion": "bg-primary",
+  placeholder: "border border-hairline",
 };
 
 export function PartnersSection({ className }: { className?: string }) {
@@ -47,24 +56,24 @@ export function PartnersSection({ className }: { className?: string }) {
               {members.map((partner) => (
                 <li
                   key={partner.id}
-                  className="flex flex-col justify-between gap-4 rounded-lg border border-hairline bg-background p-4 transition-colors hover:border-primary/40"
+                  className="flex flex-col justify-between gap-4 rounded-lg border border-hairline bg-card p-4 transition-colors hover:border-primary"
                 >
                   {/* Wordmark plate stands in for a logo lock-up. */}
                   <div>
                     <div className="flex items-start justify-between gap-3">
-                      <span className="font-display text-sm font-semibold leading-snug tracking-display text-foreground">
+                      <span className="font-display text-base font-semibold leading-snug tracking-display text-foreground">
                         {partner.name}
                       </span>
                       <span
                         className={cn(
-                          "shrink-0 rounded-full border px-2 py-0.5 font-mono text-[0.5625rem] uppercase tracking-[0.12em]",
+                          "shrink-0 rounded-full border px-2 py-0.5 font-sans text-[0.625rem] font-semibold uppercase tracking-[0.1em]",
                           STATUS_STYLE[partner.status],
                         )}
                       >
                         {PARTNER_STATUS_LABEL[partner.status]}
                       </span>
                     </div>
-                    <p className="mt-2.5 font-sans text-xs leading-relaxed text-muted-foreground">
+                    <p className="mt-2.5 font-sans text-[0.8125rem] leading-relaxed text-muted-foreground">
                       {partner.role}
                     </p>
                   </div>
@@ -75,9 +84,9 @@ export function PartnersSection({ className }: { className?: string }) {
         );
       })}
 
-      <p className="flex items-start gap-2.5 rounded-lg border border-hairline bg-background/60 p-4 font-sans text-xs leading-relaxed text-muted-foreground">
+      <p className="flex items-start gap-2.5 rounded-lg border border-hairline bg-field p-4 font-sans text-xs leading-relaxed text-muted-foreground">
         <ShieldCheck
-          className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+          className="mt-0.5 h-4 w-4 shrink-0 text-primary-ink"
           aria-hidden
         />
         <span>
@@ -92,7 +101,7 @@ export function PartnersSection({ className }: { className?: string }) {
   );
 }
 
-/** Condensed logo rail for the homepage — names only, no status. */
+/** Condensed partner rail — bordered white pills with a status dot. */
 export function PartnerRail({ className }: { className?: string }) {
   return (
     <ul
@@ -104,9 +113,17 @@ export function PartnerRail({ className }: { className?: string }) {
       {PARTNERS.slice(0, 8).map((partner) => (
         <li
           key={partner.id}
-          className="shrink-0 snap-start rounded-md border border-hairline bg-background/60 px-3.5 py-2.5"
+          className="flex shrink-0 snap-start items-center gap-2.5 rounded-full border border-hairline bg-card px-4 py-2.5"
+          title={`${PARTNER_STATUS_LABEL[partner.status]} — ${partner.role}`}
         >
-          <span className="block max-w-[14rem] truncate font-display text-xs font-semibold tracking-display text-muted-foreground">
+          <span
+            aria-hidden
+            className={cn(
+              "h-2 w-2 shrink-0 rounded-full",
+              STATUS_DOT[partner.status],
+            )}
+          />
+          <span className="block max-w-[15rem] truncate font-sans text-[0.8125rem] font-medium text-foreground">
             {partner.name}
           </span>
         </li>

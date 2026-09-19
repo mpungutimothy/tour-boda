@@ -59,7 +59,7 @@ export default function ContentCheckPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-primary">00</span>
+        <span className="telemetry text-primary-ink">00</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Internal</span>
       </div>
@@ -199,7 +199,7 @@ export default function ContentCheckPage() {
                     <div className="flex items-center justify-between gap-4">
                       <span className="flex items-center gap-3">
                         <AlertTriangle
-                          className="h-4 w-4 shrink-0 text-primary"
+                          className="h-4 w-4 shrink-0 text-primary-ink"
                           aria-hidden
                         />
                         <span className="font-mono text-sm text-foreground">

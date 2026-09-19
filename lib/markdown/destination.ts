@@ -1,6 +1,6 @@
 import type { Destination } from "@/types/destination";
-
-const SITE_URL = "https://tour-boda.ug";
+import { SITE_URL, absoluteUrl } from "@/lib/site";
+import { creditLine } from "@/lib/photos";
 
 export function destinationToMarkdown(destination: Destination): string {
   const lines: string[] = [];
@@ -89,9 +89,11 @@ export function destinationToMarkdown(destination: Destination): string {
   lines.push("## Images");
   lines.push("");
   for (const img of destination.images) {
-    lines.push(`![${img.caption}](${img.url})`);
+    // Absolute, and credited from the licence table: a markdown mirror is read
+    // out of page context, where a relative path and a bare caption are useless.
+    lines.push(`![${img.caption}](${absoluteUrl(img.url)})`);
     lines.push("");
-    lines.push(`*${img.caption}* — © ${img.credit}`);
+    lines.push(`*${img.caption}* — ${creditLine(img.url) ?? img.credit ?? ""}`);
     lines.push("");
   }
 

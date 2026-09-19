@@ -19,7 +19,7 @@ export function NarrativeSection({ destination }: { destination: Destination }) 
   return (
     <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-primary">02</span>
+        <span className="telemetry text-primary-ink">02</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Road log</span>
       </div>
@@ -51,7 +51,7 @@ export function NarrativeSection({ destination }: { destination: Destination }) 
           className="mt-8 border-l-2 border-primary pl-5 sm:pl-6"
           style={{ maxWidth: "65ch" }}
         >
-          <span className="telemetry text-primary">Honest note</span>
+          <span className="telemetry text-primary-ink">Honest note</span>
           <p className="mt-2 font-serif text-lg italic leading-relaxed text-foreground sm:text-xl">
             {honest.replace(/^One honest note:\s*/i, "")}
           </p>
@@ -62,7 +62,7 @@ export function NarrativeSection({ destination }: { destination: Destination }) 
         className="mt-10 flex items-center gap-4 border-t border-hairline pt-6"
         style={{ maxWidth: "65ch" }}
       >
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-hairline bg-card font-display text-lg font-bold text-primary">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-hairline bg-card font-display text-lg font-bold text-primary-ink">
           {destination.author.name.charAt(0)}
         </div>
         <div className="min-w-0">

@@ -80,14 +80,14 @@ export function BrowseView() {
               </div>
               <div className="flex items-baseline justify-between gap-3">
                 <dt className="text-muted-foreground">Showing</dt>
-                <dd data-readout className="font-mono text-primary">
+                <dd data-readout className="font-mono text-primary-ink">
                   {outcome.matches.length}
                 </dd>
               </div>
               {activeCount > 0 ? (
                 <div className="flex items-baseline justify-between gap-3">
                   <dt className="text-muted-foreground">Filters on</dt>
-                  <dd data-readout className="font-mono text-primary">
+                  <dd data-readout className="font-mono text-primary-ink">
                     {activeCount}
                   </dd>
                 </div>
@@ -99,17 +99,17 @@ export function BrowseView() {
             <p className="telemetry text-muted-foreground">Good to know</p>
             <ul className="mt-3 space-y-2.5 font-sans text-xs leading-relaxed text-muted-foreground">
               <li className="flex items-start gap-2">
-                <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+                <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary-ink" aria-hidden />
                 Some routes need {SHORTEST_NOTICE} hours&apos; notice, others 72.
                 The booking step tells you before you pay.
               </li>
               <li className="flex items-start gap-2">
-                <Bike className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+                <Bike className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary-ink" aria-hidden />
                 Two riders per boda. Larger parties are quoted across several
                 bikes automatically.
               </li>
               <li className="flex items-start gap-2">
-                <BadgeCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+                <BadgeCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary-ink" aria-hidden />
                 {guides.length} vetted guides, each cleared for specific tiers.
               </li>
             </ul>
@@ -117,7 +117,7 @@ export function BrowseView() {
         </aside>
 
         {/* ---- Results ---- */}
-        <div className="min-w-0">
+        <div id="results" className="min-w-0 scroll-mt-24">
           <ResultsGrid columns={2} />
         </div>
       </div>

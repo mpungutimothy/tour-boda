@@ -12,7 +12,7 @@ export function FAQSection({ destination }: { destination: Destination }) {
   return (
     <section className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-primary">05</span>
+        <span className="telemetry text-primary-ink">05</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Questions</span>
       </div>
@@ -36,11 +36,11 @@ export function FAQSection({ destination }: { destination: Destination }) {
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
-                  className="flex w-full items-center gap-4 py-4 text-left transition-colors hover:text-primary"
+                  className="flex w-full items-center gap-4 py-4 text-left transition-colors hover:text-primary-ink"
                 >
                   <span
                     aria-hidden
-                    className="font-mono text-[0.6875rem] tabular-nums text-primary"
+                    className="font-mono text-[0.6875rem] tabular-nums text-primary-ink"
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -49,7 +49,7 @@ export function FAQSection({ destination }: { destination: Destination }) {
                   </span>
                   <span
                     aria-hidden
-                    className="shrink-0 font-mono text-lg leading-none text-primary transition-transform duration-200"
+                    className="shrink-0 font-mono text-lg leading-none text-primary-ink transition-transform duration-200"
                     style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
                   >
                     +

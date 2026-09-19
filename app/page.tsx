@@ -5,15 +5,17 @@ import { tierMeta } from "@/data/tiers";
 import { TRAVELLER_FEES } from "@/data/revenue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { InstrumentCluster, Readout, SectionMark } from "@/components/instrument/readouts";
-import { CountUp, CountUpCurrency } from "@/components/motion/count-up";
-import { Reveal } from "@/components/motion/reveal";
+import { SectionHeading } from "@/components/layout/section-heading";
 import { SearchProvider } from "@/components/marketplace/search-provider";
 import { SearchBar } from "@/components/marketplace/search-bar";
 import { QuickPicks } from "@/components/marketplace/quick-picks";
 import { ResultsGrid } from "@/components/marketplace/results-grid";
+import { ExperienceGrid } from "@/components/marketplace/experience-grid";
 import { TierLegend } from "@/components/marketplace/tier-ui";
-import { RevenueModel, RevenueSummaryStrip } from "@/components/marketplace/revenue-model";
+import {
+  RevenueModel,
+  RevenueSummaryStrip,
+} from "@/components/marketplace/revenue-model";
 import { PartnerRail } from "@/components/marketplace/partners-section";
 import { GuideCard } from "@/components/marketplace/guide-card";
 import {
@@ -23,50 +25,46 @@ import {
   CreditCard,
   Plus,
   ShieldCheck,
-  Users,
-  Wallet,
+  Sparkles,
 } from "lucide-react";
 
-const heroImage =
-  "https://images.pexels.com/photos/38520450/pexels-photo-38520450.jpeg?auto=compress&cs=tinysrgb&w=1920";
-
-/** The marketplace journey, in the order a traveller actually does it. */
+/**
+ * The marketplace journey, in the order a traveller actually does it.
+ */
 const howItWorks = [
   {
     icon: Compass,
+    step: "01",
     title: "Search and compare",
     desc: "Filter by place, date, group type and budget. Every route shows three service levels side by side, priced in shillings.",
   },
   {
     icon: CreditCard,
+    step: "02",
     title: "Book and pay",
     desc: "Pick a date and party size, add extras, and pay by MTN or Airtel Money or card. The price you see is the price you pay.",
   },
   {
     icon: Bike,
+    step: "03",
     title: "Ride with your guide",
     desc: "Your rider picks you up. Licensed, vetted, and on this road most days of the week.",
   },
 ];
 
-const whyTourBoda = [
-  {
-    icon: ShieldCheck,
-    title: "Vetted, not just listed",
-    desc: "Every guide holds a district or city authority licence, and is re-verified in person. The licence number is on the profile.",
-  },
-  {
-    icon: Users,
-    title: "Local guides",
-    desc: "Our riders grew up here. They know the woman who sells the best rolex at Nakawa, and which pothole floods first.",
-  },
-  {
-    icon: Wallet,
-    title: "Sixty per cent to the road",
-    desc: "The operator and guide take the majority of every booking. The split is published, not implied.",
-  },
-];
-
+/**
+ * Home.
+ *
+ * Section rhythm is fixed and deliberate: cream → white → cream → white → dark.
+ * The alternation is what gives the page its editorial pacing, so it is
+ * expressed once here in band classes rather than improvised per section. Any
+ * new section has to join one of the four bands, not invent a fifth.
+ *
+ * There is exactly one entrance animation on this page — the hero sequence.
+ * Everything below it is static on load. Scroll-triggered reveals on every
+ * section were removed because they made a marketplace feel like a landing
+ * page and delayed content the visitor had already asked for.
+ */
 export default function Home() {
   const routeCount = destinations.length;
   const guideCount = guides.length;
@@ -78,176 +76,224 @@ export default function Home() {
       destination.tiers.map((tier) => tier.price),
     ),
   );
+  const rating = averageRating();
+  const trips = totalTripsLed();
+
+  const heroStats = [
+    { label: "Destinations", value: String(routeCount) },
+    { label: "Districts", value: String(districtCount) },
+    { label: "Vetted guides", value: String(guideCount) },
+    { label: "From", value: `${(fromPrice / 1000).toFixed(0)}k`, unit: "UGX" },
+  ];
+
+  const trustSignals = [
+    { label: "Licensed guides", detail: "District or city authority permit on every profile" },
+    { label: "Vetted in person", detail: "Interviewed and ride-checked before listing" },
+    { label: "No booking fee", detail: "Travellers pay the published price, nothing on top" },
+    {
+      label: "Partnership-backed",
+      detail: "Guide associations, rider groups and site custodians",
+    },
+  ];
 
   return (
     <SearchProvider>
-      {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={heroImage}
-            alt=""
-            className="duotone h-full w-full object-cover"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-primary/16 mix-blend-overlay"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/80 to-scrim/40" />
-          <div className="pointer-events-none absolute inset-0 glow-mesh opacity-70" />
-        </div>
+      {/* ══ BAND 1 — CREAM: hero and search ═══════════════════════════ */}
+      <section className="band-cream border-b border-hairline">
+        <div className="mx-auto max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:px-8 lg:pb-28 lg:pt-20">
+          <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.02fr] lg:gap-14">
+            {/* ---- Headline ---- */}
+            <div>
+              <p
+                className="animate-rise-in font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-primary-ink"
+                style={{ animationDelay: "0ms" }}
+              >
+                Kampala · Jinja · Entebbe · Mbale · Fort Portal
+              </p>
 
-        <div className="mx-auto w-full max-w-7xl px-4 pb-10 pt-24 sm:px-6 lg:px-8 lg:pt-28">
-          <div className="max-w-3xl">
-            <span className="telemetry text-on-scrim/60">
-              Kampala · Jinja · Entebbe · Mbale · Fort Portal
-            </span>
+              <h1
+                className="animate-rise-in mt-4 font-display text-[2.5rem] font-semibold leading-[1.04] tracking-display-lg text-foreground sm:text-[3.25rem] lg:text-[3.75rem]"
+                style={{ animationDelay: "100ms" }}
+              >
+                Ride Uganda with a guide who knows every road
+              </h1>
 
-            <h1 className="mt-4 font-display text-5xl font-bold leading-[0.94] tracking-display-lg text-on-scrim sm:text-6xl lg:text-7xl">
-              Ride Uganda with a guide who knows every road
-            </h1>
+              <p
+                className="animate-rise-in mt-5 max-w-xl font-sans text-lg leading-relaxed text-muted-foreground"
+                style={{ animationDelay: "200ms" }}
+              >
+                Local boda-boda riders take you to the places a coach bus cannot
+                reach — and tell you the truth about the road on the way.
+              </p>
 
-            <p className="mt-5 max-w-xl font-sans text-base leading-relaxed text-on-scrim/85 sm:text-lg">
-              Local boda-boda riders take you to the places a coach bus cannot
-              reach — and tell you the truth about the road on the way.
-            </p>
-          </div>
-
-          {/* Live figures — every one derived from the published catalogue. */}
-          <div className="mt-10 border-t border-on-scrim/20 pt-6">
-            <InstrumentCluster onScrim>
-              <Readout
-                onScrim
-                label="Routes"
-                value={<CountUp value={routeCount} />}
-                tone="data"
-              />
-              <Readout
-                onScrim
-                label="Service levels"
-                value={<CountUp value={3} />}
-                hint="Every route, three tiers"
-              />
-              <Readout
-                onScrim
-                label="Vetted guides"
-                value={<CountUp value={guideCount} />}
-              />
-              <Readout
-                onScrim
-                label="From"
-                value={<CountUpCurrency value={fromPrice} />}
-                unit="UGX"
-                tone="signal"
-              />
-              <Readout
-                onScrim
-                label="Booking fee"
-                value={<CountUp value={TRAVELLER_FEES.bookingFee} pad={1} durationMs={600} />}
-                hint="Paid by us, not you"
-              />
-            </InstrumentCluster>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Search: the marketplace itself ───────────────────────────── */}
-      <section
-        id="search"
-        className="relative border-b border-hairline bg-background"
-        aria-labelledby="search-heading"
-      >
-        <div className="mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 lg:px-8">
-          <h2 id="search-heading" className="sr-only">
-            Search tours
-          </h2>
-
-          {/* Pulled up over the hero edge so the filter bar is above the fold. */}
-          <div className="relative -mt-20 sm:-mt-24">
-            <SearchBar className="shadow-xl" />
-          </div>
-
-          <div className="mt-10">
-            <div className="mb-3 flex items-center gap-3">
-              <span className="telemetry text-primary">01</span>
-              <span className="h-px flex-1 bg-hairline" />
-              <span className="telemetry text-muted-foreground">
-                Start from your plan
-              </span>
+              {/* ---- Hero stats ---- */}
+              <dl
+                className="animate-rise-in mt-9 grid max-w-xl grid-cols-2 gap-x-8 gap-y-6 border-t border-hairline pt-7 sm:grid-cols-4"
+                style={{ animationDelay: "300ms" }}
+              >
+                {heroStats.map((stat) => (
+                  <div key={stat.label}>
+                    <dt className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                      {stat.label}
+                    </dt>
+                    <dd className="mt-1.5 font-display text-2xl font-semibold leading-none tracking-display text-foreground">
+                      {stat.value}
+                      {stat.unit ? (
+                        <span className="ml-1 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                          {stat.unit}
+                        </span>
+                      ) : null}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
+
+            {/* ---- Search card, offset against the band below ---- */}
+            <div
+              className="animate-rise-in lg:translate-y-10"
+              style={{ animationDelay: "400ms" }}
+            >
+              <SearchBar className="shadow-xl" />
+            </div>
+          </div>
+
+          <div className="mt-16 lg:mt-24">
+            <p className="mb-4 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              Start from your plan
+            </p>
             <QuickPicks />
           </div>
         </div>
       </section>
 
-      {/* ── Live results ─────────────────────────────────────────────── */}
-      <section
-        id="results"
-        className="border-b border-hairline"
-        aria-labelledby="results-heading"
-      >
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-          <SectionMark index="02">
-            <span id="results-heading">
-              {routeCount} rides across {districtCount} districts
-            </span>
-          </SectionMark>
-
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="max-w-xl font-display text-3xl font-bold leading-tight tracking-display sm:text-4xl">
-              Routes that match your filters
-            </h2>
-            <Button asChild variant="link" className="shrink-0 px-0">
-              <Link href="/tours">
-                Open the full marketplace
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
+      {/* ══ BAND 2 — WHITE: trust, destinations, experiences ══════════ */}
+      <section className="border-b border-hairline bg-background">
+        {/* ---- Trust bar ---- */}
+        <div className="border-b border-hairline">
+          <div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
+            <ul className="grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+              {trustSignals.map((signal) => (
+                <li key={signal.label} className="flex items-start gap-3">
+                  <span
+                    aria-hidden
+                    className="mt-1.5 h-2 w-2 shrink-0 rounded-full dot-trust"
+                  />
+                  <span>
+                    <span className="block font-sans text-sm font-semibold text-foreground">
+                      {signal.label}
+                    </span>
+                    <span className="mt-0.5 block font-sans text-xs leading-relaxed text-muted-foreground">
+                      {signal.detail}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
+        </div>
+
+        {/* ---- Destinations ---- */}
+        <div
+          id="results"
+          className="mx-auto max-w-7xl scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8"
+        >
+          <SectionHeading
+            id="results-heading"
+            eyebrow={`${routeCount} rides across ${districtCount} districts`}
+            title="Destinations that match your filters"
+            lead="Same road, same rider, three levels of service. Choose a level on any card and the price changes with it."
+            action={
+              <Button asChild variant="outline">
+                <Link href="/tours">
+                  Open the full marketplace
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                </Link>
+              </Button>
+            }
+          />
 
           <ResultsGrid />
 
-          {/* The three service levels, explained once, above the fold of results. */}
-          <div className="mt-12">
-            <div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-              <h3 className="font-display text-xl font-semibold tracking-display">
-                Every route sells three ways
-              </h3>
-              <p className="max-w-xl font-sans text-xs leading-relaxed text-muted-foreground">
-                Same road, same rider, three levels of service. Pick the level on
-                any card and the price changes with it.
-              </p>
-            </div>
+          <div className="mt-14">
             <TierLegend />
+          </div>
+        </div>
+
+        {/* ---- Browse by experience ---- */}
+        <div className="border-t border-hairline">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <SectionHeading
+              eyebrow="Pick your kind of day"
+              title="Eight ways to see Uganda"
+              lead="Choose one and the catalogue filters to it. Choose it again to clear."
+            />
+            <ExperienceGrid />
           </div>
         </div>
       </section>
 
-      {/* ── How it works ─────────────────────────────────────────────── */}
+      {/* ══ BAND 3 — CREAM: meet your guides ══════════════════════════ */}
       <section
-        className="border-b border-hairline bg-background text-foreground"
-        aria-labelledby="how-heading"
+        className="band-cream border-b border-hairline"
+        aria-labelledby="guides-heading"
       >
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <SectionMark index="03">How it works</SectionMark>
-          <h2
-            id="how-heading"
-            className="max-w-xl font-display text-3xl font-bold leading-tight tracking-display sm:text-4xl"
-          >
-            Three steps from idea to road
-          </h2>
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <SectionHeading
+            id="guides-heading"
+            eyebrow="Meet your guides"
+            title="The person who actually rides with you"
+            lead={
+              <>
+                <span className="numeric-emphasis">{rating.toFixed(1)}</span>{" "}
+                average rating across{" "}
+                <span className="numeric-emphasis">
+                  {trips.toLocaleString("en-UG")}
+                </span>{" "}
+                completed trips. Licence numbers and vetting dates are on every
+                profile.
+              </>
+            }
+            action={
+              <Button asChild variant="outline">
+                <Link href="/guides">
+                  All {guideCount} guides
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                </Link>
+              </Button>
+            }
+          />
 
-          <ol className="mt-10 grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-3">
-            {howItWorks.map((step, index) => (
-              <li key={step.title} className="bg-background p-6">
-                <div className="flex items-baseline justify-between">
-                  <span className="font-mono text-2xl font-semibold text-primary">
-                    {String(index + 1).padStart(2, "0")}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {guides.slice(0, 3).map((guide) => (
+              <GuideCard key={guide.id} guide={guide} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══ BAND 4 — WHITE: how it works, the model, partners ═════════ */}
+      <section className="bg-background">
+        {/* ---- How it works ---- */}
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="How it works"
+            title="Three steps from idea to road"
+          />
+
+          <ol className="grid gap-6 sm:grid-cols-3">
+            {howItWorks.map((step) => (
+              <li
+                key={step.title}
+                className="rounded-lg border border-hairline bg-card p-6"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-display text-2xl font-semibold leading-none tracking-display text-primary-ink">
+                    {step.step}
                   </span>
                   <step.icon
-                    className="h-5 w-5 text-primary"
-                    strokeWidth={1.5}
+                    className="h-5 w-5 text-muted-foreground"
+                    strokeWidth={1.6}
                     aria-hidden
                   />
                 </div>
@@ -261,214 +307,161 @@ export default function Home() {
             ))}
           </ol>
         </div>
-      </section>
 
-      {/* ── The model ────────────────────────────────────────────────── */}
-      <section
-        id="model"
-        className="relative overflow-hidden border-b border-hairline"
-        aria-labelledby="model-heading"
-      >
-        <div
-          aria-hidden
-          className="glow-accent pointer-events-none absolute inset-0 -z-10 opacity-70"
-        />
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <SectionMark index="04">The model</SectionMark>
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <h2
-                id="model-heading"
-                className="max-w-xl font-display text-3xl font-bold leading-tight tracking-display sm:text-4xl"
-              >
-                Where the money goes
-              </h2>
-              <p className="mt-3 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
-                One price, split three ways. The rider and guide take the
-                majority, the destination that delivers the day is paid
-                directly, and the platform keeps the rest to run the system.
-              </p>
+        {/* ---- Where the money goes ---- */}
+        <div className="border-t border-hairline">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <SectionHeading
+              id="model-heading"
+              eyebrow="The model"
+              title="Where the money goes"
+              lead="One price, split three ways. The rider and guide take the majority, the destination that delivers the day is paid directly, and the platform keeps the rest to run the system."
+              action={<RevenueSummaryStrip className="shrink-0" />}
+            />
+
+            <RevenueModel />
+
+            <div className="mt-8">
+              <Button asChild variant="outline">
+                <Link href="/how-it-works">
+                  Read the full model
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                </Link>
+              </Button>
             </div>
-            <RevenueSummaryStrip className="shrink-0" />
-          </div>
-
-          <RevenueModel />
-
-          <div className="mt-8">
-            <Button asChild variant="outline">
-              <Link href="/how-it-works">
-                Read the full model
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-              </Link>
-            </Button>
           </div>
         </div>
-      </section>
 
-      {/* ── Guides ───────────────────────────────────────────────────── */}
-      <section
-        className="border-b border-hairline bg-background"
-        aria-labelledby="guides-heading"
-      >
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <SectionMark index="05">Meet your guides</SectionMark>
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <h2
-                id="guides-heading"
-                className="max-w-xl font-display text-3xl font-bold leading-tight tracking-display sm:text-4xl"
-              >
-                The person who actually rides with you
-              </h2>
-              <p className="mt-3 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
-                <span data-readout className="font-mono text-foreground">
-                  {averageRating().toFixed(1)}
-                </span>{" "}
-                average rating across{" "}
-                <span data-readout className="font-mono text-foreground">
-                  {totalTripsLed().toLocaleString("en-UG")}
-                </span>{" "}
-                completed trips. Licence numbers and vetting dates are on every
-                profile.
-              </p>
-            </div>
-            <Button asChild variant="link" className="shrink-0 px-0">
-              <Link href="/guides">
-                All {guideCount} guides
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {guides.slice(0, 3).map((guide) => (
-              <Reveal key={guide.id} className="h-full">
-                <GuideCard guide={guide} />
-              </Reveal>
-            ))}
+        {/* ---- Partners ---- */}
+        <div className="border-t border-hairline">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <SectionHeading
+              id="partners-heading"
+              eyebrow="In partnership with"
+              title="Guide associations, rider groups, and the sites themselves"
+              action={
+                <Button asChild variant="outline">
+                  <Link href="/how-it-works#partners">
+                    The full ecosystem
+                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                  </Link>
+                </Button>
+              }
+            />
+            <PartnerRail />
           </div>
         </div>
-      </section>
 
-      {/* ── Why ──────────────────────────────────────────────────────── */}
-      <section
-        className="border-b border-hairline bg-background text-foreground"
-        aria-labelledby="why-heading"
-      >
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <SectionMark index="06">Why Tour-Boda</SectionMark>
-          <h2
-            id="why-heading"
-            className="max-w-xl font-display text-3xl font-bold leading-tight tracking-display sm:text-4xl"
-          >
-            Three things we get right
-          </h2>
-
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
-            {whyTourBoda.map((item) => (
-              <div key={item.title} className="border-t-2 border-primary/70 pt-5">
-                <item.icon
-                  className="h-6 w-6 text-primary"
-                  strokeWidth={1.5}
-                  aria-hidden
-                />
-                <h3 className="mt-4 font-display text-lg font-semibold tracking-display">
-                  {item.title}
-                </h3>
-                <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">
-                  {item.desc}
+        {/* ---- Newsletter ---- */}
+        <div className="border-t border-hairline">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <div className="grid gap-8 rounded-lg border border-hairline bg-card p-8 sm:p-10 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-14">
+              <div>
+                <p className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-primary-ink">
+                  Trip ideas
+                </p>
+                <h2 className="mt-2.5 font-display text-3xl font-semibold leading-tight tracking-display sm:text-4xl">
+                  Find your Uganda
+                </h2>
+                <p className="mt-3 max-w-lg font-sans text-base leading-relaxed text-muted-foreground">
+                  One email a month with new routes, seasonal conditions, and
+                  guides who just joined.
                 </p>
               </div>
-            ))}
+
+              <div>
+                <form className="flex flex-col gap-3 sm:flex-row">
+                  <label htmlFor="trip-ideas-email" className="sr-only">
+                    Email address
+                  </label>
+                  <Input
+                    id="trip-ideas-email"
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                  <Button type="submit" className="shrink-0">
+                    Get trip ideas
+                    <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                  </Button>
+                </form>
+                <p className="mt-3 font-sans text-[0.6875rem] leading-relaxed text-muted-foreground">
+                  Prototype: this form validates but does not submit anywhere,
+                  and no list is stored.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <Button asChild size="lg">
+                <Link href="/tours">
+                  Find your ride
+                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="/book/custom-destination-tour">
+                  <Plus className="mr-2 h-4 w-4" aria-hidden />
+                  Build a custom route
+                </Link>
+              </Button>
+              <span className="ml-1 hidden items-center gap-2 font-sans text-xs text-muted-foreground sm:inline-flex">
+                <Sparkles className="h-3.5 w-3.5 text-primary-ink" aria-hidden />
+                Booking fee for travellers:{" "}
+                <span className="numeric-emphasis font-mono">
+                  {TRAVELLER_FEES.bookingFee === 0
+                    ? "none"
+                    : TRAVELLER_FEES.bookingFee}
+                </span>
+              </span>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* ── Partners ─────────────────────────────────────────────────── */}
-      <section
-        className="border-b border-hairline bg-background"
-        aria-labelledby="partners-heading"
-      >
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <SectionMark index="07">In partnership with</SectionMark>
-          <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-            <h2
-              id="partners-heading"
-              className="max-w-2xl font-display text-2xl font-bold leading-tight tracking-display sm:text-3xl"
-            >
-              Guide associations, rider groups, and the sites themselves
-            </h2>
-            <Button asChild variant="link" className="shrink-0 px-0">
-              <Link href="/how-it-works#partners">
-                The full ecosystem
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-          <PartnerRail />
-        </div>
-      </section>
-
-      {/* ── Newsletter ───────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-t border-hairline bg-scrim">
-        <div className="paper-grain mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 lg:px-8">
-          <SectionMark index="08">
-            <span className="text-on-scrim/60">Trip ideas</span>
-          </SectionMark>
-          <h2 className="font-display text-4xl font-bold leading-[0.98] tracking-display text-on-scrim sm:text-5xl">
-            Find your Uganda
-          </h2>
-          <p className="mx-auto mt-4 max-w-lg font-sans text-base leading-relaxed text-on-scrim/75">
-            One email a month with new routes, seasonal conditions, and guides
-            who just joined.
-          </p>
-
-          <form className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
-            <label htmlFor="trip-ideas-email" className="sr-only">
-              Email address
-            </label>
-            <Input
-              id="trip-ideas-email"
-              type="email"
-              placeholder="you@example.com"
-              required
-              className="border-on-scrim/25 bg-on-scrim/5 text-on-scrim placeholder:text-on-scrim/40"
-            />
-            <Button type="submit" size="lg" className="shrink-0">
-              Get trip ideas
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </form>
-
-          <p className="mt-4 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-on-scrim/50">
-            One email a month. Unsubscribe anytime.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 border-t border-on-scrim/15 pt-8">
-            <Button asChild size="lg">
-              <Link href="/tours">
-                Find your ride
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-on-scrim/30 bg-on-scrim/10 text-on-scrim hover:bg-on-scrim/20 hover:text-on-scrim"
-            >
-              <Link href="/book/custom-destination-tour">
-                <Plus className="mr-2 h-4 w-4" aria-hidden />
-                Build a custom route
-              </Link>
-            </Button>
+        {/* Why Tour-Boda — the three claims, stated once. */}
+        <div className="border-t border-hairline">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <div className="grid gap-8 sm:grid-cols-3">
+              {[
+                {
+                  icon: ShieldCheck,
+                  title: "Vetted, not just listed",
+                  desc: "Every guide holds a district or city authority licence and is re-verified in person. The licence number is on the profile.",
+                },
+                {
+                  icon: Bike,
+                  title: "Local guides",
+                  desc: "Our riders grew up here. They know the woman who sells the best rolex at Nakawa, and which pothole floods first.",
+                },
+                {
+                  icon: Compass,
+                  title: "Sixty per cent to the road",
+                  desc: "The operator and guide take the majority of every booking. The split is published, not implied.",
+                },
+              ].map((item) => (
+                <div key={item.title} className="border-t-2 border-primary pt-5">
+                  <item.icon
+                    className="h-6 w-6 text-primary-ink"
+                    strokeWidth={1.6}
+                    aria-hidden
+                  />
+                  <h3 className="mt-4 font-display text-lg font-semibold tracking-display">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Tier names are surfaced once for screen readers reading the hero stats. */}
       <p className="sr-only">
-        Service levels: {destinations[0]?.tiers.map((tier) => tierMeta(tier.key).name).join(", ")}.
+        Service levels:{" "}
+        {destinations[0]?.tiers.map((tier) => tierMeta(tier.key).name).join(", ")}.
       </p>
     </SearchProvider>
   );

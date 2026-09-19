@@ -28,7 +28,7 @@ export function TierSelector({ destination }: { destination: Destination }) {
   return (
     <section className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-primary">04</span>
+        <span className="telemetry text-primary-ink">04</span>
         <span className="h-px flex-1 bg-hairline" />
         <span className="telemetry text-muted-foreground">Packages</span>
       </div>

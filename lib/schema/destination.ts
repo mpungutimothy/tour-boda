@@ -1,6 +1,5 @@
 import type { Destination, TourTier } from "@/types/destination";
-
-const SITE_URL = "https://tour-boda.ug";
+import { SITE_URL, absoluteUrl } from "@/lib/site";
 
 /**
  * Site-wide identity, so every node can be attributed to one publisher.
@@ -53,7 +52,8 @@ export function generateTouristAttraction(destination: Destination): SchemaObjec
     description: destination.narrative,
     url,
     mainEntityOfPage: url,
-    image: destination.images.map((img) => img.url),
+    // Absolute, because structured data is consumed out of page context.
+    image: destination.images.map((img) => absoluteUrl(img.url)),
     address: {
       "@type": "PostalAddress",
       addressRegion: destination.location.region,
@@ -93,7 +93,7 @@ export function generateProduct(
     name: `${destination.name} — ${tier.name}`,
     description: tier.bestFor,
     url,
-    image: destination.images.map((img) => img.url),
+    image: destination.images.map((img) => absoluteUrl(img.url)),
     category: destination.category,
     brand: {
       "@type": "Brand",

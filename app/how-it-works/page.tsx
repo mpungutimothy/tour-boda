@@ -12,6 +12,8 @@ import { TierDot } from "@/components/marketplace/tier-ui";
 import { Button } from "@/components/ui/button";
 import { SectionMark } from "@/components/instrument/readouts";
 import { RouteLine } from "@/components/motion/route-line";
+import { PhotoBand } from "@/components/visual/photo-band";
+import { PageHeader } from "@/components/layout/page-header";
 import { formatUGX } from "@/lib/format";
 import { ArrowRight, Bike, Coins, CreditCard, Users } from "lucide-react";
 
@@ -51,43 +53,41 @@ export default function HowItWorksPage() {
 
   return (
     <div>
-      {/* ---- Header ---- */}
-      <section className="border-b border-hairline">
-        <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mb-3 flex items-center gap-3">
-            <span className="telemetry text-primary">00</span>
-            <span className="h-px flex-1 bg-hairline" />
-            <span className="telemetry text-muted-foreground">The model</span>
-          </div>
-          <h1 className="max-w-3xl font-display text-4xl font-bold leading-[1.02] tracking-display sm:text-5xl">
-            A marketplace for the last mile of Ugandan tourism
-          </h1>
-          <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
-            Boda-bodas already move most people around Ugandan towns. This
-            platform turns that fleet into licensed, priced, bookable tourism
-            capacity — and pays the rider the majority of every booking.
-          </p>
-
-          <dl className="mt-8 grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-4">
+      <PageHeader
+        eyebrow="The model"
+        title="A marketplace for the last mile of Ugandan tourism"
+        lead="Boda-bodas already move most people around Ugandan towns. This platform turns that fleet into licensed, priced, bookable tourism capacity — and pays the rider the majority of every booking."
+        below={
+          <dl className="grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-4">
             {[
-              { label: "Routes", value: String(destinations.length) },
+              { label: "Destinations", value: String(destinations.length) },
               { label: "Guides", value: String(guides.length) },
               { label: "Add-ons", value: String(ADD_ONS.length) },
               { label: "From", value: formatUGX(cheapest) },
             ].map((stat) => (
               <div key={stat.label} className="bg-card p-4">
-                <dt className="telemetry text-muted-foreground">{stat.label}</dt>
+                <dt className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                  {stat.label}
+                </dt>
                 <dd
                   data-readout
-                  className="mt-1.5 font-mono text-xl font-bold leading-none text-primary"
+                  className="mt-1.5 font-display text-2xl font-semibold leading-none text-foreground"
                 >
                   {stat.value}
                 </dd>
               </div>
             ))}
           </dl>
-        </div>
-      </section>
+        }
+      />
+
+      <PhotoBand
+        image="/images/brand-mbale-junction.jpg"
+        alt="Boda-bodas among traffic at a junction in Mbale town"
+        eyebrow="The asset"
+        title="Uganda already has the fleet. It has never been priced, licensed or bookable."
+        body="Roughly a million boda-bodas move people around this country every day. Almost none of that capacity is reachable by a traveller who lands at Entebbe with a phone and a budget."
+      />
 
       {/* ---- Pipeline ---- */}
       <section
@@ -110,11 +110,11 @@ export default function HowItWorksPage() {
                 className="flex flex-col gap-4 bg-background p-6 sm:flex-row sm:items-start sm:gap-6"
               >
                 <span className="flex shrink-0 items-center gap-3 sm:w-40">
-                  <span className="font-mono text-2xl font-semibold text-primary">
+                  <span className="font-mono text-2xl font-semibold text-primary-ink">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <stage.icon
-                    className="h-5 w-5 text-primary"
+                    className="h-5 w-5 text-primary-ink"
                     strokeWidth={1.5}
                     aria-hidden
                   />
@@ -160,7 +160,7 @@ export default function HowItWorksPage() {
           <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-3">
             {REVENUE_SPLIT.map((party) => (
               <div key={party.id} className="bg-background p-5">
-                <p className="font-mono text-3xl font-bold leading-none text-primary">
+                <p className="font-mono text-3xl font-bold leading-none text-primary-ink">
                   {Math.round(party.share * 100)}%
                 </p>
                 <h3 className="mt-3 font-display text-base font-semibold tracking-display">
@@ -177,7 +177,7 @@ export default function HowItWorksPage() {
             <p className="telemetry text-muted-foreground">Traveller fees</p>
             <p className="mt-2 font-sans text-sm leading-relaxed text-muted-foreground">
               Booking fee:{" "}
-              <span data-readout className="font-mono text-primary">
+              <span data-readout className="font-mono text-primary-ink">
                 {formatUGX(TRAVELLER_FEES.bookingFee)}
               </span>
               . {TRAVELLER_FEES.note}
@@ -348,6 +348,16 @@ export default function HowItWorksPage() {
       </section>
 
       {/* ---- Close ---- */}
+      {/* ---- Closing image ---- */}
+      <PhotoBand
+        image="/images/dest-custom-1.jpg"
+        alt="Open road running through green hills in western Uganda"
+        eyebrow="The long game"
+        title="The last mile is where the margin has been hiding"
+        body="Every operator in Ugandan tourism sells the same few lodges and the same few vehicles. The road between them — and the people who already know it — has never been packaged."
+        height="short"
+      />
+
       <section className="relative overflow-hidden bg-scrim">
         <div
           aria-hidden

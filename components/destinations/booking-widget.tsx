@@ -105,7 +105,7 @@ export function BookingWidget({ destination }: { destination: Destination }) {
             </div>
 
             {destination.pricingMode === "quotation" ? (
-              <p className="mt-3 rounded-md border border-primary/30 bg-primary/[0.07] px-2.5 py-2 font-sans text-[0.6875rem] leading-snug text-primary">
+              <p className="mt-3 rounded-md border border-primary/30 bg-primary/[0.07] px-2.5 py-2 font-sans text-[0.6875rem] leading-snug text-primary-ink">
                 Indicative. This route is quoted by hand within 48 hours.
               </p>
             ) : null}

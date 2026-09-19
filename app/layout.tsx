@@ -1,32 +1,34 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Fraunces, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
-/** Reading voice — body copy. */
+/**
+ * Two typefaces, two jobs.
+ *
+ * Fraunces for headlines — a variable serif with a real optical-size axis, so a
+ * 60px hero and an 18px card title are cut differently rather than being the
+ * same shapes scaled. Inter for everything else. The previous build also loaded
+ * a geometric sans and used it for headings; with Fraunces in that role it was
+ * dead weight on every page load, so it is gone.
+ */
+
+/** Reading voice — body and UI copy. */
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
 
-/** Display voice — geometric/technical, for headings. */
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-space",
-  display: "swap",
-});
-
-/** Human voice — the guide's own words, used with restraint. */
+/** Display voice — headlines, set with optical sizing. */
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-fraunces",
   display: "swap",
 });
 
-/** Data voice — every number that matters. */
+/** Data voice — tabular figures for prices, counts and distances. */
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
@@ -36,7 +38,8 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://tour-boda.ug"),
   title: {
-    default: "Tour-Boda Uganda — Your Tour. Your Boda Guide. Your Uganda Experience.",
+    default:
+      "Tour-Boda Uganda — Your Tour. Your Boda Guide. Your Uganda Experience.",
     template: "%s | Tour-Boda Uganda",
   },
   description:
@@ -51,7 +54,8 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Tour-Boda Uganda" }],
   openGraph: {
-    title: "Tour-Boda Uganda — Your Tour. Your Boda Guide. Your Uganda Experience.",
+    title:
+      "Tour-Boda Uganda — Your Tour. Your Boda Guide. Your Uganda Experience.",
     description:
       "Connect with local boda-boda guides for authentic, personalized tours across Uganda.",
     type: "website",
@@ -75,25 +79,23 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${fraunces.variable} ${jetbrains.variable}`}
+      className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`}
     >
-      <body className="font-sans antialiased">
-        {/*
-          Ambient backing: a precision grid plus a soft accent mesh. Fixed,
-          decorative, behind all content, hidden from assistive tech.
-        */}
-        <div
-          aria-hidden
-          className="pointer-events-none fixed inset-0 -z-10 grid-plate opacity-40"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-[80vh] glow-mesh"
-        />
+      {/*
+        The body is light and the shell is dark. There is no `dark` class on
+        <html> and no theme toggle: the alternation is structural — dark header
+        and footer bookending a light editorial body — so it is expressed by
+        scoping, not by a user-switchable mode.
 
+        The old build laid a fixed precision grid and a coloured mesh across the
+        entire viewport. On a light editorial page that reads as a dashboard
+        underlay, so both are gone; texture now appears only where a section
+        explicitly asks for it.
+      */}
+      <body className="bg-background font-sans antialiased">
         <div className="flex min-h-screen flex-col">
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 bg-background">{children}</main>
           <Footer />
         </div>
       </body>

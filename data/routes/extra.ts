@@ -1,12 +1,14 @@
 import type { DestinationContent } from "@/types/destination-content";
+import { gallery } from "@/lib/photos";
 
 /**
  * Routes added for the marketplace build: the eastern mountains, community
  * tourism in the west, and the quotation-based custom desk.
  *
- * Photography is Wikimedia Commons, chosen so that every frame actually shows
- * the place named on the card. Each credit line carries the licence, because
- * CC BY and CC BY-SA both require attribution.
+ * Photography is sourced through `scripts/photo-manifest.json` and stored
+ * locally in `public/images/`. Every frame shows the place named on the card,
+ * and each one carries the attribution its licence requires — generated from
+ * the source file's own metadata rather than typed by hand.
  */
 export const extraDestinations: DestinationContent[] = [
   {
@@ -27,20 +29,28 @@ export const extraDestinations: DestinationContent[] = [
       lng: 34.3747,
       region: "Eastern Region, Kapchorwa District",
     },
-    images: [
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Sipi_Falls_in_Uganda.jpg/1280px-Sipi_Falls_in_Uganda.jpg",
-        caption:
-          "The main drop at Sipi, one of three falls on the same river, seen from the coffee terraces",
-        credit: "Wikimedia Commons — Sandra Aceng, CC BY-SA 4.0",
-      },
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Sipi_falls_Uganda.jpg/1280px-Sipi_falls_Uganda.jpg",
-        caption:
-          "The Sipi river above the falls, where the trail crosses on the way to the second drop",
-        credit: "Wikimedia Commons — Mercyatuhaire, CC BY-SA 4.0",
-      },
-    ],
+    images: gallery([
+      [
+        "dest-sipi-1.jpg",
+        "The main drop at Sipi, one of three falls on the same river, seen from the coffee terraces",
+      ],
+      [
+        "dest-sipi-2.jpg",
+        "The falls from the base of the gorge, where the spray reaches you before you see the drop",
+      ],
+      [
+        "dest-sipi-3.jpg",
+        "Ripe coffee cherries on the branch. Wamala Robert's family has farmed this slope for three generations",
+      ],
+      [
+        "dest-sipi-4.jpg",
+        "Beans on the drying rack at Mbale, turned by hand through the day",
+      ],
+      [
+        "dest-sipi-5.jpg",
+        "Mbale town, where the road up to Sipi begins",
+      ],
+    ]),
     author: {
       name: "Wamala Robert",
       bio: "Trail guide on the Sipi falls since 2012. Third-generation coffee farmer from Kapchorwa. Speaks Luganda, Lumasaaba, and English.",
@@ -135,20 +145,28 @@ export const extraDestinations: DestinationContent[] = [
       lng: 30.2749,
       region: "Western Region, Kabarole District",
     },
-    images: [
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Crater_Lake_nestled_in_Fort_Portal_01.jpg/1280px-Crater_Lake_nestled_in_Fort_Portal_01.jpg",
-        caption:
-          "One of the crater lakes on the road out of Fort Portal, flat before the mist lifts",
-        credit: "Wikimedia Commons — Fiktube, CC BY-SA 4.0",
-      },
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Crater_Lakes_of_Fort_Portal_01.jpg/1280px-Crater_Lakes_of_Fort_Portal_01.jpg",
-        caption:
-          "Crater lakes below the Rwenzori foothills, formed where the volcanoes blew their tops off",
-        credit: "Wikimedia Commons — Fiktube, CC BY-SA 4.0",
-      },
-    ],
+    images: gallery([
+      [
+        "dest-kibale-1.jpg",
+        "One of the crater lakes on the road out of Fort Portal, flat before the mist lifts",
+      ],
+      [
+        "dest-kibale-2.jpg",
+        "Crater lakes below the Rwenzori foothills, formed where the volcanoes blew their tops off",
+      ],
+      [
+        "dest-kibale-3.jpg",
+        "A chimpanzee in Kibale forest, a short ride from the village",
+      ],
+      [
+        "dest-kibale-4.jpg",
+        "Tea estate rows along the boundary the village walk follows",
+      ],
+      [
+        "dest-kibale-5.jpg",
+        "The market in Fort Portal, where the cooperative sells its honey and raffia work",
+      ],
+    ]),
     author: {
       name: "Kyomuhendo Justus",
       bio: "Runs the Nkingo community tourism group outside Fort Portal. Has hosted village walks since 2015. Speaks Rutooro, Runyankole, and English.",
@@ -243,20 +261,28 @@ export const extraDestinations: DestinationContent[] = [
       lng: 32.2903,
       region: "Nationwide, Uganda",
     },
-    images: [
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Boda_boda_on_the_tarmac_road.jpg/1280px-Boda_boda_on_the_tarmac_road.jpg",
-        caption:
-          "A boda on the tarmac, with the rain pooled at the verge where the drainage gives out",
-        credit: "Wikimedia Commons — Kabazzi Jonathan, CC BY-SA 4.0",
-      },
-      {
-        url: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Boda_boda_in_uganda.jpg/1280px-Boda_boda_in_uganda.jpg",
-        caption:
-          "A rider between towns on a route that only exists because somebody asked for it",
-        credit: "Wikimedia Commons — Namulinda Brenda, CC BY-SA 4.0",
-      },
-    ],
+    images: gallery([
+      [
+        "dest-custom-1.jpg",
+        "Open road through the hills of western Uganda — the kind of route the custom desk builds",
+      ],
+      [
+        "dest-custom-2.jpg",
+        "A boda on the tarmac, with the rain pooled at the verge where the drainage gives out",
+      ],
+      [
+        "dest-custom-3.jpg",
+        "A rider between towns, on a route that only exists because somebody asked for it",
+      ],
+      [
+        "dest-custom-4.jpg",
+        "Lake Bunyonyi, one of the places travellers ask for by name",
+      ],
+      [
+        "dest-custom-5.jpg",
+        "The Nile forcing through the gorge at Murchison Falls, a two-day custom route",
+      ],
+    ]),
     author: {
       name: "Mbabazi Sarah",
       bio: "Route planner for the custom desk. Has built itineraries for film crews, birdwatchers and family groups since 2017. Speaks Luganda, English, and Kiswahili.",

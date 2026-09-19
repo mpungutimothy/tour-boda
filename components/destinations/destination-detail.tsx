@@ -54,7 +54,7 @@ export function DestinationDetail({
                 aria-labelledby="route-guides-heading"
               >
                 <div className="mb-3 flex items-center gap-3">
-                  <span className="telemetry text-primary">05</span>
+                  <span className="telemetry text-primary-ink">05</span>
                   <span className="h-px flex-1 bg-hairline" />
                   <span className="telemetry text-muted-foreground">
                     Your guide
@@ -74,7 +74,7 @@ export function DestinationDetail({
                       key={guide.id}
                       className="flex gap-4 rounded-lg border border-hairline bg-card p-5"
                     >
-                      <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-hairline bg-surface font-display text-lg font-bold text-primary">
+                      <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-hairline bg-surface font-display text-lg font-bold text-primary-ink">
                         {guide.name
                           .split(/\s+/)
                           .slice(0, 2)
@@ -100,7 +100,7 @@ export function DestinationDetail({
                             <ShieldCheck className="h-3 w-3" aria-hidden />
                             Licensed · {guide.licence.authority}
                           </span>
-                          <span className="inline-flex items-center gap-1.5 text-primary">
+                          <span className="inline-flex items-center gap-1.5 text-primary-ink">
                             <BadgeCheck className="h-3 w-3" aria-hidden />
                             Vetted {guide.vetted.verifiedOn}
                           </span>
@@ -112,7 +112,7 @@ export function DestinationDetail({
 
                         <Link
                           href="/guides"
-                          className="mt-3 inline-block font-mono text-[0.625rem] uppercase tracking-[0.14em] text-primary transition-opacity hover:opacity-80"
+                          className="mt-3 inline-block font-mono text-[0.625rem] uppercase tracking-[0.14em] text-primary-ink transition-opacity hover:opacity-80"
                         >
                           Full profile
                         </Link>

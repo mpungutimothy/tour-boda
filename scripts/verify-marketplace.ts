@@ -14,8 +14,11 @@ import { ADD_ONS } from "../data/add-ons";
 import { DESTINATION_COMMERCE } from "../data/routes/commerce";
 import { EXPERIENCE_TYPES } from "../data/experience-types";
 import { TIER_ORDER } from "../data/tiers";
+import { PHOTO_CREDITS } from "../data/photo-credits";
 import { validateContent } from "../lib/content/validate";
 import { findPricingViolations } from "../lib/marketplace/pricing";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 
 const problems: string[] = [];
 const notes: string[] = [];
@@ -61,10 +64,29 @@ for (const destination of destinations) {
   );
   if (!ascending) fail(`${label}: tiers are not ordered cheapest-first`);
 
-  if (destination.images.length === 0) fail(`${label}: no images`);
+  // Photography is first-party. A route image must exist on disk *and* carry a
+  // licence record, because CC BY and CC BY-SA both require attribution and a
+  // missing file is a broken card in front of an investor.
+  if (destination.images.length < 4) {
+    fail(`${label}: only ${destination.images.length} images (want 4 or more)`);
+  }
+  const seen = new Set<string>();
   for (const image of destination.images) {
-    if (!image.url.startsWith("http")) fail(`${label}: image url is not absolute`);
-    if (!image.credit.trim()) fail(`${label}: image "${image.caption}" has no credit`);
+    if (!image.url.startsWith("/images/")) {
+      fail(`${label}: image "${image.url}" is not a local /images/ path`);
+      continue;
+    }
+    if (seen.has(image.url)) fail(`${label}: duplicate image "${image.url}"`);
+    seen.add(image.url);
+
+    const file = image.url.slice("/images/".length);
+    if (!existsSync(join(process.cwd(), "public", "images", file))) {
+      fail(`${label}: image file missing on disk: public/images/${file}`);
+    }
+    if (!PHOTO_CREDITS.some((credit) => credit.file === file)) {
+      fail(`${label}: no licence record for ${file} — attribution would be lost`);
+    }
+    if (!image.caption.trim()) fail(`${label}: image "${file}" has no caption`);
   }
 
   if (destination.faqs.length < 3) fail(`${label}: fewer than 3 FAQs`);
@@ -116,8 +138,45 @@ for (const guide of guides) {
   if (!guide.photo) {
     notes.push(`guide ${guide.id} (${guide.name}) has no photo — monogram tile`);
   }
+
+  // Every guide carries a district photograph, so no card is left image-less.
+  for (const [kind, path] of [
+    ["regionImage", guide.regionImage],
+    ...(guide.photo ? [["photo", guide.photo] as const] : []),
+  ] as const) {
+    if (!path.startsWith("/images/")) {
+      fail(`guide ${guide.id}: ${kind} "${path}" is not a local /images/ path`);
+      continue;
+    }
+    const file = path.slice("/images/".length);
+    if (!existsSync(join(process.cwd(), "public", "images", file))) {
+      fail(`guide ${guide.id}: ${kind} missing on disk: public/images/${file}`);
+    }
+    if (!PHOTO_CREDITS.some((credit) => credit.file === file)) {
+      fail(`guide ${guide.id}: no licence record for ${file}`);
+    }
+  }
+
   if (guide.tripsLed === 0 && guide.tierKeys.some((key) => key === "freelance")) {
     fail(`guide ${guide.id}: leads the freelance tier but has led no trips`);
+  }
+}
+
+/* --- Experience tiles ----------------------------------------------------- */
+
+for (const type of EXPERIENCE_TYPES) {
+  const file = type.image.slice("/images/".length);
+  if (!existsSync(join(process.cwd(), "public", "images", file))) {
+    fail(`experience type ${type.id}: tile image missing on disk: ${file}`);
+  }
+  if (!PHOTO_CREDITS.some((credit) => credit.file === file)) {
+    fail(`experience type ${type.id}: no licence record for ${file}`);
+  }
+  const tagged = destinations.filter((destination) =>
+    destination.experienceTypes.includes(type.id),
+  );
+  if (tagged.length === 0) {
+    notes.push(`experience type ${type.id} (${type.label}) matches no route`);
   }
 }
 

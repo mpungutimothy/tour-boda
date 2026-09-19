@@ -24,7 +24,7 @@ export function RelatedDestinations({
     <section className="border-t border-hairline">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="mb-3 flex items-center gap-3">
-          <span className="telemetry text-primary">07</span>
+          <span className="telemetry text-primary-ink">07</span>
           <span className="h-px flex-1 bg-hairline" />
           <span className="telemetry text-muted-foreground">
             Also on the network
@@ -67,7 +67,7 @@ export function RelatedDestinations({
                 <dl className="mt-3 flex flex-wrap gap-x-5 gap-y-1">
                   <div className="flex items-baseline gap-1.5">
                     <dt className="telemetry text-muted-foreground">Dist</dt>
-                    <dd data-readout className="font-mono text-xs text-primary">
+                    <dd data-readout className="font-mono text-xs text-primary-ink">
                       {factOf(d, "Total distance") ?? "—"}
                     </dd>
                   </div>
@@ -104,10 +104,10 @@ export function RelatedDestinations({
                 </ul>
 
                 <div className="mt-auto flex items-center justify-between gap-3 border-t border-hairline pt-3">
-                  <span data-readout className="font-mono text-sm font-semibold text-primary">
+                  <span data-readout className="font-mono text-sm font-semibold text-primary-ink">
                     From {formatUGX(fromPrice(d))}
                   </span>
-                  <span className="flex items-center gap-1 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground transition-all group-hover:gap-1.5 group-hover:text-primary">
+                  <span className="flex items-center gap-1 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground transition-all group-hover:gap-1.5 group-hover:text-primary-ink">
                     Open
                     <ArrowRight className="h-3 w-3" />
                   </span>

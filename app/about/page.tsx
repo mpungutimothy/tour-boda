@@ -3,6 +3,9 @@ import Link from "next/link";
 import { destinations } from "@/data/destinations";
 import { Button } from "@/components/ui/button";
 import { PartnerRail } from "@/components/marketplace/partners-section";
+import { PageHeader } from "@/components/layout/page-header";
+import { PhotoBand } from "@/components/visual/photo-band";
+import { creditLine } from "@/lib/photos";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -11,8 +14,41 @@ export const metadata: Metadata = {
     "Tour-Boda Uganda connects travellers with local boda-boda guides for authentic, personalized tours. Learn who we are and why we exist.",
 };
 
-const aboutImage =
-  "https://images.pexels.com/photos/38520450/pexels-photo-38520450.jpeg?auto=compress&cs=tinysrgb&w=1920";
+/**
+ * Photographic breaks, keyed to the section they follow.
+ *
+ * Captions describe what is actually in the frame. An earlier draft captioned a
+ * stock photograph "boda riders on the Jinja Road" — a specific, checkable claim
+ * about a picture taken somewhere else entirely. Being wrong about a road is a
+ * small thing that costs a lot of credibility in front of people who know
+ * Uganda.
+ */
+const IMAGE_BREAKS: Record<
+  string,
+  { src: string; alt: string; caption: string; place?: string }
+> = {
+  "01": {
+    src: "/images/brand-rider-passenger.jpg",
+    alt: "A boda-boda rider carrying a passenger along a Ugandan road",
+    caption:
+      "A rider and passenger on a Ugandan road. This is the seat the whole platform is built around.",
+    place: "Uganda",
+  },
+  "03": {
+    src: "/images/brand-boda-rank.jpg",
+    alt: "Rows of boda-boda motorcycles waiting for fares at a staging point",
+    caption:
+      "A rider rank waiting on fares. Every one of these is somebody's business, and most of them are invisible to the tourism economy.",
+    place: "Uganda",
+  },
+  "05": {
+    src: "/images/brand-ugandan-food.jpg",
+    alt: "A plate of Ugandan matooke served with groundnut sauce",
+    caption:
+      "Matooke and ground-nut sauce. Lunch on the community routes is cooked by the family who eats it with you, and paid for out of the destination's share.",
+    place: "Uganda",
+  },
+};
 
 const sections = [
   {
@@ -52,24 +88,19 @@ export default function AboutPage() {
 
   return (
     <div>
-      {/* Header — night road */}
-      <section className="border-b border-hairline">
-        <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mb-3 flex items-center gap-3">
-            <span className="telemetry text-primary">00</span>
-            <span className="h-px flex-1 bg-hairline" />
-            <span className="telemetry text-muted-foreground">Who we are</span>
-          </div>
-          <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-display sm:text-5xl">
-            About Tour-Boda
-          </h1>
-          <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-muted-foreground">
-            A small team connecting travellers with local boda-boda drivers across
-            Uganda. No office towers, no call centres — just riders who know the
-            road and a booking system that pays them fairly.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow="Who we are"
+        title="About Tour-Boda"
+        lead="A small team connecting travellers with local boda-boda drivers across Uganda. No office towers, no call centres — just riders who know the road and a booking system that pays them fairly."
+      />
+
+      <PhotoBand
+        image="/images/brand-night-city.jpg"
+        alt="Kampala street life after dark"
+        eyebrow="Where it starts"
+        title="The riders were already there. The tourists were already coming."
+        body="Nothing connected them except a hotel desk and a markup. That gap is the whole company."
+      />
 
       {/* Body — reading band */}
       <section className="bg-background text-foreground">
@@ -78,7 +109,7 @@ export default function AboutPage() {
             {sections.map((section, i) => (
               <div key={section.title} className={i > 0 ? "mt-12" : undefined}>
                 <div className="mb-3 flex items-center gap-3">
-                  <span className="telemetry text-primary">{section.index}</span>
+                  <span className="telemetry text-primary-ink">{section.index}</span>
                   <span className="h-px flex-1 bg-hairline" />
                 </div>
                 <h2 className="mb-3 font-display text-2xl font-bold tracking-display">
@@ -88,25 +119,25 @@ export default function AboutPage() {
                   {section.body}
                 </p>
 
-                {/* Image break sits after the first section. */}
-                {i === 0 ? (
+                {/* Photographic break, where one exists for this section. */}
+                {IMAGE_BREAKS[section.index] ? (
                   <figure className="my-12">
                     <div className="overflow-hidden rounded-lg border border-hairline">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={aboutImage}
-                        alt="Boda boda riders on a road in Uganda with mountains in the background"
+                        src={IMAGE_BREAKS[section.index].src}
+                        alt={IMAGE_BREAKS[section.index].alt}
                         loading="lazy"
                         className="h-full w-full object-cover"
                       />
                     </div>
                     <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                       <p className="max-w-[58ch] font-sans text-sm text-muted-foreground">
-                        Boda riders on the Jinja Road. Most of our guides have been
-                        on these routes for over a decade.
+                        {IMAGE_BREAKS[section.index].caption}
                       </p>
                       <span className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground">
-                        Jinja Road
+                        {creditLine(IMAGE_BREAKS[section.index].src) ??
+                          IMAGE_BREAKS[section.index].place}
                       </span>
                     </figcaption>
                   </figure>
@@ -118,7 +149,7 @@ export default function AboutPage() {
           {/* Ecosystem */}
           <div className="mt-14 border-t border-hairline pt-8" style={{ maxWidth: "65ch" }}>
             <div className="mb-3 flex items-center gap-3">
-              <span className="telemetry text-primary">07</span>
+              <span className="telemetry text-primary-ink">07</span>
               <span className="h-px flex-1 bg-hairline" />
               <span className="telemetry text-muted-foreground">Ecosystem</span>
             </div>

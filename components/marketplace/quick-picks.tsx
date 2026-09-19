@@ -52,14 +52,14 @@ export function QuickPicks({ className }: { className?: string }) {
             "transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-glow-sm",
           )}
         >
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary-ink">
             <preset.icon className="h-4 w-4" aria-hidden />
           </span>
           <span className="min-w-0">
             <span className="block font-display text-sm font-semibold leading-snug tracking-display">
               {preset.question}
             </span>
-            <span className="mt-1.5 block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-muted-foreground transition-colors group-hover:text-primary">
+            <span className="mt-1.5 block font-mono text-[0.625rem] uppercase tracking-[0.12em] text-muted-foreground transition-colors group-hover:text-primary-ink">
               {preset.result}
             </span>
           </span>

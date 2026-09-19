@@ -68,10 +68,10 @@ export function SearchBar({
       {/* ---- Plate header: identity + live count + reset ---- */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-4 py-3 sm:px-5">
         <span className="flex items-center gap-2">
-          <Search className="h-3.5 w-3.5 text-primary" aria-hidden />
+          <Search className="h-3.5 w-3.5 text-primary-ink" aria-hidden />
           <span className="telemetry text-muted-foreground">Find a ride</span>
           {activeCount > 0 ? (
-            <span className="rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-primary">
+            <span className="rounded-full border border-primary/40 bg-primary/10 px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-primary-ink">
               {activeCount} active
             </span>
           ) : null}
@@ -81,7 +81,7 @@ export function SearchBar({
           <span className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground">
             <span
               data-readout
-              className="text-base font-semibold text-primary"
+              className="text-base font-semibold text-primary-ink"
               aria-live="polite"
             >
               {String(outcome.matches.length).padStart(2, "0")}
@@ -202,7 +202,7 @@ export function SearchBar({
                   className={cn(
                     "shrink-0 snap-start rounded-full border px-3 py-1.5 font-sans text-xs transition-all duration-200",
                     active
-                      ? "border-primary bg-primary/15 text-primary shadow-glow-sm"
+                      ? "border-primary bg-primary/15 text-primary-ink shadow-glow-sm"
                       : "border-hairline text-muted-foreground hover:border-primary/40 hover:text-foreground",
                   )}
                 >
@@ -228,7 +228,7 @@ export function SearchBar({
               </Label>
               <span
                 data-readout
-                className="font-mono text-sm font-semibold text-primary"
+                className="font-mono text-sm font-semibold text-primary-ink"
               >
                 {budgetLabel}
               </span>
@@ -331,7 +331,7 @@ function RequirementRow({
         className="flex cursor-pointer items-center gap-2 font-sans text-xs font-normal normal-case tracking-normal text-muted-foreground"
       >
         <Icon
-          className={cn("h-3.5 w-3.5", checked ? "text-primary" : "text-muted-foreground")}
+          className={cn("h-3.5 w-3.5", checked ? "text-primary-ink" : "text-muted-foreground")}
           aria-hidden
         />
         {label}

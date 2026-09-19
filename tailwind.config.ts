@@ -10,13 +10,12 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        // Machine voice — geometric/technical display for headings.
-        display: ["var(--font-space)", "system-ui", "sans-serif"],
-        // Reading voice — body copy.
+        // Display voice — Fraunces, an optical-size serif. Headlines.
+        display: ["var(--font-fraunces)", "Georgia", "serif"],
+        // Reading voice — body and UI copy.
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        // Data voice — every number that matters.
+        // Data voice — tabular figures only, never prose.
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
-        // Human voice — the guide's own words, used in exactly one place.
         serif: ["var(--font-fraunces)", "Georgia", "serif"],
       },
       backgroundImage: {
@@ -58,7 +57,16 @@ const config: Config = {
           foreground: "hsl(var(--primary-foreground))",
           dark: "hsl(var(--primary-dark))",
           light: "hsl(var(--primary-light))",
+          // Gold as *text*. Resolves per scope: #8A5A16 on the light body
+          // (6.4:1 — safe at any size), #C98A2C on the dark shell (6.3:1). Use
+          // this, never `text-primary`, for gold copy: the fill gold only
+          // reaches 2.9:1 on white and fails AA outright.
+          ink: "hsl(var(--primary-ink))",
         },
+        // Section-level band colour. A background, never a card surface.
+        cream: "hsl(var(--cream))",
+        field: "hsl(var(--field))",
+        clay: "hsl(var(--clay))",
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
@@ -93,6 +101,7 @@ const config: Config = {
         success: {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
+          deep: "hsl(var(--success-deep))",
         },
         warning: {
           DEFAULT: "hsl(var(--warning))",
@@ -161,6 +170,16 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(8px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        // Hero entrance. One deliberate sequence on load, ~100ms apart.
+        "rise-in": {
+          from: { opacity: "0", transform: "translateY(10px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        // Price crossfade when the selected tier changes.
+        "price-swap": {
+          from: { opacity: "0", transform: "translateY(4px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -173,6 +192,8 @@ const config: Config = {
         "bar-grow": "bar-grow 900ms cubic-bezier(0.16, 1, 0.3, 1) both",
         "seg-draw": "seg-draw 1100ms cubic-bezier(0.16, 1, 0.3, 1) both",
         "fade-up": "fade-up 320ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "rise-in": "rise-in 640ms cubic-bezier(0.16, 1, 0.3, 1) both",
+        "price-swap": "price-swap 260ms ease-out both",
       },
     },
   },

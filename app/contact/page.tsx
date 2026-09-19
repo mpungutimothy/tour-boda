@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact/contact-form";
+import { PageHeader } from "@/components/layout/page-header";
+import { PhotoBand } from "@/components/visual/photo-band";
+import { creditLine } from "@/lib/photos";
 import { MapPin, Phone, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -30,35 +33,28 @@ const details = [
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
-      <div className="mb-3 flex items-center gap-3">
-        <span className="telemetry text-primary">01</span>
-        <span className="h-px flex-1 bg-hairline" />
-        <span className="telemetry text-muted-foreground">Radio check</span>
-      </div>
+    <div>
+      <PageHeader
+        eyebrow="Get in touch"
+        title="Contact"
+        lead="We read every message. Replies usually come within a day — from a real person in Kampala."
+      />
 
-      <div className="mb-12">
-        <h1 className="font-display text-4xl font-bold leading-[0.98] tracking-display sm:text-5xl">
-          Contact
-        </h1>
-        <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-muted-foreground">
-          We read every message. Replies usually come within a day — from a real
-          person in Kampala.
-        </p>
-      </div>
+      <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
+          <div className="rounded-lg border border-hairline bg-card p-6 text-foreground sm:p-8">
+            <ContactForm />
+          </div>
 
-      <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
-        <div className="rounded-lg border border-hairline bg-background p-6 text-foreground sm:p-8">
-          <ContactForm />
-        </div>
-
-        <aside className="lg:border-l lg:border-hairline lg:pl-8">
-          <span className="telemetry text-muted-foreground">Direct</span>
+          <aside className="lg:border-l lg:border-hairline lg:pl-8">
+            <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              Direct
+            </span>
 
           <ul className="mt-5 space-y-6">
             {details.map((detail) => (
               <li key={detail.label} className="flex items-start gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-hairline text-primary">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-hairline text-primary-ink">
                   <detail.icon className="h-4 w-4" aria-hidden />
                 </span>
                 <div className="min-w-0">
@@ -88,8 +84,36 @@ export default function ContactPage() {
               ready and a map on the wall. No appointment needed.
             </p>
           </div>
+
+          <figure className="mt-6 overflow-hidden rounded-lg border border-hairline">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/dest-kampala-4.jpg"
+              alt="Produce stalls inside Nakasero Market, Kampala"
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+            <figcaption className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-t border-hairline bg-card px-3 py-2">
+              <span className="font-sans text-[0.6875rem] text-muted-foreground">
+                Nakasero market, twenty minutes from the office
+              </span>
+              <span className="font-mono text-[0.5625rem] uppercase tracking-[0.12em] text-muted-foreground">
+                {creditLine("/images/dest-kampala-4.jpg")}
+              </span>
+            </figcaption>
+          </figure>
         </aside>
+        </div>
       </div>
+
+      <PhotoBand
+        image="/images/dest-custom-1.jpg"
+        alt="Open road running through green hills in western Uganda"
+        eyebrow="Not in the catalogue?"
+        title="Tell us the trip you have in mind and we will price it"
+        body="The custom desk quotes routes that are not on this page — film crews, birdwatchers, family groups, and people who just want to see one particular lake."
+        height="short"
+      />
     </div>
   );
 }

@@ -4,11 +4,18 @@ import type { TierKey } from "@/types/destination";
  * Guide profiles.
  *
  * ⚠️  PROTOTYPE DATA. Ratings, review counts, licence numbers and vetting
- * dates are sample values, not records. The three founding profiles carry
- * stock portraits; the three newer profiles deliberately have no photograph
- * rather than attaching a real stranger's face to an invented name, licence
- * number and rating. Replace both with consented operator photography before
- * this goes in front of the public.
+ * dates are sample values, not records.
+ *
+ * Portraits: three founding profiles carry stock portraits; the three newer
+ * profiles deliberately have none, and fall back to a monogram identity mark.
+ * Attaching a real stranger's face to an invented name, licence number and
+ * rating is misrepresentation, so the design supports both states on purpose.
+ * Replace both with consented operator photography before this goes in front
+ * of the public.
+ *
+ * Every profile does carry a `regionImage` — a real photograph of the district
+ * that guide works in — so no card is left without imagery while we wait on
+ * consented portraits.
  */
 
 export interface GuideLicence {
@@ -26,10 +33,18 @@ export interface Guide {
   id: string;
   name: string;
   /**
-   * Optional by design. When absent the card renders a monogram identity tile
+   * Optional by design. When absent the card renders a monogram identity mark
    * instead of a photograph.
    */
   photo?: string;
+  /**
+   * Photograph of the guide's own district, shown as the card's lead image.
+   *
+   * This carries the visual weight of the card so that a profile without a
+   * consented portrait still reads as complete. It is a real photograph of the
+   * place the guide actually works — never a stand-in face.
+   */
+  regionImage: string;
   region: string;
   /** Matches `Destination.location.district`, so guides and routes align. */
   district: string;
@@ -55,8 +70,8 @@ export const guides: Guide[] = [
   {
     id: "okello-joseph",
     name: "Okello Joseph",
-    photo:
-      "https://images.pexels.com/photos/15929275/pexels-photo-15929275.jpeg?auto=compress&cs=tinysrgb&w=900",
+    photo: "/images/guide-photo-okello.jpg",
+    regionImage: "/images/guide-okello.jpg",
     region: "Central Region, Kampala",
     district: "Kampala",
     languages: ["Luganda", "Acholi", "English"],
@@ -83,8 +98,8 @@ export const guides: Guide[] = [
   {
     id: "namugga-florence",
     name: "Namugga Florence",
-    photo:
-      "https://images.pexels.com/photos/27038743/pexels-photo-27038743.jpeg?auto=compress&cs=tinysrgb&w=900",
+    photo: "/images/guide-photo-florence.jpg",
+    regionImage: "/images/guide-florence.jpg",
     region: "Eastern Region, Jinja",
     district: "Jinja",
     languages: ["Luganda", "Lusoga", "English"],
@@ -111,8 +126,8 @@ export const guides: Guide[] = [
   {
     id: "ssemwogerere-david",
     name: "Ssemwogerere David",
-    photo:
-      "https://images.pexels.com/photos/3316263/pexels-photo-3316263.jpeg?auto=compress&cs=tinysrgb&w=900",
+    photo: "/images/guide-photo-david.jpg",
+    regionImage: "/images/guide-david.jpg",
     region: "Central Region, Entebbe",
     district: "Entebbe",
     languages: ["Luganda", "English", "Kiswahili"],
@@ -139,6 +154,7 @@ export const guides: Guide[] = [
   {
     id: "wamala-robert",
     name: "Wamala Robert",
+    regionImage: "/images/guide-robert.jpg",
     region: "Eastern Region, Kapchorwa",
     district: "Mbale",
     languages: ["Luganda", "Lumasaaba", "English"],
@@ -165,6 +181,7 @@ export const guides: Guide[] = [
   {
     id: "kyomuhendo-justus",
     name: "Kyomuhendo Justus",
+    regionImage: "/images/guide-justus.jpg",
     region: "Western Region, Kabarole",
     district: "Fort Portal",
     languages: ["Rutooro", "Runyankole", "English"],
@@ -191,6 +208,7 @@ export const guides: Guide[] = [
   {
     id: "mbabazi-sarah",
     name: "Mbabazi Sarah",
+    regionImage: "/images/guide-sarah.jpg",
     region: "Central Region, Kampala",
     district: "Kampala",
     languages: ["Luganda", "English", "Kiswahili"],

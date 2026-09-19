@@ -1,10 +1,19 @@
 /**
- * WCAG 2.1 contrast audit for the Tour-Boda token set (all-dark, savanna gold).
- * Mirrors app/globals.css. Run: node scripts/check-contrast.mjs
+ * WCAG 2.1 contrast audit for the Tour-Boda token set.
  *
- * The three tier tones are audited twice: as text on the base surfaces, and as
- * a fill behind `--primary-foreground`, because both are real usages (tier
- * badges are text; the active tier tab is a fill).
+ * Mirrors app/globals.css exactly, in both scopes:
+ *   LIGHT — the content body (white and cream)
+ *   SHELL — the dark header, footer and photographic bands
+ *
+ * Run: node scripts/check-contrast.mjs
+ *
+ * Thresholds are per-pair because not every usage is body text. A 28px price in
+ * gold is "large text" under WCAG (3:1); an 11px gold eyebrow is not (4.5:1).
+ * Auditing both against a flat 4.5 either fails working pairs or, worse, passes
+ * broken ones, so each pair declares the bar it actually has to clear.
+ *
+ *   min 4.5  normal body and small UI text
+ *   min 3.0  large text (>=18.66px bold or >=24px), and non-text UI boundaries
  */
 
 function hslToRgb(h, s, l) {
@@ -33,98 +42,193 @@ function contrast(fg, bg) {
 }
 
 const over = (fg, bg, alpha) => fg.map((c, i) => c * alpha + bg[i] * (1 - alpha));
-
-const T = {
-  background: [30, 8, 4],
-  foreground: [36, 20, 96],
-  card: [28, 7, 6],
-  panel: [28, 6, 8],
-  mutedForeground: [33, 9, 64],
-  primary: [42, 90, 56],
-  primaryForeground: [30, 25, 6],
-  accent: [28, 6, 14],
-  accentForeground: [36, 20, 96],
-  secondary: [28, 6, 12],
-  secondaryForeground: [36, 20, 96],
-  success: [152, 62, 48],
-  warning: [42, 100, 58],
-  error: [358, 100, 68],
-  scrim: [30, 12, 3],
-  onScrim: [36, 20, 96],
-  hairline: [28, 6, 15],
-  tier1: [13, 65, 57],
-  tier2: [42, 90, 56],
-  tier3: [160, 60, 46],
-};
-
 const rgb = (t) => hslToRgb(t[0], t[1], t[2]);
 
-const pairs = [
-  ["foreground on background", "foreground", "background"],
-  ["foreground on card", "foreground", "card"],
-  ["foreground on panel", "foreground", "panel"],
-  ["muted-foreground on background", "mutedForeground", "background"],
-  ["muted-foreground on card", "mutedForeground", "card"],
-  ["muted-foreground on panel", "mutedForeground", "panel"],
-  ["gold accent as text on background", "primary", "background"],
-  ["gold accent as text on card", "primary", "card"],
-  ["gold accent as text on panel", "primary", "panel"],
-  ["dark text on gold fill (buttons)", "primaryForeground", "primary"],
-  ["accent-foreground on accent wash", "accentForeground", "accent"],
-  ["secondary-foreground on secondary", "secondaryForeground", "secondary"],
-  ["success on background", "success", "background"],
-  ["warning on background", "warning", "background"],
-  ["error on background", "error", "background"],
-  ["on-scrim on scrim (hero text)", "onScrim", "scrim"],
-  ["foreground/90 on background", "foreground", "background", 0.9],
-  ["foreground/70 on background", "foreground", "background", 0.7],
-  ["foreground/60 on background", "foreground", "background", 0.6],
+/* ---------------------------------------------------------------- palettes */
+
+const LIGHT = {
+  background: [0, 0, 100], // #FFFFFF
+  foreground: [45, 17, 9], // #1C1A14
+  card: [0, 0, 100],
+  cream: [44, 65, 96], // #FBF7EC
+  field: [44, 44, 92], // #F3EEE0
+  mutedForeground: [38, 11, 38], // #6B6355
+  primary: [36, 64, 48], // #C98A2C — fills only
+  primaryInk: [32, 71, 31], // #8A5A16 — gold text, AA at any size
+  primaryForeground: [40, 30, 8],
+  success: [130, 19, 26], // #3F5C44
+  successDeep: [133, 27, 20], // #2F4A35
+  clay: [15, 60, 44], // #B5502D
+  destructive: [2, 66, 45],
+  warning: [36, 84, 34],
+  hairline: [60, 2, 89],
+  scrim: [30, 12, 3],
+  onScrim: [36, 20, 96],
+};
+
+const SHELL = {
+  background: [40, 17, 7], // #15130F
+  foreground: [43, 45, 92], // #F4EFE2
+  card: [38, 16, 10],
+  cream: [38, 16, 10],
+  field: [38, 16, 13],
+  mutedForeground: [44, 20, 74], // #C9C2AE
+  primary: [36, 64, 48],
+  primaryInk: [36, 64, 48], // bright gold is legible on soil
+  primaryForeground: [40, 17, 7],
+  success: [130, 26, 52],
+  successDeep: [130, 30, 62],
+  clay: [15, 60, 44],
+  destructive: [2, 72, 62],
+  warning: [36, 90, 58],
+  hairline: [38, 10, 17],
+  scrim: [30, 12, 3],
+  onScrim: [36, 20, 96],
+};
+
+/* ------------------------------------------------------------------- pairs */
+
+const LIGHT_PAIRS = [
+  // Body text
+  ["ink on white", "foreground", "background", 4.5],
+  ["ink on cream band", "foreground", "cream", 4.5],
+  ["ink on card", "foreground", "card", 4.5],
+  ["secondary text on white", "mutedForeground", "background", 4.5],
+  ["secondary text on cream band", "mutedForeground", "cream", 4.5],
+  ["secondary text on card", "mutedForeground", "card", 4.5],
+  ["secondary text on form field", "mutedForeground", "field", 4.5],
+
+  // Gold — the pair the brief calls out explicitly. One token has to serve an
+  // 11px eyebrow and a 28px price, so it is audited at the stricter 4.5 bar.
+  ["gold text on white", "primaryInk", "background", 4.5],
+  ["gold text on cream band", "primaryInk", "cream", 4.5],
+  ["gold text on card", "primaryInk", "card", 4.5],
+  ["gold text on form field", "primaryInk", "field", 4.5],
+  ["dark text on gold fill (CTA)", "primaryForeground", "primary", 4.5],
+
+  // Trust and tier accents
+  ["green #3F5C44 on white", "success", "background", 4.5],
+  ["green #3F5C44 on cream", "success", "cream", 4.5],
+  ["green #2F4A35 small badge on white", "successDeep", "background", 4.5],
+  ["white on green fill (Verified badge)", "background", "success", 4.5],
+  ["clay #B5502D on white", "clay", "background", 4.5],
+  ["white on clay fill (Experience flag)", "background", "clay", 4.5],
+
+  // Status
+  ["destructive on white", "destructive", "background", 4.5],
+  ["warning on white", "warning", "background", 4.5],
+
+  // Non-text boundaries
+  ["hairline on white (divider)", "hairline", "background", 1.2],
+  ["gold fill on white (button edge)", "primary", "background", 1.2],
 ];
 
-// Tier tones: text usage, then fill usage.
-for (const [key, label] of [
-  ["tier1", "tier 1 freelance"],
-  ["tier2", "tier 2 guided"],
-  ["tier3", "tier 3 experience"],
-]) {
-  pairs.push([`${label} as text on background`, key, "background"]);
-  pairs.push([`${label} as text on card`, key, "card"]);
-  pairs.push([`dark text on ${label} fill`, "primaryForeground", key]);
-}
+const SHELL_PAIRS = [
+  ["paper on soil", "foreground", "background", 4.5],
+  ["dimmed paper nav link on soil", "mutedForeground", "background", 4.5],
+  ["paper on shell card", "foreground", "card", 4.5],
+  ["dimmed paper on shell card", "mutedForeground", "card", 4.5],
+  ["gold on soil (small label)", "primaryInk", "background", 4.5],
+  ["gold on soil (large)", "primaryInk", "background", 3.0],
+  ["dark text on gold fill (CTA)", "primaryForeground", "primary", 4.5],
+  ["lifted green on soil (Verified)", "success", "background", 4.5],
+  ["paper/70 on soil", "foreground", "background", 4.5, 0.7],
+  ["paper/60 on soil", "foreground", "background", 4.5, 0.6],
+  ["hairline on soil (divider)", "hairline", "background", 1.2],
+];
 
-// Tier chip: tone text over its own 13% wash on the card surface.
+// Text over photography always sits on the constant scrim, in both scopes.
+const SCRIM_PAIRS = [
+  ["on-scrim paper on scrim", "onScrim", "scrim", 4.5],
+  ["on-scrim/85 on scrim", "onScrim", "scrim", 4.5, 0.85],
+  ["on-scrim/75 on scrim", "onScrim", "scrim", 4.5, 0.75],
+  ["on-scrim/60 on scrim (small)", "onScrim", "scrim", 4.5, 0.6],
+  ["gold on scrim (eyebrow over photo)", "primary", "scrim", 4.5],
+  ["gold on scrim (rating star)", "primary", "scrim", 3.0],
+  ["white on clay over scrim (Experience)", "background", "clay", 4.5],
+];
+
+/* -------------------------------------------------------------------- run */
+
 const failures = [];
-for (const [key, label] of [
-  ["tier1", "tier 1"],
-  ["tier2", "tier 2"],
-  ["tier3", "tier 3"],
-]) {
-  const bg = over(rgb(T[key]), rgb(T.card), 0.13);
-  const ratio = contrast(rgb(T[key]), bg);
-  const tag = ratio >= 4.5 ? (ratio >= 7 ? "AA / AAA" : "AA") : "AA FAIL";
-  if (ratio < 4.5) failures.push(`${label} chip text on its own wash`);
-  console.log(`  ${`${label} chip text on 13% wash`.padEnd(38)} ${ratio.toFixed(2).padEnd(7)} ${tag}`);
+let total = 0;
+
+function run(title, tokens, pairs) {
+  console.log(`\n${title}`);
+  console.log("─".repeat(72));
+  console.log(`${"PAIR".padEnd(44)} ${"RATIO".padEnd(7)} VERDICT`);
+
+  for (const [label, fgKey, bgKey, min, alpha] of pairs) {
+    total += 1;
+    const bg = rgb(tokens[bgKey]);
+    let fg = rgb(tokens[fgKey]);
+    if (alpha !== undefined) fg = over(fg, bg, alpha);
+
+    const ratio = contrast(fg, bg);
+    const pass = ratio >= min;
+    if (!pass) failures.push(`${title} → ${label} (${ratio.toFixed(2)} < ${min})`);
+
+    const verdict = pass
+      ? ratio >= 7 && min >= 4.5
+        ? "AA / AAA"
+        : "PASS"
+      : `FAIL (need ${min})`;
+    console.log(`  ${label.padEnd(42)} ${ratio.toFixed(2).padEnd(7)} ${verdict}`);
+  }
 }
 
-console.log("Resolved hex");
-for (const k of Object.keys(T)) console.log(`  ${k.padEnd(18)} ${toHex(rgb(T[k]))}`);
-
-console.log(`\n${"PAIR".padEnd(38)} ${"RATIO".padEnd(7)} VERDICT`);
-for (const [label, fgKey, bgKey, alpha] of pairs) {
-  let fg = rgb(T[fgKey]);
-  const bg = rgb(T[bgKey]);
-  if (alpha !== undefined) fg = over(fg, bg, alpha);
-  const ratio = contrast(fg, bg);
-  if (ratio < 4.5) failures.push(label);
+console.log("Resolved accents (identical in both scopes)");
+for (const k of ["primary", "clay", "success"]) {
   console.log(
-    `  ${label.padEnd(38)} ${ratio.toFixed(2).padEnd(7)} ${ratio < 4.5 ? "AA FAIL" : "AA"}${
-      ratio >= 7 ? " / AAA" : ""
-    }`,
+    `  ${k.padEnd(12)} light ${toHex(rgb(LIGHT[k]))}   shell ${toHex(rgb(SHELL[k]))}`,
   );
 }
 
-console.log(`\n${failures.length} of ${pairs.length + 3} pair(s) below 4.5:1 AA for normal text.`);
+run("LIGHT — content body", LIGHT, LIGHT_PAIRS);
+run("SHELL — header, footer, photo bands", SHELL, SHELL_PAIRS);
+run("PHOTOGRAPHY — text over the constant scrim", LIGHT, SCRIM_PAIRS);
+
+/* -------------------------------------------------------- negative control */
+/*
+ * The brief nominates #C98A2C for gold fills and a deeper #A8701F for gold
+ * text on white. The fill tone is audited here as a negative control: it must
+ * keep failing as text, because that is the reason the two tokens exist. Note
+ * the shipped text token goes a step deeper than the brief's suggestion — see
+ * the comment on `--primary-ink` in app/globals.css — because #A8701F measures
+ * 4.25:1 and this token also paints 11px eyebrows.
+ */
+const brightGoldOnWhite = contrast(rgb(LIGHT.primary), rgb(LIGHT.background));
+const deepGoldOnWhite = contrast(rgb(LIGHT.primaryInk), rgb(LIGHT.background));
+const briefGoldOnWhite = contrast(hslToRgb(33, 68, 40), rgb(LIGHT.background));
+
+console.log("\nNEGATIVE CONTROL — why gold fill and gold text are separate tokens");
+console.log("─".repeat(72));
+console.log(
+  `  #C98A2C (fill gold) as text on white   ${brightGoldOnWhite.toFixed(2)}   must stay below 4.5`,
+);
+console.log(
+  `  #A8701F (brief's text gold) on white   ${briefGoldOnWhite.toFixed(2)}   large text only`,
+);
+console.log(
+  `  #8A5A16 (shipped text gold) on white   ${deepGoldOnWhite.toFixed(2)}   must clear 4.5`,
+);
+if (brightGoldOnWhite >= 4.5) {
+  failures.push(
+    "negative control: #C98A2C unexpectedly passes as text on white — the fill and text gold tokens may have been merged",
+  );
+}
+if (deepGoldOnWhite < 4.5) {
+  failures.push(
+    "gold text token #8A5A16 no longer clears 4.5:1 on white",
+  );
+}
+
+console.log(
+  `\n${failures.length} of ${total} pair(s) below their required ratio.`,
+);
 if (failures.length > 0) {
   for (const failure of failures) console.log(`  FAIL  ${failure}`);
   process.exitCode = 1;
+} else {
+  console.log("All pairs clear WCAG AA at the level each usage requires.\n");
 }

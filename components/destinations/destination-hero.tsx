@@ -39,7 +39,7 @@ export function DestinationHero({ destination }: { destination: Destination }) {
   );
 
   return (
-    <section className="relative isolate flex min-h-[88vh] flex-col justify-end overflow-hidden">
+    <section className="theme-shell relative isolate flex min-h-[88vh] flex-col justify-end overflow-hidden">
       {/* Windscreen: the road ahead. */}
       <div className="absolute inset-0 -z-10">
         {hero ? (
@@ -54,8 +54,7 @@ export function DestinationHero({ destination }: { destination: Destination }) {
           aria-hidden
           className="absolute inset-0 bg-primary/14 mix-blend-overlay"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/75 to-scrim/35" />
-        <div className="pointer-events-none absolute inset-0 glow-mesh opacity-70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/80 to-scrim/45" />
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-4 pb-10 pt-24 sm:px-6 lg:px-8 lg:pb-14">
@@ -110,7 +109,7 @@ export function DestinationHero({ destination }: { destination: Destination }) {
                   ·
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <Star className="h-3 w-3 fill-[#F2B32B] text-[#F2B32B]" aria-hidden />
+                  <Star className="h-3 w-3 fill-primary text-primary" aria-hidden />
                   <span className="text-on-scrim">{guides[0].rating.toFixed(1)}</span>
                   <span className="text-on-scrim/60">
                     ({guides[0].reviewCount} reviews)
@@ -151,7 +150,7 @@ export function DestinationHero({ destination }: { destination: Destination }) {
               </span>
               <span
                 data-readout
-                className="mt-1 font-mono text-sm font-bold text-[#F2B32B]"
+                className="mt-1 font-display text-base font-semibold text-primary-ink"
               >
                 {formatUGX(fromPrice(destination))}
               </span>

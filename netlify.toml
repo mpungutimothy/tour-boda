@@ -1,6 +1,36 @@
+# Netlify configuration.
+#
+# This site deploys with Netlify's Next.js Runtime, which is what makes
+# `publish = ".next"` correct: the plugin reads the server build and splits it
+# into static assets plus serverless functions. Publishing `.next` by hand —
+# dragging the folder into Netlify Drop — does NOT work, because `.next` is not
+# a directory of static files.
+#
+# If you would rather deploy a plain static folder, run `npm run build:static`
+# instead. That emits `out/`, which is a complete static site and *can* be
+# dragged onto any host. Set `publish = "out"` (and drop the plugin) to use that
+# path from Git as well.
+
 [build]
 command = "npx next build"
 publish = ".next"
 
 [[plugins]]
 package = "@netlify/plugin-nextjs"
+
+# The markdown mirrors are served by a route handler that sets
+# `Content-Type: text/markdown`. When the site is deployed as a static export
+# there is no handler to set it, and the file `/md/<slug>` has no extension for
+# the host to infer a type from, so it arrives as application/octet-stream.
+# Declaring the type here makes the behaviour identical on both deploy paths.
+[[headers]]
+  for = "/md/*"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+# Photography is remote (Pexels and Wikimedia) and already sized at the edge.
+# Cache the hashed build output aggressively; it is immutable per build.
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

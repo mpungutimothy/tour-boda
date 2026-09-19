@@ -7,10 +7,13 @@ import { cn } from "@/lib/utils";
 /**
  * Tier presentation.
  *
- * Every element here carries `data-tier`, which is what resolves
- * `--tier-color` in globals.css. Nothing hardcodes a hue, so the three tier
- * colours stay consistent across cards, tabs, table and booking flow, and can
- * be re-tuned in one place.
+ * Active state is gold for every tier. That is deliberate: gold marks the
+ * *choice*, and three competing tier hues fighting for attention would make the
+ * selected option the least obvious thing on the card. The levels stay
+ * distinguishable through their labels, their prices, and the small legend
+ * dots, which use each tier's own hue.
+ *
+ * Clay appears exactly once in this file — on the Experience flag.
  */
 
 export function TierDot({
@@ -24,8 +27,22 @@ export function TierDot({
     <span
       data-tier={tierKey}
       aria-hidden
-      className={cn("inline-block h-1.5 w-1.5 rounded-full tier-fill", className)}
+      className={cn("inline-block h-2 w-2 rounded-full tier-bg", className)}
     />
+  );
+}
+
+/** The Experience flag. The only clay on the site. */
+export function ExperienceFlag({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        "flag-experience inline-flex items-center rounded-full px-2 py-0.5 font-sans text-[0.625rem] font-semibold uppercase tracking-[0.1em]",
+        className,
+      )}
+    >
+      Experience
+    </span>
   );
 }
 
@@ -42,7 +59,7 @@ export function TierBadge({
     <span
       data-tier={tierKey}
       className={cn(
-        "tier-chip inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[0.625rem] uppercase tracking-[0.14em]",
+        "tier-chip inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-sans text-[0.6875rem] font-semibold",
         className,
       )}
     >
@@ -74,7 +91,7 @@ export function TierTabs({
       role="radiogroup"
       aria-label={label}
       className={cn(
-        "grid grid-cols-3 gap-1 rounded-md border border-hairline bg-background/60 p-1",
+        "grid grid-cols-3 gap-1 rounded-md border border-hairline bg-field p-1",
         className,
       )}
     >
@@ -90,10 +107,10 @@ export function TierTabs({
             onClick={() => onChange(tier.key)}
             title={`${tierMeta(tier.key).name} — ${tierMeta(tier.key).tagline}`}
             className={cn(
-              "relative rounded-[4px] px-1.5 py-1.5 font-mono text-[0.625rem] uppercase tracking-[0.1em] transition-all duration-200",
+              "relative rounded-[5px] px-1.5 py-2 font-sans text-[0.6875rem] font-semibold transition-all duration-200",
               active
-                ? "tier-fill font-semibold"
-                : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-background hover:text-foreground",
             )}
           >
             {tierMeta(tier.key).shortLabel}
@@ -104,7 +121,7 @@ export function TierTabs({
   );
 }
 
-/** The three-tier explainer strip, used above a grid of cards. */
+/** The three-tier explainer strip, used above or below a grid of cards. */
 export function TierLegend({ className }: { className?: string }) {
   return (
     <ul
@@ -116,17 +133,20 @@ export function TierLegend({ className }: { className?: string }) {
       {TIER_ORDER.map((key, index) => {
         const meta = TIER_META[key];
         return (
-          <li key={key} data-tier={key} className="bg-background p-4">
-            <div className="flex items-center gap-2">
-              <TierDot tierKey={key} />
-              <span className="font-mono text-[0.625rem] uppercase tracking-[0.16em] tier-text">
-                Tier {String(index + 1).padStart(2, "0")}
+          <li key={key} data-tier={key} className="bg-card p-5">
+            <div className="flex items-center justify-between gap-3">
+              <span className="inline-flex items-center gap-2">
+                <TierDot tierKey={key} />
+                <span className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  Level {index + 1}
+                </span>
               </span>
+              {key === "experience" ? <ExperienceFlag /> : null}
             </div>
-            <h3 className="mt-2 font-display text-sm font-semibold leading-tight tracking-display">
+            <h3 className="mt-2.5 font-display text-base font-semibold tracking-display">
               {meta.name}
             </h3>
-            <p className="mt-1.5 font-sans text-xs leading-relaxed text-muted-foreground">
+            <p className="mt-1.5 font-sans text-[0.8125rem] leading-relaxed text-muted-foreground">
               {meta.summary}
             </p>
           </li>
@@ -162,13 +182,13 @@ export function TierPriceStrip({
               aria-pressed={active}
               className={cn(
                 "flex w-full flex-col items-start gap-1 px-3 py-2.5 text-left transition-colors",
-                active ? "tier-soft" : "hover:bg-accent",
+                active ? "bg-primary/[0.08]" : "hover:bg-accent",
               )}
             >
               <span
                 className={cn(
-                  "font-mono text-[0.5625rem] uppercase tracking-[0.14em]",
-                  active ? "tier-text" : "text-muted-foreground",
+                  "font-sans text-[0.625rem] font-semibold uppercase tracking-[0.12em]",
+                  active ? "text-primary-ink" : "text-muted-foreground",
                 )}
               >
                 {tierMeta(tier.key).shortLabel}
@@ -177,7 +197,7 @@ export function TierPriceStrip({
                 data-readout
                 className={cn(
                   "font-mono text-xs font-semibold",
-                  active ? "tier-text" : "text-foreground",
+                  active ? "text-primary-ink" : "text-foreground",
                 )}
               >
                 {formatPrice(tier)}
