@@ -32,12 +32,12 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "mb-8 flex flex-wrap items-end justify-between gap-x-10 gap-y-4",
-        align === "center" && "flex-col items-center text-center",
+        "mb-8 flex flex-col gap-y-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-x-10",
+        align === "center" && "items-center text-center sm:flex-col",
         className,
       )}
     >
-      <div className={cn("max-w-2xl", align === "center" && "mx-auto")}>
+      <div className={cn("min-w-0 max-w-2xl", align === "center" && "mx-auto")}>
         {eyebrow ? (
           <p className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-primary-ink">
             {eyebrow}
@@ -59,7 +59,11 @@ export function SectionHeading({
         ) : null}
       </div>
 
-      {action ? <div className="shrink-0">{action}</div> : null}
+      {/* `w-full` on a phone, `shrink-0` only once there is room. The revenue
+          summary strip is ~361px of content; as a `shrink-0` flex item it could
+          not narrow and pushed the whole page 2px past the viewport at 375px,
+          and clipped the last chip at 320px. */}
+      {action ? <div className="w-full sm:w-auto sm:shrink-0">{action}</div> : null}
     </div>
   );
 }

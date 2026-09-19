@@ -91,8 +91,13 @@ export function TripRail({ totalKm, waypoints = [] }: TripRailProps) {
         />
       </div>
 
-      {/* Desktop: the rail proper. */}
-      <div className="fixed left-6 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
+      {/* Desktop: the rail proper.
+          Shown from `xl`, not `lg`. The waypoint labels hang to the right of a
+          1px rail by design, which puts their right edge about 135px from the
+          viewport edge; at 1024px the page's `max-w-4xl` column starts at 96px,
+          so the labels ran into the narrative text. At 1280px that column
+          starts at 224px and there is room. Measured, not assumed. */}
+      <div className="fixed left-6 top-1/2 z-40 hidden -translate-y-1/2 xl:block">
         <div className="flex flex-col items-center gap-3">
           <span className="telemetry text-primary-ink">
             {kmTravelled.toFixed(1)}

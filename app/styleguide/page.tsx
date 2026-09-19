@@ -163,7 +163,7 @@ export default function StyleguidePage() {
           {voices.map((v, i) => (
             <div
               key={v.voice}
-              className={`grid gap-3 p-6 sm:grid-cols-[10rem_1fr] sm:items-baseline ${
+              className={`grid grid-cols-1 gap-3 p-6 sm:grid-cols-[10rem_1fr] sm:items-baseline ${
                 i > 0 ? "border-t border-hairline" : ""
               }`}
             >
@@ -278,7 +278,7 @@ export default function StyleguidePage() {
         <h3 className="mb-4 mt-10 font-display text-lg font-bold uppercase tracking-[0.02em]">
           Base &amp; glass
         </h3>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="rounded-lg border border-hairline bg-background p-6 text-foreground">
             <span className="telemetry text-muted-foreground">Base · bg-background</span>
             <p className="mt-3 font-display text-xl font-bold uppercase">Near-black base</p>
@@ -385,7 +385,7 @@ export default function StyleguidePage() {
         <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Surfaces
         </h2>
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div className="grid-plate rounded-lg border border-hairline p-6">
             <p className="font-display text-lg font-semibold uppercase">Grid plate</p>
             <p className="mt-2 font-sans text-sm text-muted-foreground">
@@ -444,7 +444,7 @@ export default function StyleguidePage() {
         <h2 className="mb-6 font-display text-2xl font-bold tracking-display">
           Cards
         </h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader>
               <CardTitle className="font-display uppercase">Kampala City Tour</CardTitle>
@@ -501,7 +501,7 @@ export default function StyleguidePage() {
           Inputs
         </h2>
         <div className="rounded-lg border border-hairline bg-background p-8 text-foreground">
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="demo-name" className="telemetry text-muted-foreground">
                 Full name

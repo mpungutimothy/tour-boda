@@ -51,8 +51,8 @@ export default function GuidesPage() {
         title="Your guide"
         lead="The person who actually rides with you. Every guide is licensed by a district or city authority, vetted in person, and local to the road they ride."
         aside={
-          <dl className="flex gap-px overflow-hidden rounded-lg border border-hairline bg-hairline">
-            <div className="bg-card px-5 py-3.5">
+          <dl className="grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline break-words">
+            <div className="bg-card px-3 py-3 sm:px-5 sm:py-3.5">
               <dt className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 Guides
               </dt>
@@ -63,7 +63,7 @@ export default function GuidesPage() {
                 {String(guides.length).padStart(2, "0")}
               </dd>
             </div>
-            <div className="bg-card px-5 py-3.5">
+            <div className="bg-card px-3 py-3 sm:px-5 sm:py-3.5">
               <dt className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 Districts
               </dt>
@@ -74,7 +74,7 @@ export default function GuidesPage() {
                 {String(districtCount).padStart(2, "0")}
               </dd>
             </div>
-            <div className="bg-card px-5 py-3.5">
+            <div className="bg-card px-3 py-3 sm:px-5 sm:py-3.5">
               <dt className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 Avg rating
               </dt>
@@ -105,7 +105,7 @@ export default function GuidesPage() {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {guides.map((guide) => (
             <GuideCard key={guide.id} guide={guide} />
           ))}
@@ -125,7 +125,7 @@ export default function GuidesPage() {
             lead="Four checks, and the date each one was last run is published on the guide's profile. If a licence lapses, the profile comes down."
           />
 
-          <ol className="grid gap-6 sm:grid-cols-2">
+          <ol className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {VETTING_STEPS.map((step) => (
               <li
                 key={step.index}

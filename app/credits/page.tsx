@@ -46,7 +46,7 @@ export default function CreditsPage() {
 
       <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Licence summary */}
-        <dl className="grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-3">
+        <dl className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-3">
         <div className="bg-card p-4">
           <dt className="telemetry text-muted-foreground">Photographs</dt>
           <dd

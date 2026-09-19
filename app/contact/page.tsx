@@ -41,7 +41,7 @@ export default function ContactPage() {
       />
 
       <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-[1fr_300px]">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_300px]">
           <div className="rounded-lg border border-hairline bg-card p-6 text-foreground sm:p-8">
             <ContactForm />
           </div>

@@ -41,7 +41,7 @@ export function QuickPicks({ className }: { className?: string }) {
   const { applyPreset } = useSearch();
 
   return (
-    <div className={cn("grid gap-3 sm:grid-cols-3", className)}>
+    <div className={cn("grid grid-cols-1 gap-3 sm:grid-cols-3", className)}>
       {PRESETS.map((preset) => (
         <button
           key={preset.id}

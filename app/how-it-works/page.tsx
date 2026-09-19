@@ -58,7 +58,7 @@ export default function HowItWorksPage() {
         title="A marketplace for the last mile of Ugandan tourism"
         lead="Boda-bodas already move most people around Ugandan towns. This platform turns that fleet into licensed, priced, bookable tourism capacity — and pays the rider the majority of every booking."
         below={
-          <dl className="grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-4">
+          <dl className="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-4">
             {[
               { label: "Destinations", value: String(destinations.length) },
               { label: "Guides", value: String(guides.length) },
@@ -152,12 +152,12 @@ export default function HowItWorksPage() {
                 checked against a price the catalogue actually publishes.
               </p>
             </div>
-            <RevenueSummaryStrip className="shrink-0" />
+            <RevenueSummaryStrip className="w-full sm:w-auto" />
           </div>
 
           <RevenueModel destinationSlug="kampala-city-heritage" tierKey="guided" />
 
-          <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-3">
+          <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-3">
             {REVENUE_SPLIT.map((party) => (
               <div key={party.id} className="bg-background p-5">
                 <p className="font-mono text-3xl font-bold leading-none text-primary-ink">
@@ -204,7 +204,7 @@ export default function HowItWorksPage() {
             summary names the rule that moved the number.
           </p>
 
-          <div className="mt-8 grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-2">
+          <div className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-2">
             {[
               {
                 title: "Per person, per level",
@@ -242,8 +242,10 @@ export default function HowItWorksPage() {
             ))}
           </div>
 
-          {/* ---- Tier comparison, the commercial summary ---- */}
-          <div className="mt-10 overflow-x-auto rounded-lg border border-hairline">
+          {/* ---- Tier comparison, the commercial summary ----
+               Scrolls sideways on a phone (40rem minimum) with a faded right
+               edge as the cue that there is more table. */}
+          <div className="scroll-fade mt-10 overflow-x-auto rounded-lg border border-hairline">
             <table className="w-full min-w-[40rem] text-left">
               <caption className="sr-only">
                 What each service level includes

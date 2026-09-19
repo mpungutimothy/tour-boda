@@ -44,7 +44,7 @@ export function ExperienceGrid({ className }: { className?: string }) {
     <ul
       className={
         className ??
-        "grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 lg:gap-4"
+        "grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:gap-4"
       }
     >
       {EXPERIENCE_TYPES.map((type) => {

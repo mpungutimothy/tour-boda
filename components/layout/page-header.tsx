@@ -31,8 +31,8 @@ export function PageHeader({
   return (
     <section className={cn("band-cream border-b border-hairline", className)}>
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-8">
-          <div className="max-w-3xl">
+        <div className="flex flex-col gap-y-8 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-x-10">
+          <div className="min-w-0 max-w-3xl">
             {eyebrow ? (
               <p className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-primary-ink">
                 {eyebrow}
@@ -53,7 +53,11 @@ export function PageHeader({
             ) : null}
           </div>
 
-          {aside ? <div className="shrink-0">{aside}</div> : null}
+          {/* `w-full` on a phone rather than `shrink-0` at every width: the
+              stat plates below are three or four cells wide and at 320-375px
+              they cannot fit beside the title, so shrink-0 used to force them
+              past the viewport edge instead of letting them take a full row. */}
+          {aside ? <div className="w-full sm:w-auto sm:shrink-0">{aside}</div> : null}
         </div>
 
         {below ? <div className="mt-10">{below}</div> : null}

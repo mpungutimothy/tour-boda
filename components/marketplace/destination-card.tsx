@@ -180,8 +180,11 @@ export function DestinationCard({
           label={`Service level for ${destination.name}`}
         />
 
-        {/* Price, in deep gold, crossfading as the tier changes. */}
-        <div className="mt-4 flex items-end justify-between gap-3">
+        {/* Price, in deep gold, crossfading as the tier changes.
+            Stacks on a narrow card: the price, the "total · each" line and the
+            "From" comparator are three separate figures, and at 375px they were
+            sharing one row with only a few pixels between them. */}
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-3">
           <div className="min-w-0">
             <p className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
               {tier.badge ?? tierMeta(tier.key).tagline}
@@ -199,7 +202,7 @@ export function DestinationCard({
               each
             </p>
           </div>
-          <span className="shrink-0 text-right">
+          <span className="text-right sm:shrink-0">
             <span className="block font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
               {destination.pricingMode === "quotation" ? "Indicative" : "From"}
             </span>
@@ -254,12 +257,14 @@ export function DestinationCard({
           </p>
         ) : null}
 
-        {/* ---- Actions ---- */}
-        <div className="mt-auto flex items-center gap-2 pt-5">
+        {/* ---- Actions ----
+             Full-width buttons on a phone so both stay comfortably tappable
+             (44px-ish targets, no text truncation), side by side from `sm`. */}
+        <div className="mt-auto flex flex-col gap-2 pt-5 sm:flex-row sm:items-center">
           <Link
             href={`/book/${destination.slug}?tier=${tier.key}`}
             className={cn(
-              "sheen inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-md px-3",
+              "sheen inline-flex h-10 w-full items-center justify-center gap-2 rounded-md px-3 sm:flex-1",
               "bg-primary font-sans text-[0.8125rem] font-semibold text-primary-foreground",
               "transition-colors hover:bg-primary-dark",
             )}
@@ -269,7 +274,7 @@ export function DestinationCard({
           </Link>
           <Link
             href={`/destinations/${destination.slug}`}
-            className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-md border border-hairline px-4 font-sans text-[0.8125rem] font-semibold text-foreground transition-colors hover:border-primary hover:text-primary-ink"
+            className="inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-md border border-hairline px-4 font-sans text-[0.8125rem] font-semibold text-foreground transition-colors hover:border-primary hover:text-primary-ink sm:w-auto sm:shrink-0"
           >
             Details
             <ArrowRight className="h-4 w-4" aria-hidden />

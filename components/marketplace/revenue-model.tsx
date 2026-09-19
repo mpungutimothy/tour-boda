@@ -53,8 +53,11 @@ export function RevenueModel({
 
   return (
     <div className={cn("min-w-0", className)}>
-      {/* ---- Worked example ---- */}
-      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+      {/* ---- Worked example ----
+           Stacks on a phone: "Every shilling of a Kampala City Heritage ·
+           Guided Tour, per person" and "Package UGX 150,000" are two separate
+           facts and read badly squeezed onto one line at 375px. */}
+      <div className="flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-x-6 sm:gap-y-2">
         <p className="font-sans text-sm text-muted-foreground">
           Every shilling of a{" "}
           <span className="font-semibold text-foreground">
@@ -97,11 +100,18 @@ export function RevenueModel({
                 backgroundColor: PARTY_COLOR[share.id],
               }}
             >
-              {/* The percentage is only painted where the segment is wide
-                  enough to hold it without clipping. */}
-              {percent >= 15 ? (
+              {/* The percentage is painted inline only where the segment is
+                  comfortably wide enough to hold it.
+
+                  At 375px the 15% segment is about 43px and a 14px "15%" is
+                  about 28px, which leaves too little margin to survive a font
+                  metric difference. Nothing overlaps — the bar clips its
+                  children — but a clipped number reads as a rendering fault, so
+                  the threshold sits at 20% and the label steps down a size on
+                  phones. The legend below carries every figure regardless. */}
+              {percent >= 20 ? (
                 <span
-                  className="font-sans text-sm font-bold"
+                  className="font-sans text-xs font-bold sm:text-sm"
                   style={{
                     // Both non-gold segments are dark fills (deep green, clay),
                     // so they take the success foreground token rather than a
@@ -123,7 +133,7 @@ export function RevenueModel({
       </div>
 
       {/* ---- Legend ---- */}
-      <ul className="mt-6 grid gap-x-8 gap-y-6 sm:grid-cols-3">
+      <ul className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-3">
         {shares.map((share) => (
           <li key={share.id}>
             <div className="flex items-center gap-2.5">
@@ -160,7 +170,7 @@ export function RevenueModel({
       </ul>
 
       {/* ---- Sanity check against the concept note's operator band ---- */}
-      <div className="mt-8 grid gap-6 rounded-lg border border-hairline bg-card p-5 sm:grid-cols-2">
+      <div className="mt-8 grid grid-cols-1 gap-6 rounded-lg border border-hairline bg-card p-5 sm:grid-cols-2">
         <div>
           <p className="font-sans text-[0.625rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
             Operator day-rate band

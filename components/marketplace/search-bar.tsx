@@ -103,9 +103,9 @@ export function SearchBar({
         </span>
       </div>
 
-      <div className="grid gap-5 p-4 sm:p-5">
+      <div className="grid grid-cols-1 gap-5 p-4 sm:p-5">
         {/* ---- Where, when, who ---- */}
-        <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr_1.3fr]">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.1fr_1fr_1.3fr]">
           <div className="space-y-2">
             <Label htmlFor="search-location" className="telemetry text-muted-foreground">
               <MapPin className="mr-1 inline h-3 w-3" aria-hidden />
@@ -131,15 +131,21 @@ export function SearchBar({
               <CalendarDays className="mr-1 inline h-3 w-3" aria-hidden />
               When
             </Label>
-            <div className="flex gap-2">
+            {/* `flex-wrap` plus a floor on the date input's width. Left to
+                `min-w-0` the date field was squeezed until Chrome reported its
+                content as clipped (scrollWidth 104 against clientWidth 102),
+                because a native date control cannot render its value in less
+                than about 8rem. Wrapping means it drops to its own line instead
+                of being crushed. */}
+            <div className="flex flex-wrap gap-2">
               <Input
                 id={dateId}
                 type="date"
                 value={filters.date}
                 onChange={(event) => update({ date: event.target.value })}
-                className="min-w-0"
+                className="min-w-[9rem] flex-1"
               />
-              <div className="relative w-[7.5rem] shrink-0">
+              <div className="relative w-[7rem] shrink-0 sm:w-[7.5rem]">
                 <Clock
                   className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground"
                   aria-hidden
@@ -161,7 +167,7 @@ export function SearchBar({
               <Users className="mr-1 inline h-3 w-3" aria-hidden />
               Who is riding
             </legend>
-            <div className="flex flex-wrap gap-1.5" role="group">
+            <div className="flex flex-wrap gap-2" role="group">
               <GroupChip
                 active={filters.groupType === ""}
                 onClick={() => update({ groupType: "" })}
@@ -189,7 +195,7 @@ export function SearchBar({
           <legend className="telemetry text-muted-foreground">
             Destination or experience type
           </legend>
-          <div className="-mx-1 scroll-x scroll-fade gap-1.5 px-1 pb-1">
+          <div className="flex flex-wrap gap-2">
             {EXPERIENCE_TYPES.map((type) => {
               const active = filters.experienceTypes.includes(type.id);
               return (
@@ -200,7 +206,7 @@ export function SearchBar({
                   aria-pressed={active}
                   title={type.hint}
                   className={cn(
-                    "shrink-0 snap-start rounded-full border px-3 py-1.5 font-sans text-xs transition-all duration-200",
+                    "rounded-full border px-3 py-1.5 font-sans text-xs transition-all duration-200",
                     active
                       ? "border-primary bg-primary/15 text-primary-ink shadow-glow-sm"
                       : "border-hairline text-muted-foreground hover:border-primary/40 hover:text-foreground",
@@ -213,15 +219,18 @@ export function SearchBar({
           </div>
         </fieldset>
 
-        {/* ---- Budget + requirements ---- */}
+        {/* ---- Budget + requirements ----
+             `grid-cols-1` rather than a bare `grid`: without a base column
+             definition the implicit `auto` track is sized by content and cannot
+             shrink, which pushed this row 639px wide inside a 375px viewport. */}
         <div
           className={cn(
-            "grid gap-5",
+            "grid grid-cols-1 gap-5",
             showRequirements ? "lg:grid-cols-[1.3fr_1fr]" : undefined,
           )}
         >
-          <div className="space-y-3">
-            <div className="flex items-baseline justify-between gap-3">
+          <div className="min-w-0 space-y-3">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
               <Label htmlFor={budgetId} className="telemetry text-muted-foreground">
                 <Wallet className="mr-1 inline h-3 w-3" aria-hidden />
                 Budget per person

@@ -22,8 +22,8 @@ export default function ToursPage() {
         title="All destinations"
         lead="Guided rides across Uganda, each led by a local boda driver who knows the road. Every route sells three ways — self-guided, guided, or the full package."
         aside={
-          <dl className="flex gap-px overflow-hidden rounded-lg border border-hairline bg-hairline">
-            <div className="bg-card px-5 py-3.5">
+          <dl className="grid grid-cols-3 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline break-words">
+            <div className="bg-card px-3 py-3 sm:px-5 sm:py-3.5">
               <dt className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 Destinations
               </dt>
@@ -34,7 +34,7 @@ export default function ToursPage() {
                 {String(destinations.length).padStart(2, "0")}
               </dd>
             </div>
-            <div className="bg-card px-5 py-3.5">
+            <div className="bg-card px-3 py-3 sm:px-5 sm:py-3.5">
               <dt className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                 Guides
               </dt>

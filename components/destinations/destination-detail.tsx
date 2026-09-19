@@ -68,7 +68,7 @@ export function DestinationDetail({
                   Who leads this route
                 </h2>
 
-                <ul className="grid gap-4 sm:grid-cols-2">
+                <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {guides.map((guide) => (
                     <li
                       key={guide.id}

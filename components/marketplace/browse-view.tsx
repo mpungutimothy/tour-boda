@@ -32,7 +32,7 @@ export function BrowseView() {
     <div className="space-y-8">
       <SearchBar />
 
-      <div className="grid gap-8 lg:grid-cols-[260px_1fr] lg:gap-10">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[260px_1fr] lg:gap-10">
         {/* ---- Reference rail ---- */}
         <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
           <div className="plate rounded-lg p-4">

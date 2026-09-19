@@ -126,7 +126,7 @@ export function TierLegend({ className }: { className?: string }) {
   return (
     <ul
       className={cn(
-        "grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-3",
+        "grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-3",
         className,
       )}
     >

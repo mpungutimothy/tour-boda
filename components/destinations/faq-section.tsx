@@ -30,13 +30,19 @@ export function FAQSection({ destination }: { destination: Destination }) {
           return (
             <div key={faq.question}>
               <h3>
+                {/* `pr-1.5` on the button reserves the room the rotation needs.
+                    Rotating a 20px box by 45 degrees grows its bounding box to
+                    28px, so the open-state "×" was reaching about 4px past the
+                    button's right edge — measured scrollWidth 317 against
+                    clientWidth 311. Six pixels of right padding keeps it inside
+                    without visibly moving it. */}
                 <button
                   id={buttonId}
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : i)}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
-                  className="flex w-full items-center gap-4 py-4 text-left transition-colors hover:text-primary-ink"
+                  className="flex w-full items-center gap-4 py-4 pr-1.5 text-left transition-colors hover:text-primary-ink"
                 >
                   <span
                     aria-hidden
@@ -44,12 +50,19 @@ export function FAQSection({ destination }: { destination: Destination }) {
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="flex-1 font-display text-base font-semibold leading-snug">
+                  {/* `min-w-0` on the question is what lets the row actually
+                      fit. Without it the flex item kept its content-based
+                      minimum, so the question did not shrink quite enough and
+                      pushed the "+" about 5px past the button's right edge —
+                      measured scrollWidth 318 against clientWidth 311. */}
+                  <span className="min-w-0 flex-1 font-display text-base font-semibold leading-snug">
                     {faq.question}
                   </span>
+                  {/* Fixed square so the 45-degree rotation of the open state
+                      stays inside its own box instead of growing the row. */}
                   <span
                     aria-hidden
-                    className="shrink-0 font-mono text-lg leading-none text-primary-ink transition-transform duration-200"
+                    className="inline-flex h-5 w-5 shrink-0 items-center justify-center font-mono text-lg leading-none text-primary-ink transition-transform duration-200"
                     style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
                   >
                     +

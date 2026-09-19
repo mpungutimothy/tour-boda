@@ -297,7 +297,7 @@ export function BookingFlow({
   /* ------------------------------------------------------------------ render */
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_340px] lg:gap-10">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_340px] lg:gap-10">
       <div className="min-w-0">
         {/* ---- Stepper ---- */}
         <div className="mb-8">
@@ -355,7 +355,7 @@ export function BookingFlow({
               a party of two; the next step adjusts it for your actual party.
             </p>
 
-            <div className="mt-6 grid gap-4">
+            <div className="mt-6 grid grid-cols-1 gap-4">
               {destination.tiers.map((entry) => {
                 const active = entry.key === tier.key;
                 const meta = tierMeta(entry.key);
@@ -401,7 +401,7 @@ export function BookingFlow({
                       </div>
                     </div>
 
-                    <ul className="mt-4 grid gap-1.5 sm:grid-cols-2">
+                    <ul className="mt-4 grid grid-cols-1 gap-1.5 sm:grid-cols-2">
                       {entry.inclusions.slice(0, 4).map((item) => (
                         <li
                           key={item}
@@ -497,7 +497,7 @@ export function BookingFlow({
             </div>
 
             {/* Date + time */}
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="book-date" className="telemetry text-muted-foreground">
                   Date
@@ -714,7 +714,7 @@ export function BookingFlow({
             ) : null}
 
             {/* Contact */}
-            <fieldset className="grid gap-4 sm:grid-cols-2">
+            <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <legend className="telemetry mb-1 text-muted-foreground">
                 Who we are booking for
               </legend>
@@ -806,7 +806,7 @@ export function BookingFlow({
               </p>
             ) : null}
 
-            <dl className="mt-6 grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-2">
+            <dl className="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-2">
               <SummaryCell label="Route" value={destination.name} />
               <SummaryCell
                 label="Service level"
@@ -858,7 +858,7 @@ export function BookingFlow({
                 <div
                   role="radiogroup"
                   aria-label="Payment method"
-                  className="mt-6 grid gap-3"
+                  className="mt-6 grid grid-cols-1 gap-3"
                 >
                   {PAYMENT_METHODS.map((method) => {
                     const active = paymentMethod === method.id;
@@ -989,7 +989,7 @@ export function BookingFlow({
               <p className="mt-2 font-mono text-3xl font-bold tracking-[0.08em] text-primary-ink">
                 {reference.code}
               </p>
-              <dl className="mt-5 grid gap-3 border-t border-hairline pt-5 sm:grid-cols-2">
+              <dl className="mt-5 grid grid-cols-1 gap-3 border-t border-hairline pt-5 sm:grid-cols-2">
                 <SummaryCell label="Route" value={destination.name} compact />
                 <SummaryCell
                   label="Service level"

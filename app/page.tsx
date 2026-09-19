@@ -136,7 +136,14 @@ export default function Home() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          // On a phone the hero is far taller than it is wide, so `object-cover`
+          // scales this 16:9 frame by HEIGHT and only ~19% of its width stays
+          // visible. That makes the horizontal position the only component that
+          // decides what you see — a vertical bias such as `center 30%` does
+          // nothing here, because the image already fills the box vertically.
+          // 47% puts the visible slice over the rider and passenger, who sit
+          // just left of centre, instead of on the empty road to their right.
+          className="object-cover object-[47%_center] md:object-center"
         />
 
         {/*
@@ -160,9 +167,26 @@ export default function Home() {
         />
 
         <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-          <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.02fr] lg:gap-14">
+          {/*
+            `grid-cols-1` is load-bearing, not decoration.
+
+            A bare `grid` with no base column definition creates an implicit
+            `auto` track, and an auto track is sized by its content and cannot
+            shrink below the largest item's content-based minimum. Measured, the
+            headline column resolved to 673px inside a 375px viewport, and the
+            section's `overflow-hidden` then clipped the text rather than
+            letting it wrap — which is exactly the reported bug.
+            `grid-cols-1` compiles to `repeat(1, minmax(0, 1fr))`, and a minimum
+            of 0 is what lets the column actually be the width of the screen.
+
+            `min-w-0` on the two children does the same job one level down, for
+            the two-column case: a grid item defaults to `min-width: auto`, so
+            without it the search card could still refuse to shrink and push the
+            track wider than its column.
+          */}
+          <div className="grid grid-cols-1 items-start gap-12 md:grid-cols-2 lg:gap-14">
             {/* ---- Headline ---- */}
-            <div>
+            <div className="min-w-0">
               {/*
                 The eyebrow is paper, not gold. Brand gold as 11px text over a
                 photograph measures 4.3:1 against a white pixel at this scrim —
@@ -185,16 +209,22 @@ export default function Home() {
               </h1>
 
               <p
-                className="animate-rise-in mt-5 max-w-xl font-sans text-lg leading-relaxed text-muted-foreground"
+                className="animate-rise-in mt-5 w-full font-sans text-lg leading-relaxed text-muted-foreground md:max-w-xl"
                 style={{ animationDelay: "200ms" }}
               >
                 Local boda-boda riders take you to the places a coach bus cannot
                 reach — and tell you the truth about the road on the way.
               </p>
 
-              {/* ---- Hero stats ---- */}
+              {/* ---- Hero stats ----
+                   Four across only from `xl`. Between 768px and 1279px the hero
+                   is already two columns, so this column is only 330-450px wide
+                   and four tracks leave 61-89px each — narrower than the word
+                   DESTINATIONS (about 100px), which then spilled out of its
+                   track and collided with DISTRICTS at 768px. Two columns until
+                   there is genuinely room for four. */}
               <dl
-                className="animate-rise-in mt-9 grid max-w-xl grid-cols-2 gap-x-8 gap-y-6 border-t border-hairline pt-7 sm:grid-cols-4"
+                className="animate-rise-in mt-9 grid w-full grid-cols-2 gap-x-6 gap-y-6 border-t border-hairline pt-7 xl:grid-cols-4 xl:gap-x-8 md:max-w-xl"
                 style={{ animationDelay: "300ms" }}
               >
                 {heroStats.map((stat) => (
@@ -221,7 +251,7 @@ export default function Home() {
                  surface, dark ink and light dividers and the fields inside it
                  stay legible. Offset against the band below on large screens. */}
             <div
-              className="theme-body animate-rise-in lg:translate-y-10"
+              className="theme-body animate-rise-in min-w-0 lg:translate-y-10"
               style={{ animationDelay: "400ms" }}
             >
               <SearchBar className="shadow-xl" />
@@ -249,7 +279,7 @@ export default function Home() {
         {/* ---- Trust bar ---- */}
         <div className="border-b border-hairline">
           <div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
-            <ul className="grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="grid grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-2 md:grid-cols-4">
               {trustSignals.map((signal) => (
                 <li key={signal.label} className="flex items-start gap-3">
                   <span
@@ -341,7 +371,7 @@ export default function Home() {
             }
           />
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {guides.slice(0, 3).map((guide) => (
               <GuideCard key={guide.id} guide={guide} />
             ))}
@@ -358,7 +388,7 @@ export default function Home() {
             title="Three steps from idea to road"
           />
 
-          <ol className="grid gap-6 sm:grid-cols-3">
+          <ol className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {howItWorks.map((step) => (
               <li
                 key={step.title}
@@ -393,7 +423,9 @@ export default function Home() {
               eyebrow="The model"
               title="Where the money goes"
               lead="One price, split three ways. The rider and guide take the majority, the destination that delivers the day is paid directly, and the platform keeps the rest to run the system."
-              action={<RevenueSummaryStrip className="shrink-0" />}
+              action={
+                <RevenueSummaryStrip className="w-full sm:w-auto" />
+              }
             />
 
             <RevenueModel />
@@ -432,7 +464,7 @@ export default function Home() {
         {/* ---- Newsletter ---- */}
         <div className="border-t border-hairline">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-            <div className="grid gap-8 rounded-lg border border-hairline bg-card p-8 sm:p-10 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-14">
+            <div className="grid grid-cols-1 gap-8 rounded-lg border border-hairline bg-card p-6 sm:p-10 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-14">
               <div>
                 <p className="font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-primary-ink">
                   Trip ideas
@@ -456,8 +488,9 @@ export default function Home() {
                     type="email"
                     placeholder="you@example.com"
                     required
+                    className="w-full"
                   />
-                  <Button type="submit" className="shrink-0">
+                  <Button type="submit" className="w-full sm:w-auto sm:shrink-0">
                     Get trip ideas
                     <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
                   </Button>
@@ -469,20 +502,25 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
-              <Button asChild size="lg">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href="/tours">
                   Find your ride
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto"
+              >
                 <Link href="/book/custom-destination-tour">
                   <Plus className="mr-2 h-4 w-4" aria-hidden />
                   Build a custom route
                 </Link>
               </Button>
-              <span className="ml-1 hidden items-center gap-2 font-sans text-xs text-muted-foreground sm:inline-flex">
+              <span className="hidden items-center gap-2 font-sans text-xs text-muted-foreground sm:inline-flex sm:ml-1">
                 <Sparkles className="h-3.5 w-3.5 text-primary-ink" aria-hidden />
                 Booking fee for travellers:{" "}
                 <span className="numeric-emphasis font-mono">
@@ -498,7 +536,7 @@ export default function Home() {
         {/* Why Tour-Boda — the three claims, stated once. */}
         <div className="border-t border-hairline">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-            <div className="grid gap-8 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {[
                 {
                   icon: ShieldCheck,

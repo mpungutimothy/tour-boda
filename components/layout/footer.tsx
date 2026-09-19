@@ -71,8 +71,11 @@ export function Footer() {
   return (
     <footer className="theme-shell border-t border-hairline bg-background">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        {/* ---- Brand + sitemap ---- */}
-        <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-12">
+        {/* ---- Brand + sitemap ----
+             One column on a phone, two on a tablet, four from `lg` up. The
+             `grid-cols-1` base is required: a bare `grid` leaves an implicit
+             `auto` track that cannot shrink below its content. */}
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-12">
           <div className="max-w-sm">
             <Link
               href="/"
@@ -177,7 +180,7 @@ export function Footer() {
 
         {/* ---- Social ---- */}
         <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-hairline pt-8">
-          <ul className="flex items-center gap-2">
+          <ul className="flex flex-wrap items-center gap-2">
             {socials.map(({ label, Icon, url }) => (
               <li key={label}>
                 <a

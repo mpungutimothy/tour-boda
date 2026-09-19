@@ -81,7 +81,7 @@ export function ImageGallery({ destination }: { destination: Destination }) {
 
       {/* Supporting frames */}
       {rest.length > 0 ? (
-        <div className="mt-5 grid gap-5 sm:grid-cols-2">
+        <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {rest.map((image, index) => (
             <motion.figure
               key={image.url}
@@ -98,10 +98,16 @@ export function ImageGallery({ destination }: { destination: Destination }) {
                 />
               </div>
               <figcaption className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-t border-hairline px-4 py-3">
-                <p className="max-w-[46ch] font-sans text-sm leading-snug">
+                <p className="min-w-0 max-w-[46ch] font-sans text-sm leading-snug">
                   {image.caption}
                 </p>
-                <span className="shrink-0 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground">
+                {/* No `shrink-0` here. An attribution such as
+                    "Christopher Liberty · CC BY-SA 4.0 · Wikimedia Commons" is
+                    ~400px wide in this small-caps mono treatment, and shrink-0
+                    forbade it from wrapping, which pushed the caption — and the
+                    figure it sits in — past the card edge. `min-w-0` plus
+                    `break-words` lets it take as many lines as it needs. */}
+                <span className="min-w-0 break-words font-mono text-[0.625rem] uppercase tracking-[0.14em] text-muted-foreground">
                   {creditLine(image.url) ?? image.credit}
                 </span>
               </figcaption>

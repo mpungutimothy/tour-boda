@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# output of `npm run audit:mobile` — screenshots and raw geometry
+/.mobile-audit/
+/.mobile-shots/
+/.mobile-audit-results.json

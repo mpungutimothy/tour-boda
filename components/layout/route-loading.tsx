@@ -118,13 +118,13 @@ function HeroSkeleton() {
   return (
     <div className="theme-shell relative border-b border-hairline bg-background">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.02fr] lg:gap-14">
-          <div>
+        <div className="grid grid-cols-1 items-start gap-12 md:grid-cols-2 lg:gap-14">
+          <div className="min-w-0">
             <Line className="h-3 w-56" />
             <Line className="mt-5 h-12 w-full" />
             <Line className="mt-3 h-12 w-5/6" />
             <Line className="mt-6 h-5 w-full max-w-md" />
-            <div className="mt-9 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-hairline pt-7 sm:grid-cols-4">
+            <div className="mt-9 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-hairline pt-7 lg:grid-cols-4 lg:gap-x-8">
               {[0, 1, 2, 3].map((index) => (
                 <div key={index}>
                   <Line className="h-3 w-20" />
@@ -165,7 +165,7 @@ export function RouteLoading({
         <HeroSkeleton />
         <section className="border-b border-hairline bg-background">
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {[0, 1, 2, 3, 4, 5].map((index) => (
                 <DestinationCardSkeleton key={index} />
               ))}
@@ -192,7 +192,7 @@ export function RouteLoading({
             <ProseSkeleton />
           </div>
         ) : variant === "detail" ? (
-          <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr]">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.6fr_1fr]">
             <ProseSkeleton />
             <div className="space-y-4">
               <Line className="h-40 w-full rounded-lg" />
@@ -201,7 +201,7 @@ export function RouteLoading({
             </div>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[0, 1, 2, 3, 4, 5].map((index) =>
               variant === "guides" ? (
                 <GuideCardSkeleton key={index} />

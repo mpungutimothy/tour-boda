@@ -54,8 +54,14 @@ export function TierSelector({ destination }: { destination: Destination }) {
       />
 
       {/* Comparison table. Column headers hold real buttons so selection works
-          from the keyboard; the cards below remain the primary selector. */}
-      <div className="mb-8 overflow-x-auto rounded-lg border border-hairline">
+          from the keyboard; the cards below remain the primary selector.
+
+          It is 46rem wide and scrolls sideways on a phone, which is the right
+          pattern for a genuinely tabular comparison — squashing four columns
+          into 375px would be worse than scrolling. `scroll-fade` supplies the
+          one thing that was missing: a visible cue at the right edge that there
+          is more table, rather than an unmarked cut-off. */}
+      <div className="scroll-fade mb-8 overflow-x-auto rounded-lg border border-hairline">
         <table className="w-full min-w-[46rem] text-left">
           <caption className="sr-only">
             Package comparison for {destination.name}
@@ -281,7 +287,7 @@ export function TierSelector({ destination }: { destination: Destination }) {
       </div>
 
       {/* Selectable cards — the primary, fully keyboard-accessible selector. */}
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {destination.tiers.map((tier, index) => {
           const selected = selectedIndex === index;
           const meta = tierMeta(tier.key);

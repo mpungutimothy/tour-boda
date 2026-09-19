@@ -97,8 +97,8 @@ export function ResultsGrid({
       {matches.length > 0 ? (
         <div
           className={cn(
-            "grid gap-6",
-            columns === 3 ? "sm:grid-cols-2 xl:grid-cols-3" : "sm:grid-cols-2",
+            "grid grid-cols-1 gap-6 md:grid-cols-2",
+            columns === 3 && "lg:grid-cols-3",
           )}
         >
           {matches.map((match) => (
