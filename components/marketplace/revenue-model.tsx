@@ -103,10 +103,15 @@ export function RevenueModel({
                 <span
                   className="font-sans text-sm font-bold"
                   style={{
+                    // Both non-gold segments are dark fills (deep green, clay),
+                    // so they take the success foreground token rather than a
+                    // literal #FFFFFF. It resolves to white in the light scope,
+                    // which is where this bar always sits, and keeps the last
+                    // hardcoded colour out of the component layer.
                     color:
                       share.id === "operator"
                         ? "hsl(var(--primary-foreground))"
-                        : "#FFFFFF",
+                        : "hsl(var(--success-foreground))",
                   }}
                 >
                   {percent}%

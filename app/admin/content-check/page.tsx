@@ -160,7 +160,7 @@ export default function ContentCheckPage() {
           >
             <span
               className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
-                result.passed ? "bg-success/15" : "bg-error/15"
+                result.passed ? "bg-success/[0.15]" : "bg-error/15"
               }`}
             >
               {result.passed ? (

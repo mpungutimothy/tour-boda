@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { imagePath } from "@/lib/photos";
+import { absoluteUrl } from "@/lib/site";
 
 /**
  * Two typefaces, two jobs.
@@ -61,12 +63,25 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_UG",
     siteName: "Tour-Boda Uganda",
+    // `twitter.card` below is declared `summary_large_image`, which renders as a
+    // bare grey box when no image is supplied. The image has to be an ABSOLUTE
+    // url: a social scraper fetches it with no page context, so `/images/…`
+    // means nothing to it. This mirrors what the destination pages already do.
+    images: [
+      {
+        url: absoluteUrl(imagePath("hero-home.jpg")),
+        width: 1920,
+        height: 1080,
+        alt: "A boda-boda rider carrying a passenger along a Ugandan street",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Tour-Boda Uganda",
     description:
       "Connect with local boda-boda guides for authentic, personalized tours across Uganda.",
+    images: [absoluteUrl(imagePath("hero-home.jpg"))],
   },
   robots: { index: true, follow: true },
 };

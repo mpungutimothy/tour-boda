@@ -1,0 +1,35 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 32 32"
+  width="32"
+  height="32"
+  role="img"
+  aria-label="Tour-Boda Uganda"
+>
+  <!--
+    Favicon. Next's App Router serves any `app/icon.*` as the site icon and
+    injects the <link rel="icon"> itself, so there is no metadata entry to keep
+    in sync.
+
+    Before this file existed the app shipped no icon at all, and every page load
+    requested /favicon.ico and logged a 404. A monogram is used rather than a
+    boda silhouette because it has to survive being rendered at 16px, where any
+    detail more complex than two letters turns to mud.
+
+    Colours are the brand pair hardcoded rather than read from CSS custom
+    properties: an SVG loaded as an icon has no access to the document's
+    cascade, so `hsl(var(--primary))` would silently render as black.
+  -->
+  <rect width="32" height="32" rx="7" fill="#15130F" />
+  <text
+    x="16"
+    y="16"
+    fill="#C98A2C"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="15"
+    font-weight="700"
+    letter-spacing="-0.5"
+    text-anchor="middle"
+    dominant-baseline="central"
+  >TB</text>
+</svg>

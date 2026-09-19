@@ -42,7 +42,7 @@ export function ContactForm() {
         className="rounded-lg border border-hairline bg-card p-8"
       >
         <div className="flex items-start gap-3">
-          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-success/15">
+          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-success/[0.15]">
             <Check className="h-4 w-4 text-success" aria-hidden />
           </span>
           <div>

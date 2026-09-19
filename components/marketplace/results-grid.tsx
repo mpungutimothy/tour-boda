@@ -101,11 +101,10 @@ export function ResultsGrid({
             columns === 3 ? "sm:grid-cols-2 xl:grid-cols-3" : "sm:grid-cols-2",
           )}
         >
-          {matches.map((match, index) => (
+          {matches.map((match) => (
             <DestinationCard
               key={`${match.destination.slug}-${match.tier.key}`}
               match={match}
-              index={index}
             />
           ))}
         </div>

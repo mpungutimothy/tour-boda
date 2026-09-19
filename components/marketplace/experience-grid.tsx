@@ -3,7 +3,7 @@
 import { destinations } from "@/data/destinations";
 import { EXPERIENCE_TYPES } from "@/data/experience-types";
 import { useSearch } from "@/components/marketplace/search-provider";
-import { altFor } from "@/lib/photos";
+import { altFor, asset } from "@/lib/photos";
 import { Check } from "lucide-react";
 
 /** How many routes are tagged with each experience type. */
@@ -68,14 +68,14 @@ export function ExperienceGrid({ className }: { className?: string }) {
               <span className="relative block aspect-[4/3] overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={type.image}
+                  src={asset(type.image)}
                   alt={altFor(type.image, type.label)}
                   loading="lazy"
                   className="duotone h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
                 />
                 <span
                   aria-hidden
-                  className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/35 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/[0.35] to-transparent"
                 />
 
                 {isActive ? (

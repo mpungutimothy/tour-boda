@@ -123,6 +123,53 @@ for (const [file, sources] of referenced) {
   }
 }
 
+/* --- 2b. Bare filenames in the data layer ---------------------------------
+   Destinations, guides and experience types declare their images as BARE
+   filenames — `"dest-entebbe-1.jpg"` — and `lib/photos.ts` builds the
+   `/images/` prefix at runtime. A literal-path scan cannot see those, and the
+   manifest is not evidence about them either.
+
+   This check used to be missing, and the gap was real: the manifest was treated
+   as an authoritative reference (see below), so a typo in a gallery entry
+   passed every assertion while the card rendered a broken image. The manifest
+   proves a file was synced; it does not prove the code names it correctly.
+
+   Case is compared exactly, because Netlify and GitHub Pages both run on
+   case-sensitive filesystems — `Dest-Entebbe-1.jpg` builds fine on Windows and
+   404s in production. */
+
+const BARE_NAME = /"([A-Za-z0-9][A-Za-z0-9._-]*\.(?:jpe?g|png|webp))"/g;
+const bareRefs = new Map();
+
+async function scanBare(dir) {
+  if (!existsSync(dir)) return;
+  const targets = await walk(dir, (name) => /\.(ts|tsx)$/.test(name));
+  for (const target of targets) {
+    const text = await readFile(target, "utf8");
+    for (const match of text.matchAll(BARE_NAME)) {
+      const file = match[1];
+      const set = bareRefs.get(file) ?? new Set();
+      set.add(path.relative(ROOT, target));
+      bareRefs.set(file, set);
+    }
+  }
+}
+
+await scanBare(path.join(ROOT, "data"));
+await scanBare(path.join(ROOT, "lib"));
+
+for (const [file, sources] of bareRefs) {
+  if (!onDisk.has(file)) {
+    const nearMiss = files.find((f) => f.toLowerCase() === file.toLowerCase());
+    fail(
+      `${file}: named by ${[...sources].slice(0, 3).join(", ")} but not present in public/images/` +
+        (nearMiss
+          ? ` — did you mean "${nearMiss}"? Filenames are case-sensitive in production.`
+          : ""),
+    );
+  }
+}
+
 /* --- 3. Licence records --------------------------------------------------- */
 
 const creditsSource = await readFile(
@@ -183,8 +230,60 @@ if (CHECK_BUILT) {
     for (const [file, pages] of missingInBuild) {
       fail(`out/: ${file} referenced by ${[...pages].slice(0, 3).join(", ")} but not exported`);
     }
+
+    // Stronger than the text scan above: resolve the URL the BROWSER will
+    // actually request for every <img>, and check that file exists in out/.
+    //
+    // This is the check that catches a deployment-subpath mistake — a page
+    // emitting `/tour-boda/images/x.jpg` into an export whose images live at
+    // `out/images/x.jpg`. That failure renders every card image broken while
+    // the page itself still looks fine, which is exactly how it gets
+    // misdiagnosed as "the images are missing from the repo".
+    const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/+$/, "");
+    const IMG_SRC = /<img\b[^>]*?\bsrc="([^"]+)"/g;
+    const unresolved = new Map();
+    let imgCount = 0;
+
+    for (const htmlFile of htmlFiles) {
+      const text = await readFile(htmlFile, "utf8");
+      for (const match of text.matchAll(IMG_SRC)) {
+        const src = match[1];
+        // Remote and inline sources are not this script's business; the whole
+        // point of the image pipeline is that there should be none.
+        if (/^(https?:)?\/\//.test(src) || src.startsWith("data:")) continue;
+        imgCount++;
+
+        let rel = decodeURIComponent(src.split("?")[0]).replace(/^\/+/, "");
+        // The export always writes `out/images/…` flat. On a subpath deploy the
+        // host maps `out/` to that subpath, so the prefix is stripped before
+        // resolving against the filesystem.
+        if (basePath) {
+          const prefix = `${basePath.replace(/^\//, "")}/`;
+          if (rel.startsWith(prefix)) rel = rel.slice(prefix.length);
+        }
+        if (!rel) continue;
+
+        if (!existsSync(path.join(OUT_DIR, rel))) {
+          const set = unresolved.get(src) ?? new Set();
+          set.add(path.relative(OUT_DIR, htmlFile));
+          unresolved.set(src, set);
+        }
+      }
+    }
+
+    for (const [src, pages] of unresolved) {
+      fail(
+        `out/: <img src="${src}"> would 404 — no such file in the export (first seen in ${[...pages][0]})`,
+      );
+    }
+
     console.log(
       `Scanned ${htmlFiles.length} exported HTML file(s); ${built.size} image(s) in out/images/.`,
+    );
+    console.log(
+      `Resolved ${imgCount} <img> src value(s) against the export` +
+        (basePath ? ` (basePath "${basePath}" stripped)` : "") +
+        `.`,
     );
   }
 }

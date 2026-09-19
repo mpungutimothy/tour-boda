@@ -312,9 +312,9 @@ export function BookingFlow({
                     className={cn(
                       "flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[0.625rem] uppercase tracking-[0.12em] transition-colors",
                       current
-                        ? "border-primary bg-primary/12 text-primary-ink"
+                        ? "border-primary bg-primary/[0.12] text-primary-ink"
                         : done
-                          ? "border-success/45 bg-success/10 text-success"
+                          ? "border-success/[0.45] bg-success/10 text-success"
                           : "border-hairline text-muted-foreground",
                     )}
                   >
@@ -800,7 +800,7 @@ export function BookingFlow({
             </p>
 
             {isQuotation && destination.quoteNote ? (
-              <p className="mt-5 flex items-start gap-2.5 rounded-lg border border-primary/35 bg-primary/[0.07] p-3.5 font-sans text-xs leading-relaxed text-primary-ink">
+              <p className="mt-5 flex items-start gap-2.5 rounded-lg border border-primary/[0.35] bg-primary/[0.07] p-3.5 font-sans text-xs leading-relaxed text-primary-ink">
                 <Sparkles className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
                 {destination.quoteNote}
               </p>
@@ -969,7 +969,7 @@ export function BookingFlow({
         {/* ---- Step: confirmed ---- */}
         {step === "confirmed" && reference ? (
           <section aria-labelledby="step-confirmed">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-success/45 bg-success/10">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-success/[0.45] bg-success/10">
               <CheckCircle2 className="h-6 w-6 text-success" aria-hidden />
             </span>
             <h2
@@ -1134,7 +1134,7 @@ export function BookingFlow({
               />
               <div
                 aria-hidden
-                className="absolute inset-0 bg-primary/12 mix-blend-overlay"
+                className="absolute inset-0 bg-primary/[0.12] mix-blend-overlay"
               />
               <div
                 aria-hidden

@@ -5,7 +5,7 @@ import { getDestination } from "@/data/destinations";
 import { tierMeta } from "@/data/tiers";
 import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/format";
-import { altFor, creditForPath } from "@/lib/photos";
+import { altFor, asset, creditForPath } from "@/lib/photos";
 import { CardImage } from "@/components/visual/card-image";
 import {
   BadgeCheck,
@@ -61,7 +61,7 @@ export function GuideCard({ guide }: { guide: Guide }) {
           />
           <span
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-scrim/85 via-scrim/15 to-scrim/40"
+            className="absolute inset-0 bg-gradient-to-t from-scrim/[0.85] via-scrim/[0.15] to-scrim/40"
           />
 
           {/* Verified badge — the green signal the brief asks for. */}
@@ -92,7 +92,7 @@ export function GuideCard({ guide }: { guide: Guide }) {
           {guide.photo ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
-              src={guide.photo}
+              src={asset(guide.photo)}
               alt={`${guide.name}, Tour-Boda guide`}
               loading="lazy"
               className="grade-portrait h-full w-full object-cover"

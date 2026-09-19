@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PHOTO_CREDITS, licenceSummary } from "@/data/photo-credits";
 import { PageHeader } from "@/components/layout/page-header";
 import { PROTOTYPE_NOTICE } from "@/lib/demo";
+import { asset } from "@/lib/photos";
 import { Camera, ExternalLink, Image as ImageIcon } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -127,7 +128,7 @@ export default function CreditsPage() {
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={`/images/${credit.file}`}
+                    src={asset(`/images/${credit.file}`)}
                     alt=""
                     loading="lazy"
                     className="h-20 w-32 shrink-0 rounded border border-hairline object-cover"

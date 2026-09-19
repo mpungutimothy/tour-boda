@@ -41,10 +41,8 @@ import {
  */
 export function DestinationCard({
   match,
-  index,
 }: {
   match: DestinationMatch;
-  index: number;
 }) {
   const { destination, quote } = match;
   const [tierKey, setTierKey] = useState<TierKey>(match.tier.key);
@@ -87,13 +85,19 @@ export function DestinationCard({
         <CardImage
           src={destination.images[0]?.url ?? ""}
           alt=""
-          eager={index < 3}
+          // Deliberately lazy, including for the first row. This grid sits well
+          // below the fold — under the hero and the quick picks — and Next
+          // emits a <link rel="preload"> for every eager card image, so the
+          // first three were competing for bandwidth with the hero photograph
+          // on the connection that can least afford it. The hero is the only
+          // image on the site that is prioritised; the shimmer placeholder
+          // covers the gap for these.
           className="group-hover:scale-[1.04]"
         />
 
         <span
           aria-hidden
-          className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-scrim/55 to-transparent"
+          className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-scrim/[0.55] to-transparent"
         />
         <span
           aria-hidden

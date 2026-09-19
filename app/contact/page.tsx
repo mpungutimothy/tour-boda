@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact/contact-form";
 import { PageHeader } from "@/components/layout/page-header";
 import { PhotoBand } from "@/components/visual/photo-band";
-import { creditLine } from "@/lib/photos";
+import { asset, creditLine } from "@/lib/photos";
 import { MapPin, Phone, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -88,7 +88,7 @@ export default function ContactPage() {
           <figure className="mt-6 overflow-hidden rounded-lg border border-hairline">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/dest-kampala-4.jpg"
+              src={asset("/images/dest-kampala-4.jpg")}
               alt="Produce stalls inside Nakasero Market, Kampala"
               loading="lazy"
               className="h-full w-full object-cover"

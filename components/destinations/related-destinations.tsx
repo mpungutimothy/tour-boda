@@ -52,7 +52,7 @@ export function RelatedDestinations({
                 />
                 <div
                   aria-hidden
-                  className="absolute inset-0 bg-primary/12 mix-blend-overlay"
+                  className="absolute inset-0 bg-primary/[0.12] mix-blend-overlay"
                 />
               </div>
 

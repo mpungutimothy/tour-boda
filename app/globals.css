@@ -23,6 +23,19 @@
   }
 }
 
+/* Route change progress. An indeterminate sweep, deliberately not a spinner:
+   a spinner is a thing you wait for, a sweep is a thing that is happening. It
+   only ever travels across the top edge, so the page chrome underneath stays
+   visible and interactive. */
+@keyframes route-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
 /* Tier price crossfade when the selected tier changes. */
 @keyframes price-swap {
   from {
@@ -65,7 +78,17 @@
    ========================================================================== */
 
 @layer base {
-  :root {
+  /* `:root` is the light palette, and `.theme-body` re-asserts it verbatim so a
+     LIGHT ISLAND can opt back in inside a dark region — the search card sitting
+     on the photographic hero is the reason it exists.
+
+     This works because an element's own declaration always beats an inherited
+     one: the island declares its own tokens, so it wins over whatever it
+     inherits from the surrounding `.theme-shell` regardless of source order or
+     specificity. The light palette therefore stays defined exactly once, and
+     nesting order can never desynchronise the two. */
+  :root,
+  .theme-body {
     /* --- Mode-constant accents ------------------------------------------
        Declared once, inherited by every scope. Do not re-declare these in
        .theme-shell — an accent that shifts between the header and the body is
@@ -425,7 +448,11 @@
   /* ---------------------------------------------------------------- loading */
 
   /* Skeleton placeholder. A cream-to-tan sweep travelling left to right, so a
-     loading card reads as filling rather than as broken. Never a spinner. */
+     loading card reads as filling rather than as broken. Never a spinner.
+
+     The sweep darkens to a slightly deeper tan rather than flaring to white:
+     the base is already cream (#F3EEE0), so a white highlight washed it out and
+     the placeholder read as blank space instead of as work in progress. */
   .skeleton {
     position: relative;
     overflow: hidden;
@@ -439,7 +466,7 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      hsl(0 0% 100% / 0.55) 50%,
+      hsl(44 40% 80% / 0.9) 50%,
       transparent 100%
     );
     animation: shimmer 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
@@ -461,6 +488,44 @@
   @media (prefers-reduced-motion: reduce) {
     .skeleton::after {
       animation: none;
+    }
+  }
+
+  /* Route-change progress bar.
+     Pinned to the top of the viewport at z-70, which is deliberately above the
+     sticky header (z-50) so it reads as a property of the browser's own
+     progress rather than as part of the page. It is 3px tall, transparent to
+     clicks, and never covers the chrome — the header and footer stay visible
+     and usable while a route loads. */
+  .route-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 70;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: transparent;
+  }
+  .route-progress::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    background-color: hsl(var(--primary));
+    animation: route-progress 1.05s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  /* Reduced motion: no sweep, but the indicator must not disappear — a static
+     gold rule is still an honest "a route change is in flight". */
+  @media (prefers-reduced-motion: reduce) {
+    .route-progress::after {
+      animation: none;
+      width: 100%;
+      opacity: 0.85;
     }
   }
 

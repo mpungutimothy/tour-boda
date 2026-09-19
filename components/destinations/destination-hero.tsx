@@ -52,9 +52,9 @@ export function DestinationHero({ destination }: { destination: Destination }) {
         ) : null}
         <div
           aria-hidden
-          className="absolute inset-0 bg-primary/14 mix-blend-overlay"
+          className="absolute inset-0 bg-primary/[0.14] mix-blend-overlay"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/80 to-scrim/45" />
+        <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/80 to-scrim/[0.45]" />
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-4 pb-10 pt-24 sm:px-6 lg:px-8 lg:pb-14">

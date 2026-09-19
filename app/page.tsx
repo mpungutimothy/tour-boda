@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { destinations } from "@/data/destinations";
 import { guides, totalTripsLed, averageRating } from "@/data/guides";
 import { tierMeta } from "@/data/tiers";
@@ -6,6 +7,7 @@ import { TRAVELLER_FEES } from "@/data/revenue";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SectionHeading } from "@/components/layout/section-heading";
+import { asset } from "@/lib/photos";
 import { SearchProvider } from "@/components/marketplace/search-provider";
 import { SearchBar } from "@/components/marketplace/search-bar";
 import { QuickPicks } from "@/components/marketplace/quick-picks";
@@ -98,14 +100,78 @@ export default function Home() {
 
   return (
     <SearchProvider>
-      {/* ══ BAND 1 — CREAM: hero and search ═══════════════════════════ */}
-      <section className="band-cream border-b border-hairline">
-        <div className="mx-auto max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:px-8 lg:pb-28 lg:pt-20">
+      {/* ══ BAND 1 — PHOTOGRAPHIC HERO ════════════════════════════════
+          The only dark region outside the header and footer, and the only place
+          a photograph sits behind running text. `theme-shell` flips the tokens
+          so the headline, the stats and the rule above them become paper and
+          dimmed paper without a single hardcoded colour; the search card opts
+          back out into the light palette with `theme-body`, so it stays a white
+          card whatever is behind it. */}
+      <section className="theme-shell relative isolate overflow-hidden border-b border-hairline bg-background">
+        {/*
+          The one photograph on this site allowed to load eagerly: it is the
+          largest contentful paint element on the most-visited page, so
+          `priority` is right here and wrong anywhere else.
+
+          `bg-background` on the section above is the fallback — if the file
+          ever goes missing the hero is still a dark band with paper text on it,
+          rather than paper text on white.
+
+          The src goes through `asset()` deliberately. It is tempting to assume
+          next/image applies `basePath` on its own, and it does NOT: with
+          `images.unoptimized` set — which this static export requires — the src
+          is emitted verbatim. Verified by building with
+          NEXT_PUBLIC_BASE_PATH=/tour-boda: next/image produced
+          `/images/hero-home.jpg` while the raw <img> elements correctly
+          produced `/tour-boda/images/…`. Without `asset()` here the hero would
+          be the single image that breaks on a subpath deploy. `asset()` is a
+          no-op at the root, so Netlify is unaffected.
+
+          TODO(pre-launch): replace with commissioned or UTB-licensed imagery.
+          See the licensing note in lib/photos.ts.
+        */}
+        <Image
+          src={asset("/images/hero-home.jpg")}
+          alt="A boda-boda rider carrying a passenger along a street in western Uganda, with mist-covered hills behind"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+
+        {/*
+          Two overlays, and both are load-bearing for WCAG AA.
+
+          The first is the dark wash. Its lightest point is 0.70 rather than the
+          0.60 the brief suggested, because the top of this particular frame is
+          a bright misty sky: measured against it, the dimmed paper stat labels
+          (#C9C2AE) reach only 3.2:1 at 0.60, and 4.8:1 at 0.70.
+
+          The second darkens the left edge under the headline column, so
+          legibility does not depend on which photograph is eventually used.
+        */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/[0.68] to-black/[0.78]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-r from-black/[0.45] via-black/20 to-transparent"
+        />
+
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.02fr] lg:gap-14">
             {/* ---- Headline ---- */}
             <div>
+              {/*
+                The eyebrow is paper, not gold. Brand gold as 11px text over a
+                photograph measures 4.3:1 against a white pixel at this scrim —
+                short of the 4.5:1 AA floor — and the brightness of the frame
+                under it is not something a future image swap should be able to
+                quietly invalidate. Paper clears it everywhere by a wide margin.
+              */}
               <p
-                className="animate-rise-in font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-primary-ink"
+                className="animate-rise-in font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-foreground"
                 style={{ animationDelay: "0ms" }}
               >
                 Kampala · Jinja · Entebbe · Mbale · Fort Portal
@@ -149,26 +215,37 @@ export default function Home() {
               </dl>
             </div>
 
-            {/* ---- Search card, offset against the band below ---- */}
+            {/* ---- Search card ----
+                 `theme-body` is the light island: it re-asserts the light
+                 palette inside the dark hero, so the card keeps its white
+                 surface, dark ink and light dividers and the fields inside it
+                 stay legible. Offset against the band below on large screens. */}
             <div
-              className="animate-rise-in lg:translate-y-10"
+              className="theme-body animate-rise-in lg:translate-y-10"
               style={{ animationDelay: "400ms" }}
             >
               <SearchBar className="shadow-xl" />
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-16 lg:mt-24">
+      {/* ══ BAND 2 — WHITE: quick picks, trust, destinations ══════════ */}
+      <section className="border-b border-hairline bg-background">
+        {/* ---- Quick picks ----
+             Moved out of the hero when the hero became photographic. Cream is
+             reserved for the guides band below, so the page alternates
+             dark hero → white → cream → white rather than tinting every
+             section. */}
+        <div className="border-b border-hairline">
+          <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
             <p className="mb-4 font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
               Start from your plan
             </p>
             <QuickPicks />
           </div>
         </div>
-      </section>
 
-      {/* ══ BAND 2 — WHITE: trust, destinations, experiences ══════════ */}
-      <section className="border-b border-hairline bg-background">
         {/* ---- Trust bar ---- */}
         <div className="border-b border-hairline">
           <div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">

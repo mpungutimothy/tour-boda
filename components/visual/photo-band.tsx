@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { altFor, creditForPath } from "@/lib/photos";
+import { altFor, asset, creditForPath } from "@/lib/photos";
 
 /**
  * A full-bleed photographic band.
@@ -51,14 +51,14 @@ export function PhotoBand({
       <div className="absolute inset-0 -z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={image}
+          src={asset(image)}
           alt={alt ?? altFor(image, "")}
           loading="lazy"
           className="duotone h-full w-full object-cover"
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-primary/14 mix-blend-overlay"
+          className="absolute inset-0 bg-primary/[0.14] mix-blend-overlay"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/80 to-scrim/50" />
         <div className="pointer-events-none absolute inset-0 glow-mesh opacity-50" />
@@ -87,7 +87,7 @@ export function PhotoBand({
           {action ? <div className="mt-6">{action}</div> : null}
 
           {credit ? (
-            <p className="mt-6 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-on-scrim/45">
+            <p className="mt-6 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-on-scrim/[0.45]">
               Photograph: {credit.artist} · {credit.licence} · {credit.source}
             </p>
           ) : null}

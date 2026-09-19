@@ -148,6 +148,50 @@ const SCRIM_PAIRS = [
   ["white on clay over scrim (Experience)", "background", "clay", 4.5],
 ];
 
+/* ----------------------------------------------------------------- the hero */
+
+/*
+ * The hero is the one surface whose background is a PHOTOGRAPH rather than a
+ * token, so it cannot be audited from the palette alone and is modelled here
+ * explicitly.
+ *
+ * The model is deliberately adversarial: it assumes the pixel behind the text
+ * is pure white. No real photograph of a street is, so every ratio below is a
+ * floor rather than an estimate — if a pair passes here it passes on any image
+ * anyone ever swaps in, which is the property that matters when the photography
+ * is still temporary.
+ *
+ * Two overlay layers are stacked, matching app/page.tsx:
+ *   base — gradient to bottom-right, alpha 0.70 → 0.78
+ *   left — gradient to right,        alpha 0.45 → 0 in the text column
+ * Light survives both as (1−a₁)(1−a₂), so the composite alpha under the
+ * headline column is 1 − 0.30 × 0.55 = 0.835, and under the middle of the
+ * column roughly 0.77.
+ */
+const WHITE_PIXEL = [255, 255, 255];
+const heroBg = (alpha) => over([0, 0, 0], WHITE_PIXEL, alpha);
+const stack = (a, b) => 1 - (1 - a) * (1 - b);
+
+const HERO = {
+  foreground: rgb(SHELL.foreground),
+  mutedForeground: rgb(SHELL.mutedForeground),
+  primary: rgb(SHELL.primary),
+  base70: heroBg(0.7), // lightest point of the base gradient
+  base78: heroBg(0.78), // deepest point
+  leftColumn: heroBg(stack(0.7, 0.45)), // 0.835 — under the headline
+  midColumn: heroBg(stack(0.7, 0.22)), // ~0.766 — right edge of the stat row
+};
+
+const HERO_PAIRS = [
+  ["headline (paper) over lightest base", "foreground", "base70", 4.5],
+  ["eyebrow (paper) over lightest base", "foreground", "base70", 4.5],
+  ["stat number (paper) over lightest base", "foreground", "base70", 4.5],
+  ["stat label (dimmed paper) over lightest base", "mutedForeground", "base70", 4.5],
+  ["headline (paper) over deepest base", "foreground", "base78", 4.5],
+  ["stat label (dimmed paper) over left column", "mutedForeground", "leftColumn", 4.5],
+  ["stat label (dimmed paper) over mid column", "mutedForeground", "midColumn", 4.5],
+];
+
 /* -------------------------------------------------------------------- run */
 
 const failures = [];
@@ -177,6 +221,26 @@ function run(title, tokens, pairs) {
   }
 }
 
+/** A variant of `run` for pairs whose "tokens" are already resolved RGB. */
+function runRgb(title, tokens, pairs) {
+  console.log(`\n${title}`);
+  console.log("─".repeat(72));
+  console.log(`${"PAIR".padEnd(44)} ${"RATIO".padEnd(7)} VERDICT`);
+
+  for (const [label, fgKey, bgKey, min] of pairs) {
+    total += 1;
+    const ratio = contrast(tokens[fgKey], tokens[bgKey]);
+    const pass = ratio >= min;
+    if (!pass) failures.push(`${title} → ${label} (${ratio.toFixed(2)} < ${min})`);
+    const verdict = pass
+      ? ratio >= 7 && min >= 4.5
+        ? "AA / AAA"
+        : "PASS"
+      : `FAIL (need ${min})`;
+    console.log(`  ${label.padEnd(42)} ${ratio.toFixed(2).padEnd(7)} ${verdict}`);
+  }
+}
+
 console.log("Resolved accents (identical in both scopes)");
 for (const k of ["primary", "clay", "success"]) {
   console.log(
@@ -187,6 +251,40 @@ for (const k of ["primary", "clay", "success"]) {
 run("LIGHT — content body", LIGHT, LIGHT_PAIRS);
 run("SHELL — header, footer, photo bands", SHELL, SHELL_PAIRS);
 run("PHOTOGRAPHY — text over the constant scrim", LIGHT, SCRIM_PAIRS);
+runRgb(
+  "HERO — text over the overlay (worst case: a pure-white pixel)",
+  HERO,
+  HERO_PAIRS,
+);
+
+/*
+ * Control for the hero eyebrow. The brand eyebrow is gold everywhere else on
+ * the site, and it is deliberately PAPER on the hero. This is why: gold does
+ * clear 4.5:1 at the far left, where the headline scrim is deepest, but it does
+ * NOT hold across the full width of the eyebrow line, whose right-hand end sits
+ * where the left scrim has faded out. Since the eyebrow is 11px text, and since
+ * the overlay has to keep working when the temporary photograph is replaced,
+ * paper is used there instead of a colour that only passes on one side of one
+ * line. Printed rather than asserted: if a future overlay does make gold viable,
+ * that is a colour decision, not a regression.
+ */
+const goldAtLeft = contrast(HERO.primary, HERO.leftColumn);
+const goldAtMid = contrast(HERO.primary, HERO.midColumn);
+const goldAtBase = contrast(HERO.primary, HERO.base70);
+console.log("\nCONTROL — why the hero eyebrow is paper and not brand gold");
+console.log("─".repeat(72));
+console.log(
+  `  gold #C98A2C, deepest scrim (left edge)   ${goldAtLeft.toFixed(2)}   ${goldAtLeft >= 4.5 ? "would clear 4.5" : "below 4.5"}`,
+);
+console.log(
+  `  gold #C98A2C, mid column                 ${goldAtMid.toFixed(2)}   ${goldAtMid >= 4.5 ? "would clear 4.5" : "below 4.5"}`,
+);
+console.log(
+  `  gold #C98A2C, lightest base              ${goldAtBase.toFixed(2)}   ${goldAtBase >= 4.5 ? "would clear 4.5" : "below 4.5"}`,
+);
+console.log(
+  `  paper #F4EFE2, lightest base             ${contrast(HERO.foreground, HERO.base70).toFixed(2)}   used for the eyebrow`,
+);
 
 /* -------------------------------------------------------- negative control */
 /*

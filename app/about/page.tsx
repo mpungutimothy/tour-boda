@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { PartnerRail } from "@/components/marketplace/partners-section";
 import { PageHeader } from "@/components/layout/page-header";
 import { PhotoBand } from "@/components/visual/photo-band";
-import { creditLine } from "@/lib/photos";
+import { asset, creditLine } from "@/lib/photos";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -125,7 +125,7 @@ export default function AboutPage() {
                     <div className="overflow-hidden rounded-lg border border-hairline">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={IMAGE_BREAKS[section.index].src}
+                        src={asset(IMAGE_BREAKS[section.index].src)}
                         alt={IMAGE_BREAKS[section.index].alt}
                         loading="lazy"
                         className="h-full w-full object-cover"
